@@ -17,7 +17,7 @@ GO
 
 -- Tạo bảng Users
 CREATE TABLE Users (
-    user_id INT PRIMARY KEY,
+    user_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     name NVARCHAR(255),
     password NVARCHAR(255),
     email NVARCHAR(255),
