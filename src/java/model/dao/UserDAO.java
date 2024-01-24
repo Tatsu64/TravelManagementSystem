@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.database.DatabaseConnector;
 import model.entity.User;
 
 public class UserDAO {
@@ -23,33 +24,28 @@ public class UserDAO {
         this.connection = connection;
     }
 
-    public User checkLogIn(String email, String password) {
-        try {
-            String sql = "SELECT * FROM Users WHERE email = ? AND password = ?";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, email);
-                statement.setString(2, password);
+   public User checkLogIn(String email, String password) {
+    try {
+        Connection con = DatabaseConnector.getConnection();
+        String sql = "SELECT * FROM Users WHERE email = ? AND CONVERT(VARCHAR(MAX), password) = ?";
+       
 
-                try (ResultSet rs = statement.executeQuery()) {
-                    if (rs.next()) {
-                        User user = new User(
-                                rs.getInt("user_id"),
-                                rs.getString("name"),
-                                rs.getString("password"),
-                                rs.getString("email"),
-                                rs.getString("address"),
-                                rs.getString("phone"),
-                                rs.getString("role")
-                        );
-                        return user;
-                    }
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+            statement.setString(1, email);
+            statement.setString(2, password);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    User user = new User(rs.getString("name"), rs.getString("password"), rs.getString("email"), rs.getString("address"), rs.getString("phone"),rs.getString("role"));
+                    return user;
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately
         }
-        return null;
+    } catch (SQLException e) {
+        e.printStackTrace(); // Handle the exception appropriately
     }
+    return null;
+}
 
     public User getUserById(int userId) {
         String sql = "SELECT * FROM Users WHERE user_id = ?";

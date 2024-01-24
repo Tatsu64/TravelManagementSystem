@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,10 +79,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="index.jsp" class="nav-item nav-link active">Home</a>
                     <a href="about.html" class="nav-item nav-link">About</a>
                     <a href="service.html" class="nav-item nav-link">Services</a>
                     <a href="package.html" class="nav-item nav-link">Packages</a>
+                     <c:if test="${sessionScope.auth != null}"> 
+                        <a class="nav-link me-4" href="LogoutServlet">Log out</a>
+                        <a class="nav-link me-4" href="#">HELLO ${sessionScope.auth.name}</a>
+                    </c:if>
+                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu m-0">
@@ -91,10 +97,16 @@
                             <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                             <a href="404.html" class="dropdown-item">404 Page</a>
                         </div>
+                       
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
+                     <c:if test="${sessionScope.auth.role == 'User'}">
+                        <a class="nav-link me-4" href="#">Profile</a>
+                      </c:if>
                 </div>
-                <a href="" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
+                <c:if test="${sessionScope.auth == null}">
+                <a href="login.jsp" class="btn btn-primary rounded-pill py-2 px-4">Login</a>
+               </c:if>
             </div>
         </nav>
 
