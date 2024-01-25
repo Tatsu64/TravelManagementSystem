@@ -4,9 +4,33 @@
         <servlet-name>WelcomeServlet</servlet-name>
         <servlet-class>controller.tour.WelcomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>controller.account.UserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignUpServlet</servlet-name>
+        <servlet-class>controller.account.SignUpServlet</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>controller.account.LogoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>SignUpServlet</servlet-name>
+        <url-pattern>/SignUpServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

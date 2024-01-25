@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=TravelManagementSystem; trustServerCertificate=true";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=TravelManagementSystem; trustServerCertificate = true";
     private static final String USERNAME = "sa";
     private static final String PASSWORD = "sa";
 

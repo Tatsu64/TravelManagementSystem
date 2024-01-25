@@ -69,14 +69,18 @@ public class UserServlet extends HttpServlet {
        response.setContentType("text/html;charset=UTF-8");
 		try (PrintWriter out = response.getWriter()) {
                     Connection connection = DatabaseConnector.getConnection();
-			String email = request.getParameter("Email");
-			String password = request.getParameter("Password");
+			String email = request.getParameter("email");
+                        String password = request.getParameter("password");
+                    
+                    
+                        //String email = request.getParameter("email");
+			//String password = request.getParameter("password");
                         
 
 
 			UserDAO udao = new UserDAO(connection);
                         
-                        User user = new User(email,password);
+                        User user = new User(password, email);
 			  try {
 
                          user = udao.checkLogIn(email, password);
@@ -91,7 +95,7 @@ public class UserServlet extends HttpServlet {
 				session.setAttribute("auth", user);
                                 
 //				System.out.print("user logged in");
-				response.sendRedirect("WelcomeServlet?");
+				response.sendRedirect("index.jsp");
 			} else {
                                 request.setAttribute("mess","Wrong Name or Password, please try again!");
 				request.getRequestDispatcher("login.jsp").forward(request, response);
