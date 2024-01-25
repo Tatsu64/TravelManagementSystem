@@ -113,7 +113,7 @@ public class UserDAO {
         }
         return success;
     }
-
+/*
     public boolean checkPassword(int userID, String password) {
         boolean success = false;
         String sql = "SELECT * FROM Users WHERE user_id = ? AND password = ?";
@@ -128,7 +128,7 @@ public class UserDAO {
         }
         return success;
     }
-
+*/
     public void addUser(User user) {
         String sql = "INSERT INTO Users (name, password, email, address, phone, role) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {

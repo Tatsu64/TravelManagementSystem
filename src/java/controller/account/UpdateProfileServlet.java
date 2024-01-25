@@ -33,17 +33,13 @@ public class UpdateProfileServlet extends HttpServlet {
             
             // Cập nhật thông tin người dùng trong cơ sở dữ liệu
             UserDAO dao = new UserDAO(DatabaseConnector.getConnection());
-            boolean f=dao.checkPassword(id, password);
-            if(f){
-                boolean f2=dao.updateUserProfile(user);
-                if(f2){
+            boolean f2 = dao.updateUserProfile(user);
+            if(f2){
                 request.setAttribute("succMsg", "User Profile Update Successfully");
                 request.getRequestDispatcher("profile.jsp").forward(request, response);
                 }else{
                 request.setAttribute("failedMsg", "Somthing wrong on server");
                 request.getRequestDispatcher("profile.jsp").forward(request, response);
-                }
-                
             }
             /*else{
                 request.setAttribute("failedMsg", "Your Password is Incorect");
