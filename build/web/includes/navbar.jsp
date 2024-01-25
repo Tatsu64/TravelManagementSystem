@@ -28,7 +28,7 @@
                 <a href="contact.jsp" class="nav-item nav-link">Contact</a>
             </c:if>
 
-            <c:if test="${sessionScope.auth == 'User'}"> 
+            <c:if test="${sessionScope.auth.role == 'User'}"> 
                 <a href="index.jsp" class="nav-item nav-link">Home</a>
                 <a href="about.jsp" class="nav-item nav-link">About</a>
                 <a href="service.jsp" class="nav-item nav-link">Services</a>
