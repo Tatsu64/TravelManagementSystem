@@ -22,8 +22,10 @@
     <br>
     <br>
     <br>
-    <form action="UpdateProfileServlet" method="Post">
-        <input type="hidden" value="${user.userid}" name="id">
+    <form action="UpdateProfileServlet" method="get">
+        <input type="hidden" value="${auth.userId}" name="id">
+        <input type="hidden" value="${auth.password}" name="password">
+        <input type="hidden" value="${auth.role}" name="role">
     
     <div class="container light-style flex-grow-1 container-p-y">
         <h4 class="font-weight-bold py-3 mb-4" style="font-style: italic; font-family: Serif">
@@ -66,11 +68,11 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Username</label>
-                                    <input type="text" class="form-control mb-1" value="${auth.name}">
+                                    <input type="text" class="form-control mb-1" name="name" value="${auth.name}">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">E-mail</label>
-                                    <input type="text" class="form-control mb-1" value="${auth.email}">
+                                    <input type="text" class="form-control mb-1" name="email" value="${auth.email}">
                                     
                                     <%--<div class="alert alert-warning mt-3">
                                         Your email is not confirmed. Please check your inbox.<br>
@@ -80,11 +82,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Phone</label>
-                                    <input type="text" class="form-control" value="${auth.phone}">
+                                    <input type="text" class="form-control" name="phone" value="${auth.phone}">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Address</label>
-                                    <input type="text" class="form-control" value="${auth.address}">
+                                    <input type="text" class="form-control" name="address" value="${auth.address}">
                                 </div>
                             </div>
                         </div>

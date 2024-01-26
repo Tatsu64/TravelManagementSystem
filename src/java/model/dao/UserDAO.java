@@ -36,7 +36,7 @@ public class UserDAO {
 
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    User user = new User(rs.getString("name"), rs.getString("password"), rs.getString("email"), rs.getString("address"), rs.getString("phone"),rs.getString("role"));
+                    User user = new User(rs.getInt("user_id"), rs.getString("name"), rs.getString("password"), rs.getString("email"), rs.getString("address"), rs.getString("phone"),rs.getString("role"));
                     return user;
                 }
             }
