@@ -36,7 +36,7 @@ public class UserDAO {
 
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    User user = new User(rs.getString("name"), rs.getString("password"), rs.getString("email"), rs.getString("address"), rs.getString("phone"),rs.getString("role"));
+                    User user = new User(rs.getInt("user_id"), rs.getString("name"), rs.getString("password"), rs.getString("email"), rs.getString("address"), rs.getString("phone"),rs.getString("role"));
                     return user;
                 }
             }
@@ -113,7 +113,7 @@ public class UserDAO {
         }
         return success;
     }
-
+/*
     public boolean checkPassword(int userID, String password) {
         boolean success = false;
         String sql = "SELECT * FROM Users WHERE user_id = ? AND password = ?";
@@ -128,7 +128,7 @@ public class UserDAO {
         }
         return success;
     }
-
+*/
     public void addUser(User user) {
         String sql = "INSERT INTO Users (name, password, email, address, phone, role) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {

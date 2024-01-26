@@ -27,6 +27,17 @@ public class User {
         this.role = role;
     }
 
+    public User(int userId, String name, String email, String address, String phone) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+    }
+
+   
+
+    
     public User() {
     }
 

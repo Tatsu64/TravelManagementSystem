@@ -37,7 +37,9 @@ CREATE TABLE Tours (
     tour_price DECIMAL(18, 2),
     image_url NVARCHAR(MAX),
     employee_id INT FOREIGN KEY REFERENCES Employees(employee_id),
-    start_location NVARCHAR(255)
+    start_location NVARCHAR(255),
+    max_capacity INT,
+    current_capacity INT
 );
 GO
 
@@ -54,9 +56,7 @@ CREATE TABLE Hotels (
     hotel_id INT PRIMARY KEY,
     hotel_name NVARCHAR(255),
     location_id INT FOREIGN KEY REFERENCES Locations(location_id),
-    check_in_date DATE,
-    check_out_date DATE,
-    price_per_night DECIMAL(18, 2),
+    price DECIMAL(18, 2),
     image_url NVARCHAR(MAX),
     address NVARCHAR(MAX)
 );
@@ -92,7 +92,6 @@ CREATE TABLE Bookings (
     tour_id INT FOREIGN KEY REFERENCES Tours(tour_id),
     user_id INT FOREIGN KEY REFERENCES Users(user_id),
     hotel_id INT FOREIGN KEY REFERENCES Hotels(hotel_id),
-    transportation_id INT FOREIGN KEY REFERENCES Transportations(transportation_id),
     restaurant_id INT FOREIGN KEY REFERENCES Restaurants(restaurant_id),
     booking_date DATE,
     number_of_people INT,
@@ -115,5 +114,21 @@ CREATE TABLE Reviews (
     booking_id INT FOREIGN KEY REFERENCES Bookings(booking_id),
     content NVARCHAR(MAX),
     rating INT
+);
+GO
+
+-- Tạo bảng ActivitySchedules
+CREATE TABLE ActivitySchedules (
+    schedule_id INT PRIMARY KEY,
+    tour_id INT FOREIGN KEY REFERENCES Tours(tour_id),
+    day_number INT,
+    activity_name NVARCHAR(255),
+    activity_date DATE,
+    start_time TIME,
+    end_time TIME,
+    location NVARCHAR(255),
+    description NVARCHAR(MAX),
+    image_url NVARCHAR(MAX),
+    CONSTRAINT FK_ActivitySchedules_Tours FOREIGN KEY (tour_id) REFERENCES Tours(tour_id)
 );
 GO

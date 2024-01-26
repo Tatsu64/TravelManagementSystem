@@ -11,7 +11,7 @@ import model.entity.User;
 
 public class UpdateProfileServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -20,30 +20,19 @@ public class UpdateProfileServlet extends HttpServlet {
             String password = request.getParameter("password");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
+            String role = request.getParameter("role");
             
-            User user=new User();
-            user.setUserId(id);
-            user.setName(username);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setPhone(phone);
-            user.setAddress(address);
-                         
-                    
-            
+            User user=new User(id, username, password, email, address, phone, role);          
+     
             // Cập nhật thông tin người dùng trong cơ sở dữ liệu
             UserDAO dao = new UserDAO(DatabaseConnector.getConnection());
-            boolean f=dao.checkPassword(id, password);
-            if(f){
-                boolean f2=dao.updateUserProfile(user);
-                if(f2){
+            boolean f2 = dao.updateUserProfile(user);
+            if(f2){
                 request.setAttribute("succMsg", "User Profile Update Successfully");
                 request.getRequestDispatcher("profile.jsp").forward(request, response);
                 }else{
                 request.setAttribute("failedMsg", "Somthing wrong on server");
                 request.getRequestDispatcher("profile.jsp").forward(request, response);
-                }
-                
             }
             /*else{
                 request.setAttribute("failedMsg", "Your Password is Incorect");

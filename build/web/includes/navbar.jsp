@@ -45,20 +45,27 @@
 
                 </div>
                 <a href="contact.jsp" class="nav-item nav-link">Contact</a>
-                <a class="nav-link me-4" href="#">Profile</a>
+                <a class="nav-link me-4" href="profile.jsp">Profile</a>
                 <a class="nav-link me-4" href="LogoutServlet">Log out</a>
                 <a class="nav-link me-4" href="#">HELLO ${sessionScope.auth.name}</a>
             </c:if>
 
             <c:if test="${sessionScope.auth.role == 'Admin'}">
-                <a href="index.jsp" class="nav-item nav-link">Manage Employees</a>
-                <a href="about.jsp" class="nav-item nav-link">Manage Tours</a>
-                <a href="service.jsp" class="nav-item nav-link">Manage Locations</a>
-                <a href="package.jsp" class="nav-item nav-link">Manage Hotels</a>
-                <a href="index.jsp" class="nav-item nav-link">Manage Restaurants</a>
-                <a href="about.jsp" class="nav-item nav-link">Manage Transportation</a>
-                <a href="service.jsp" class="nav-item nav-link">Manage Users</a>
-                <a href="package.jsp" class="nav-item nav-link">Manage Reviews</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Manage</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="destination.jsp" class="dropdown-item">Employees</a>
+                        <a href="booking.jsp" class="dropdown-item">Tours</a>
+                        <a href="team.jsp" class="dropdown-item">Locations</a>
+                        <a href="testimonial.jsp" class="dropdown-item">Hotels</a>
+                        <a href="404.jsp" class="dropdown-item">Restaurants</a>
+                        <a href="team.jsp" class="dropdown-item">Transportation</a>
+                        <a href="testimonial.jsp" class="dropdown-item">Users</a>
+                        <a href="404.jsp" class="dropdown-item">Reviews</a>
+                    </div>
+
+                </div>
+
                 <a class="nav-link me-4" href="LogoutServlet">Log out</a>
                 <a class="nav-link me-4" href="#">HELLO ${sessionScope.auth.name}</a>
             </c:if>
