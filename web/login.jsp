@@ -18,7 +18,6 @@
 </head>
 
 <body>
-    <%@include file="includes/navbar.jsp" %>
     <div class="main">
 
         <!-- Sign up form -->
@@ -65,6 +64,8 @@
                     <div class="signup-image">
                         <figure><img src="images/signup-image.jpg" alt="sign up image"></figure>
                         <a href="#" class="signup-image-link" id="show-signin">I am already a member</a>
+                        <br>
+                        <a href="index.jsp" class="signup-image-link">Back to Home Page</a>
                     </div>
                 </div>
             </div>
@@ -77,8 +78,9 @@
                     <div class="signin-image">
                         <figure><img src="images/signin-image.jpg" alt="sign up image"></figure>
                         <a href="#" class="signup-image-link" id="show-signup">Create an account</a>
-                    </div>
-
+                        <br>
+                        <a href="index.jsp" class="signup-image-link">Back to Home Page</a>
+                    </div>                 
                     <div class="signin-form">
                         <h2 class="form-title">Login</h2>
                         <p style="color: red" class="text-danger">${mess}</p>
@@ -105,7 +107,7 @@
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                            </ul>
+                            </ul>                           
                         </div>
                     </div>
                 </div>

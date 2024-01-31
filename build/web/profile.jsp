@@ -29,7 +29,7 @@
     
     <div class="container light-style flex-grow-1 container-p-y">
         <h4 class="font-weight-bold py-3 mb-4" style="font-style: italic; font-family: Serif">
-           User Profile
+        
         </h4>
         <div class="card overflow-hidden">
             <div class="row no-gutters row-bordered row-border-light">
@@ -271,6 +271,7 @@
             <input type="submit" class="btn btn-primary px-4" value="Save Changes">&nbsp;
             <button type="button" class="btn btn-default">Cancel</button>
         </div>
+                                <a href="index.jsp" style="color: black;">Back to Home Page</a>
     </div>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
