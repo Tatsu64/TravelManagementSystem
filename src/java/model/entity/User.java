@@ -26,6 +26,7 @@ public class User {
         this.phone = phone;
         this.role = role;
     }
+    
 
     public User(int userId, String name, String email, String address, String phone) {
         this.userId = userId;

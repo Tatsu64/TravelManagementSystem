@@ -2,6 +2,20 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/web/profile.jsp</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/web/login.jsp</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/controller/account/UpdateProfileServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/controller/account/VerifyOTPServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/web/verifySignUp.jsp</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/model/dao/UserDAO.java</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/controller/account/SignUpServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/model/dao/SendEmail.java</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/model/entity/User.java</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/controller/account/UserServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/web/verify.jsp</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/controller/account/SendEmailServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-DEMO/TravelManagementSystem/src/java/controller/account/ResetPasswordServlet.java</file>
+        </group>
     </open-files>
 </project-private>
