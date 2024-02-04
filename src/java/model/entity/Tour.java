@@ -10,18 +10,23 @@ package model.entity;
  */
 import java.util.Date;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class Tour {
     private int tourId;
     private String tourName;
     private String description;
     private Date startDate;
     private Date endDate;
-    private double tourPrice;
+    private BigDecimal tourPrice;
     private String imageUrl;
-    private Employee employee;
+    private Employee employee;  // Foreign Key to Employee
     private String startLocation;
+    private int maxCapacity;
+    private int currentCapacity;
 
-    public Tour(int tourId, String tourName, String description, Date startDate, Date endDate, double tourPrice, String imageUrl, Employee employee, String startLocation) {
+    public Tour(int tourId, String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity, int currentCapacity) {
         this.tourId = tourId;
         this.tourName = tourName;
         this.description = description;
@@ -31,9 +36,11 @@ public class Tour {
         this.imageUrl = imageUrl;
         this.employee = employee;
         this.startLocation = startLocation;
+        this.maxCapacity = maxCapacity;
+        this.currentCapacity = currentCapacity;
     }
 
-    public Tour(String tourName, String description, Date startDate, Date endDate, double tourPrice, String imageUrl, Employee employee, String startLocation) {
+    public Tour(String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity, int currentCapacity) {
         this.tourName = tourName;
         this.description = description;
         this.startDate = startDate;
@@ -42,10 +49,15 @@ public class Tour {
         this.imageUrl = imageUrl;
         this.employee = employee;
         this.startLocation = startLocation;
+        this.maxCapacity = maxCapacity;
+        this.currentCapacity = currentCapacity;
+    }
+
+    public Tour() {
     }
 
     
-    // getters and setters
+    // Getters and Setters
 
     public int getTourId() {
         return tourId;
@@ -87,11 +99,11 @@ public class Tour {
         this.endDate = endDate;
     }
 
-    public double getTourPrice() {
+    public BigDecimal getTourPrice() {
         return tourPrice;
     }
 
-    public void setTourPrice(double tourPrice) {
+    public void setTourPrice(BigDecimal tourPrice) {
         this.tourPrice = tourPrice;
     }
 
@@ -118,6 +130,21 @@ public class Tour {
     public void setStartLocation(String startLocation) {
         this.startLocation = startLocation;
     }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
+    public int getCurrentCapacity() {
+        return currentCapacity;
+    }
+
+    public void setCurrentCapacity(int currentCapacity) {
+        this.currentCapacity = currentCapacity;
+    }
     
 }
-

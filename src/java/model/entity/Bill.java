@@ -10,31 +10,31 @@ package model.entity;
  */
 import java.util.Date;
 
-public class Invoice {
-    private int invoiceId;
-    private Booking booking;
+public class Bill {
+    private int billId;
+    private Booking booking;  // Foreign Key to Booking
     private Date paymentDate;
     private String paymentMethod;
 
-    public Invoice(int invoiceId, Booking booking, Date paymentDate, String paymentMethod) {
-        this.invoiceId = invoiceId;
+    public Bill(int billId, Booking booking, Date paymentDate, String paymentMethod) {
+        this.billId = billId;
         this.booking = booking;
         this.paymentDate = paymentDate;
         this.paymentMethod = paymentMethod;
     }
 
-    public Invoice() {
+    public Bill() {
     }
 
     
-    // getters and setters
+    // Getters and Setters
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public int getBillId() {
+        return billId;
     }
 
-    public void setInvoiceId(int invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setBillId(int billId) {
+        this.billId = billId;
     }
 
     public Booking getBooking() {

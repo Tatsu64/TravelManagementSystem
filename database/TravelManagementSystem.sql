@@ -8,7 +8,7 @@ GO
 
 -- Tạo bảng Employees
 CREATE TABLE Employees (
-    employee_id INT PRIMARY KEY,
+    employee_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     full_name NVARCHAR(255),
     email NVARCHAR(255),
     position NVARCHAR(50)
@@ -29,7 +29,7 @@ GO
 
 -- Tạo bảng Tours
 CREATE TABLE Tours (
-    tour_id INT PRIMARY KEY,
+    tour_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     tour_name NVARCHAR(255),
     description NVARCHAR(MAX),
     start_date DATE,
@@ -45,7 +45,7 @@ GO
 
 -- Tạo bảng Locations
 CREATE TABLE Locations (
-    location_id INT PRIMARY KEY,
+    location_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     location_name NVARCHAR(255),
     tour_id INT FOREIGN KEY REFERENCES Tours(tour_id)
 );
@@ -53,7 +53,7 @@ GO
 
 -- Tạo bảng Hotels
 CREATE TABLE Hotels (
-    hotel_id INT PRIMARY KEY,
+    hotel_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     hotel_name NVARCHAR(255),
     location_id INT FOREIGN KEY REFERENCES Locations(location_id),
     price DECIMAL(18, 2),
@@ -64,7 +64,7 @@ GO
 
 -- Tạo bảng Transportations
 CREATE TABLE Transportations (
-    transportation_id INT PRIMARY KEY,
+    transportation_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     transportation_name NVARCHAR(255),
     departure_date DATE,
     return_date DATE,
@@ -75,7 +75,8 @@ GO
 
 -- Tạo bảng Restaurants
 CREATE TABLE Restaurants (
-    restaurant_id INT PRIMARY KEY,
+    restaurant_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	restaurant_name NVARCHAR(255),
     location_id INT FOREIGN KEY REFERENCES Locations(location_id),
     reservation_date DATE,
     price DECIMAL(18, 2),
@@ -86,7 +87,7 @@ GO
 
 -- Tạo bảng Bookings
 CREATE TABLE Bookings (
-    booking_id INT PRIMARY KEY,
+    booking_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     tour_id INT FOREIGN KEY REFERENCES Tours(tour_id),
     user_id INT FOREIGN KEY REFERENCES Users(user_id),
     booking_date DATE,
@@ -97,7 +98,7 @@ GO
 
 -- Tạo bảng Bills (Loại bỏ cột booking_id và thêm cột mới)
 CREATE TABLE Bills (
-    bill_id INT PRIMARY KEY,
+    bill_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     booking_id INT UNIQUE FOREIGN KEY REFERENCES Bookings(booking_id),
     payment_date DATE,
     payment_method NVARCHAR(50)
@@ -106,7 +107,7 @@ GO
 
 -- Tạo bảng Reviews
 CREATE TABLE Reviews (
-    review_id INT PRIMARY KEY,
+    review_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     booking_id INT FOREIGN KEY REFERENCES Bookings(booking_id),
     content NVARCHAR(MAX),
     rating INT
@@ -115,7 +116,7 @@ GO
 
 -- Tạo bảng ActivitySchedules
 CREATE TABLE ActivitySchedules (
-    schedule_id INT PRIMARY KEY,
+    schedule_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     tour_id INT FOREIGN KEY REFERENCES Tours(tour_id),
     day_number INT,
     activity_name NVARCHAR(255),

@@ -10,17 +10,29 @@ package model.entity;
  */
 import java.util.Date;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class Restaurant {
     private int restaurantId;
     private String restaurantName;
-    private Location location;
+    private Location location;  // Foreign Key to Location 
     private Date reservationDate;
-    private double price;
+    private BigDecimal price;
     private String imageUrl;
     private String address;
 
-    public Restaurant(int restaurantId, String restaurantName, Location location, Date reservationDate, double price, String imageUrl, String address) {
+    public Restaurant(int restaurantId, String restaurantName, Location location, Date reservationDate, BigDecimal price, String imageUrl, String address) {
         this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.location = location;
+        this.reservationDate = reservationDate;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.address = address;
+    }
+
+    public Restaurant(String restaurantName, Location location, Date reservationDate, BigDecimal price, String imageUrl, String address) {
         this.restaurantName = restaurantName;
         this.location = location;
         this.reservationDate = reservationDate;
@@ -33,7 +45,7 @@ public class Restaurant {
     }
 
     
-    // getters and setters
+    // Getters and Setters
 
     public int getRestaurantId() {
         return restaurantId;
@@ -67,11 +79,11 @@ public class Restaurant {
         this.reservationDate = reservationDate;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -92,4 +104,5 @@ public class Restaurant {
     }
     
 }
+
 
