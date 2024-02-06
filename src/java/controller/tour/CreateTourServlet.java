@@ -21,6 +21,7 @@ import model.dao.TourDAO;
 import model.database.DatabaseConnector;
 import model.entity.Employee;
 import model.entity.Tour;
+import model.entity.TourTransportation;
 
 /**
  *
@@ -66,70 +67,83 @@ public class CreateTourServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          // Retrieve data from the form
-        String tourName = request.getParameter("tourName");
-        String description = request.getParameter("description");
-        String startDateStr = request.getParameter("startDate");
-        String endDateStr = request.getParameter("endDate");
-        String tourPriceStr = request.getParameter("tourPrice");
-        String imageUrl = request.getParameter("imageUrl");
-        String employeeIdStr = request.getParameter("employeeId");
-        String startLocation = request.getParameter("startLocation");
-        String maxCapacityStr = request.getParameter("maxCapacity");
-        String currentCapacityStr = request.getParameter("currentCapacity");
-
-        // Convert string values to appropriate types
-        Date startDate = parseDate(startDateStr);
-        Date endDate = parseDate(endDateStr);
-        BigDecimal tourPrice = new BigDecimal(tourPriceStr);
-        int employeeId = Integer.parseInt(employeeIdStr);
-        int maxCapacity = Integer.parseInt(maxCapacityStr);
-        int currentCapacity = Integer.parseInt(currentCapacityStr);
-
-        // Create a Tour object
-        Tour newTour = new Tour();
-        newTour.setTourName(tourName);
-        newTour.setDescription(description);
-        newTour.setStartDate(startDate);
-        newTour.setEndDate(endDate);
-        newTour.setTourPrice(tourPrice);
-        newTour.setImageUrl(imageUrl);
-
-        // In a real application, you would retrieve the employee from the database based on employeeId
-        Employee employee = new Employee();
-        employee.setEmployeeId(employeeId);
-        newTour.setEmployee(employee);
-
-        newTour.setStartLocation(startLocation);
-        newTour.setMaxCapacity(maxCapacity);
-        newTour.setCurrentCapacity(currentCapacity);
-
-        // Save the Tour to the database
-        saveTourToDatabase(newTour);
-
-        // Redirect to a success page or display a success message
-        response.sendRedirect("index.jsp");
-    }
-    // Helper method to parse a string into a Date
-    private Date parseDate(String dateStr) {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            return sdf.parse(dateStr);
-        } catch (ParseException e) {
-            e.printStackTrace(); // Handle or log the exception appropriately
-            return null;
+            // Retrieve data from the form
+            String tourName = request.getParameter("tourName");
+            String description = request.getParameter("description");
+            String startDateStr = request.getParameter("startDate");
+            String endDateStr = request.getParameter("endDate");
+            String tourPriceStr = request.getParameter("tourPrice");
+            String imageUrl = request.getParameter("imageUrl");
+            String employeeIdStr = request.getParameter("employeeId");
+            String startLocation = request.getParameter("startLocation");
+            String maxCapacityStr = request.getParameter("maxCapacity");
+            String currentCapacityStr = request.getParameter("currentCapacity");
+            String[] selectedTransportations = request.getParameterValues("selectedTransportations[]");
+
+            // Validate and convert string values to appropriate types
+            Date startDate = parseDate(startDateStr);
+            Date endDate = parseDate(endDateStr);
+            BigDecimal tourPrice = new BigDecimal(tourPriceStr);
+
+            int employeeId;
+            int maxCapacity;
+            int currentCapacity;
+
+            try {
+                employeeId = Integer.parseInt(employeeIdStr);
+                maxCapacity = Integer.parseInt(maxCapacityStr);
+                currentCapacity = Integer.parseInt(currentCapacityStr);
+            } catch (NumberFormatException e) {
+                // Handle invalid number format (e.g., non-numeric input)
+                e.printStackTrace(); // Log the exception or handle it appropriately
+                response.sendRedirect("error.jsp"); // Redirect to an error page
+                return;
+            }
+
+            // Create a Tour object
+            Tour newTour = new Tour();
+            newTour.setTourName(tourName);
+            newTour.setDescription(description);
+            newTour.setStartDate(startDate);
+            newTour.setEndDate(endDate);
+            newTour.setTourPrice(tourPrice);
+            newTour.setImageUrl(imageUrl);
+
+            // In a real application, you would retrieve the employee from the database based on employeeId
+            Employee employee = new Employee();
+            employee.setEmployeeId(employeeId);
+            newTour.setEmployee(employee);
+
+            newTour.setStartLocation(startLocation);
+            newTour.setMaxCapacity(maxCapacity);
+            newTour.setCurrentCapacity(currentCapacity);
+
+            // Assuming you have the tourId available from the form submission
+            int generatedTourId = TourDAO.insertTourAndGetId(DatabaseConnector.getConnection(),newTour);
+            TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
+            // Insert into TourTransportations
+            for (String transportationId : selectedTransportations) {
+               TourTransportation tourTransportation = new TourTransportation(generatedTourId, Integer.parseInt(transportationId));
+               tourDAO.addTourTransportation(tourTransportation);
+            }
+
+            // Redirect to a success page or display a success message
+            response.sendRedirect("index.jsp");
+        } catch (ParseException ex) {
+            ex.printStackTrace(); // Handle or log the exception appropriately
+            response.sendRedirect("error.jsp"); // Redirect to an error page
         }
     }
 
-    // Helper method to save the Tour to the database
-    private void saveTourToDatabase(Tour tour) {
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            TourDAO tourDAO = new TourDAO(connection);
-            tourDAO.addTour(tour);
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle or log the exception appropriately
-        }
+// Helper method to parse a string into a Date
+    private Date parseDate(String dateStr) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false); // Disallow lenient parsing
+        return sdf.parse(dateStr);
     }
+
+
 
     /**
      * Handles the HTTP <code>POST</code> method.

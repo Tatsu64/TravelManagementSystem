@@ -9,34 +9,30 @@ package model.entity;
  * @author ADMIN
  */
 public class TourTransportation {
-    private Tour tour;  // Composite Foreign Key to Tour
-    private Transportation transportation;  // Composite Foreign Key to Transportation
+    private int tourId;
+    private int transportationId;
 
-    public TourTransportation(Tour tour, Transportation transportation) {
-        this.tour = tour;
-        this.transportation = transportation;
+    // Constructor
+    public TourTransportation(int tourId, int transportationId) {
+        this.tourId = tourId;
+        this.transportationId = transportationId;
     }
 
-    public TourTransportation() {
+    // Getters and setters
+    public int getTourId() {
+        return tourId;
     }
 
-    
-    // Getters and Setters
-
-    public Tour getTour() {
-        return tour;
+    public void setTourId(int tourId) {
+        this.tourId = tourId;
     }
 
-    public void setTour(Tour tour) {
-        this.tour = tour;
+    public int getTransportationId() {
+        return transportationId;
     }
 
-    public Transportation getTransportation() {
-        return transportation;
+    public void setTransportationId(int transportationId) {
+        this.transportationId = transportationId;
     }
-
-    public void setTransportation(Transportation transportation) {
-        this.transportation = transportation;
-    }
-    
 }
+

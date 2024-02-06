@@ -24,7 +24,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.EmployeeDAO;
+import model.dao.TransportationDAO;
 import model.database.DatabaseConnector;
+import model.entity.Transportation;
 
 /**
  *
@@ -81,7 +83,11 @@ public class EmployeeListServlet extends HttpServlet {
 
         // Set the employeeList as a request attribute
         request.setAttribute("employeeList", employeeList);
+        TransportationDAO transportationDAO = new TransportationDAO(connection);
+         List<Transportation> transportationList = transportationDAO.getTransportationList();
 
+        // Truyền danh sách này đến CreateTour.jsp để hiển thị
+        request.setAttribute("transportationList", transportationList);
         // Forward to the JSP
         request.getRequestDispatcher("/CreateTour.jsp").forward(request, response);
     } catch (SQLException ex) {

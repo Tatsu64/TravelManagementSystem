@@ -32,6 +32,10 @@
         <servlet-name>EmployeeListServlet</servlet-name>
         <servlet-class>controller.tour.EmployeeListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateTransportationServlet</servlet-name>
+        <servlet-class>controller.tour.CreateTransportationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>EmployeeListServlet</servlet-name>
         <url-pattern>/EmployeeListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTransportationServlet</servlet-name>
+        <url-pattern>/CreateTransportationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

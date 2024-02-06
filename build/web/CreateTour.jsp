@@ -55,7 +55,7 @@
                     </c:forEach>
                 </select>
             </div>
-
+            
             <div class="form-group">
                 <label for="startLocation">Start Location:</label>
                 <input type="text" id="startLocation" name="startLocation" class="form-control" required>
@@ -71,9 +71,22 @@
                 <input type="text" id="currentCapacity" name="currentCapacity" class="form-control" required>
             </div>
 
+            <div class="form-group">
+                <label for="selectedTransportations">Select Transportations:</label>
+                <c:forEach items="${transportationList}" var="transportation">
+                    <div class="form-check">
+                        <input type="checkbox" id="transportation${transportation.transportationId}" name="selectedTransportations[]" value="${transportation.transportationId}" class="form-check-input">
+                        <label for="transportation${transportation.transportationId}" class="form-check-label">${transportation.transportationName}</label>
+                    </div>
+                </c:forEach>
+            </div>
+
+
+            <br>
+            <a href="CreateTransportation.jsp" class="btn btn-secondary">Add Transportation</a>
+            <br>
             <br>
             <button type="submit" class="btn btn-dark">Create Tour</button>
-              <!-- Back to HomePage button -->
             <a href="index.jsp" class="btn btn-secondary">Back to HomePage</a>
         </div>
     </form>
