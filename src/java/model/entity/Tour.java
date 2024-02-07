@@ -21,12 +21,15 @@ public class Tour {
     private Date endDate;
     private BigDecimal tourPrice;
     private String imageUrl;
-    private Employee employee;  // Foreign Key to Employee
+    private Employee employee;  // Đây là khóa ngoại tới Employee
     private String startLocation;
     private int maxCapacity;
     private int currentCapacity;
+    private int approvalStatus; // Thêm trường này để lưu trạng thái xét duyệt
 
-    public Tour(int tourId, String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity, int currentCapacity) {
+    // Constructors, getters, and setters
+
+    public Tour(int tourId, String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity, int currentCapacity, int approvalStatus) {
         this.tourId = tourId;
         this.tourName = tourName;
         this.description = description;
@@ -38,9 +41,10 @@ public class Tour {
         this.startLocation = startLocation;
         this.maxCapacity = maxCapacity;
         this.currentCapacity = currentCapacity;
+        this.approvalStatus = approvalStatus;
     }
 
-    public Tour(String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity, int currentCapacity) {
+    public Tour(String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity, int currentCapacity, int approvalStatus) {
         this.tourName = tourName;
         this.description = description;
         this.startDate = startDate;
@@ -51,13 +55,12 @@ public class Tour {
         this.startLocation = startLocation;
         this.maxCapacity = maxCapacity;
         this.currentCapacity = currentCapacity;
+        this.approvalStatus = approvalStatus;
     }
 
     public Tour() {
     }
-
     
-    // Getters and Setters
 
     public int getTourId() {
         return tourId;
@@ -145,6 +148,14 @@ public class Tour {
 
     public void setCurrentCapacity(int currentCapacity) {
         this.currentCapacity = currentCapacity;
+    }
+
+    public int getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(int approvalStatus) {
+        this.approvalStatus = approvalStatus;
     }
     
 }

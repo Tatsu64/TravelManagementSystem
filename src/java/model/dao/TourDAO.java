@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.database.DatabaseConnector;
+import model.entity.Employee;
 import model.entity.Tour;
 import model.entity.TourTransportation;
 
@@ -29,8 +30,8 @@ public class TourDAO {
     // Create
     public void addTour(Tour tour) {
         try {
-            String query = "INSERT INTO Tours (tour_name, description, start_date, end_date, tour_price, image_url, employee_id, start_location, max_capacity, current_capacity) " +
-                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Tours (tour_name, description, start_date, end_date, tour_price, image_url, employee_id, start_location, max_capacity, current_capacity, approval_status) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, tour.getTourName());
@@ -43,6 +44,7 @@ public class TourDAO {
                 statement.setString(8, tour.getStartLocation());
                 statement.setInt(9, tour.getMaxCapacity());
                 statement.setInt(10, tour.getCurrentCapacity());
+                statement.setInt(11, tour.getApprovalStatus()); // Set the approval status
 
                 statement.executeUpdate();
             }
@@ -50,14 +52,15 @@ public class TourDAO {
             e.printStackTrace(); // Handle or log the exception appropriately
         }
     }
+
     public static int insertTourAndGetId(Connection connection, Tour tour) {
         int generatedTourId = -1;
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(
-                    "INSERT INTO Tours (tour_name, description, start_date, end_date, tour_price, image_url, employee_id, start_location, max_capacity, current_capacity) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO Tours (tour_name, description, start_date, end_date, tour_price, image_url, employee_id, start_location, max_capacity, current_capacity, approval_status) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
 
             // Set parameters
@@ -71,6 +74,7 @@ public class TourDAO {
             preparedStatement.setString(8, tour.getStartLocation());
             preparedStatement.setInt(9, tour.getMaxCapacity());
             preparedStatement.setInt(10, tour.getCurrentCapacity());
+            preparedStatement.setInt(11, tour.getApprovalStatus()); // Set the approval status
 
             // Execute the insertion
             int affectedRows = preparedStatement.executeUpdate();
@@ -88,7 +92,7 @@ public class TourDAO {
         } catch (SQLException e) {
             e.printStackTrace(); // Log the exception or handle it appropriately
         } finally {
-            // Đóng chỉ preparedStatement trong phần finally
+            // Close the PreparedStatement in the finally block
             try {
                 if (preparedStatement != null) {
                     preparedStatement.close();
@@ -100,6 +104,7 @@ public class TourDAO {
 
         return generatedTourId;
     }
+
 
 
     // Phương thức để thêm tour_id và transportation_id vào bảng TourTransportations
@@ -175,9 +180,11 @@ public class TourDAO {
     // Update
     public void updateTour(Tour tour) {
         try {
-            String query = "UPDATE Tours SET tour_name = ?, description = ?, start_date = ?, end_date = ?, " +
-                           "tour_price = ?, image_url = ?, employee_id = ?, start_location = ?, max_capacity = ?, current_capacity = ? " +
-                           "WHERE tour_id = ?";
+            String query = "UPDATE Tours SET tour_name = ?, description = ?, start_date = ?, end_date = ?, "
+                    + "tour_price = ?, image_url = ?, employee_id = ?, start_location = ?, max_capacity = ?, current_capacity = ?, "
+                    + "approval_status = ? "
+                    + // Include approval_status in the update query
+                    "WHERE tour_id = ?";
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, tour.getTourName());
@@ -190,7 +197,8 @@ public class TourDAO {
                 statement.setString(8, tour.getStartLocation());
                 statement.setInt(9, tour.getMaxCapacity());
                 statement.setInt(10, tour.getCurrentCapacity());
-                statement.setInt(11, tour.getTourId());
+                statement.setInt(11, tour.getApprovalStatus()); // Set the approval status
+                statement.setInt(12, tour.getTourId());
 
                 statement.executeUpdate();
             }
@@ -198,6 +206,7 @@ public class TourDAO {
             e.printStackTrace(); // Handle or log the exception appropriately
         }
     }
+
 
     // Delete
     public void deleteTour(int tourId) {
@@ -214,23 +223,30 @@ public class TourDAO {
     }
 
     // Helper method to extract a Tour from a ResultSet
-    private Tour extractTourFromResultSet(ResultSet resultSet) throws SQLException {
-        Tour tour = new Tour();
-        tour.setTourId(resultSet.getInt("tour_id"));
-        tour.setTourName(resultSet.getString("tour_name"));
-        tour.setDescription(resultSet.getString("description"));
-        tour.setStartDate(resultSet.getDate("start_date"));
-        tour.setEndDate(resultSet.getDate("end_date"));
-        tour.setTourPrice(resultSet.getBigDecimal("tour_price"));
-        tour.setImageUrl(resultSet.getString("image_url"));
+  private Tour extractTourFromResultSet(ResultSet resultSet) throws SQLException {
+    Tour tour = new Tour();
+    tour.setTourId(resultSet.getInt("tour_id"));
+    tour.setTourName(resultSet.getString("tour_name"));
+    tour.setDescription(resultSet.getString("description"));
+    tour.setStartDate(resultSet.getDate("start_date"));
+    tour.setEndDate(resultSet.getDate("end_date"));
+    tour.setTourPrice(resultSet.getBigDecimal("tour_price"));
+    tour.setImageUrl(resultSet.getString("image_url"));
 
-        // You may need to fetch and set the Employee object here by querying the Employees table
+    // Fetch and set the Employee object
+    int employeeId = resultSet.getInt("employee_id");
+    EmployeeDAO employeeDAO = new EmployeeDAO(connection); // Create an instance of EmployeeDAO
+    Employee employee = employeeDAO.getEmployeeById(employeeId); // Fetch the employee from the database
+    tour.setEmployee(employee); // Set the employee in the tour object
 
-        tour.setStartLocation(resultSet.getString("start_location"));
-        tour.setMaxCapacity(resultSet.getInt("max_capacity"));
-        tour.setCurrentCapacity(resultSet.getInt("current_capacity"));
+    tour.setStartLocation(resultSet.getString("start_location"));
+    tour.setMaxCapacity(resultSet.getInt("max_capacity"));
+    tour.setCurrentCapacity(resultSet.getInt("current_capacity"));
+    
+    tour.setApprovalStatus(resultSet.getInt("approval_status")); // Set the approval status
 
-        return tour;
-    }
+    return tour;
+}
+
 }
 

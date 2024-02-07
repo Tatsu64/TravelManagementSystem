@@ -45,5 +45,28 @@ public class EmployeeDAO {
 
         return employeeList;
     }
+    // Phương thức để lấy thông tin nhân viên bằng employee_id
+
+    public Employee getEmployeeById(int employeeId) {
+        Employee employee = null;
+        try {
+            String query = "SELECT * FROM Employees WHERE employee_id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, employeeId);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        employee = new Employee();
+                        employee.setEmployeeId(resultSet.getInt("employee_id"));
+                        employee.setFullName(resultSet.getString("full_name"));
+                        employee.setEmail(resultSet.getString("email"));
+                        employee.setPosition(resultSet.getString("position"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý hoặc ghi log cho ngoại lệ phù hợp
+        }
+        return employee;
+    }
 }
 

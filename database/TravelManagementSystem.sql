@@ -159,3 +159,6 @@ CREATE TABLE TourTransportations (
     FOREIGN KEY (transportation_id) REFERENCES Transportations(transportation_id)
 );
 GO
+
+ALTER TABLE Tours
+ADD approval_status INT DEFAULT 0;
