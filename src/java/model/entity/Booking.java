@@ -8,26 +8,22 @@ package model.entity;
  *
  * @author ADMIN
  */
+import java.math.BigDecimal;
 import java.util.Date;
+
 
 public class Booking {
     private int bookingId;
-    private Tour tour;
-    private User user;
-    private Hotel hotel;
-    private Transportation transportation;
-    private Restaurant restaurant;
+    private Tour tour;  // Foreign Key to Tour
+    private User user;  // Foreign Key to User
     private Date bookingDate;
     private int numberOfPeople;
-    private double totalPrice;
+    private BigDecimal totalPrice;
 
-    public Booking(int bookingId, Tour tour, User user, Hotel hotel, Transportation transportation, Restaurant restaurant, Date bookingDate, int numberOfPeople, double totalPrice) {
+    public Booking(int bookingId, Tour tour, User user, Date bookingDate, int numberOfPeople, BigDecimal totalPrice) {
         this.bookingId = bookingId;
         this.tour = tour;
         this.user = user;
-        this.hotel = hotel;
-        this.transportation = transportation;
-        this.restaurant = restaurant;
         this.bookingDate = bookingDate;
         this.numberOfPeople = numberOfPeople;
         this.totalPrice = totalPrice;
@@ -35,9 +31,9 @@ public class Booking {
 
     public Booking() {
     }
-
     
-    // getters and setters
+
+    // Getters and Setters
 
     public int getBookingId() {
         return bookingId;
@@ -63,30 +59,6 @@ public class Booking {
         this.user = user;
     }
 
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-
-    public Transportation getTransportation() {
-        return transportation;
-    }
-
-    public void setTransportation(Transportation transportation) {
-        this.transportation = transportation;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
     public Date getBookingDate() {
         return bookingDate;
     }
@@ -103,13 +75,14 @@ public class Booking {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
     
 }
+
 

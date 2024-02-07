@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.database.DatabaseConnector;
 import model.entity.User;
 
@@ -21,7 +23,7 @@ public class UserDAO {
     private Connection connection;
 
     public UserDAO(Connection connection) {
-        this.connection = connection;
+        this.connection = DatabaseConnector.getConnection();
     }
 
    public User checkLogIn(String email, String password) {
@@ -171,6 +173,72 @@ public class UserDAO {
             e.printStackTrace(); // Handle SQL exception appropriately
         }
         return false; // Returns false if there is an SQL error or neither email nor name is found
+    }
+    
+
+    
+    public User getUserByEmail(String email) {
+    String query = "SELECT * FROM Users WHERE email = ?";
+    
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, email);
+
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return mapResultSetToUser(resultSet);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Handle exceptions appropriately
+    }
+    return null;
+}
+        private User mapResultSetToUser(ResultSet rs) throws SQLException {
+    return new User(
+            rs.getInt("user_id"),
+            rs.getString("name"),
+            rs.getString("password"),
+            rs.getString("email"),
+            rs.getString("address"),
+            rs.getString("phone"),
+            rs.getString("role")
+    );
+}
+        
+  public boolean newUser(String name, String phone, String email, String password, String address, String role) throws Exception {
+    String sql = "INSERT INTO Users (name, phone, email, password, address, role) VALUES (?, ?, ?, ?, ?, ?)";
+    try {
+        Connection con = DatabaseConnector.getConnection();
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setString(1, name);
+        statement.setString(2, phone);
+        statement.setString(3, email);
+        statement.setString(4, password);  
+        statement.setString(5, address);   
+        statement.setString(6, role);     
+
+        return statement.executeUpdate() > 0;
+    } catch (SQLException ex) {
+        System.out.println(ex);
+    }
+    return false;
+}
+        
+             public void updatePassword(String newpassword, int id) {
+        String query = "UPDATE Users SET password = ? WHERE user_id = ?";
+        Connection conn;
+        PreparedStatement statement;
+        try {
+            Connection connection = DatabaseConnector.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, newpassword);
+            statement.setInt(2, id);
+            statement.execute();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
 

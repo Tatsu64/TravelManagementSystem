@@ -12,7 +12,7 @@
         <servlet-name>SignUpServlet</servlet-name>
         <servlet-class>controller.account.SignUpServlet</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>controller.account.LogoutServlet</servlet-class>
     </servlet>
@@ -20,11 +20,27 @@
         <servlet-name>UpdateProfileServlet</servlet-name>
         <servlet-class>controller.account.UpdateProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerifyOTPServlet</servlet-name>
+        <servlet-class>controller.account.VerifyOTPServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateTourServlet</servlet-name>
+        <servlet-class>controller.tour.CreateTourServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeListServlet</servlet-name>
+        <servlet-class>controller.tour.EmployeeListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateTransportationServlet</servlet-name>
+        <servlet-class>controller.tour.CreateTransportationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
@@ -32,13 +48,29 @@
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/UserServlet</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SignUpServlet</servlet-name>
         <url-pattern>/SignUpServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateProfileServlet</servlet-name>
         <url-pattern>/UpdateProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyOTPServlet</servlet-name>
+        <url-pattern>/VerifyOTPServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTourServlet</servlet-name>
+        <url-pattern>/CreateTourServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeListServlet</servlet-name>
+        <url-pattern>/EmployeeListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTransportationServlet</servlet-name>
+        <url-pattern>/CreateTransportationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

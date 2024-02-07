@@ -10,19 +10,28 @@ package model.entity;
  */
 import java.util.Date;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class Transportation {
     private int transportationId;
     private String transportationName;
-    private Tour tour;
     private Date departureDate;
     private Date returnDate;
-    private double price;
+    private BigDecimal price;
     private String imageUrl;
 
-    public Transportation(int transportationId, String transportationName, Tour tour, Date departureDate, Date returnDate, double price, String imageUrl) {
+    public Transportation(int transportationId, String transportationName, Date departureDate, Date returnDate, BigDecimal price, String imageUrl) {
         this.transportationId = transportationId;
         this.transportationName = transportationName;
-        this.tour = tour;
+        this.departureDate = departureDate;
+        this.returnDate = returnDate;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
+    public Transportation(String transportationName, Date departureDate, Date returnDate, BigDecimal price, String imageUrl) {
+        this.transportationName = transportationName;
         this.departureDate = departureDate;
         this.returnDate = returnDate;
         this.price = price;
@@ -33,7 +42,7 @@ public class Transportation {
     }
 
     
-    // getters and setters
+    // Getters and Setters
 
     public int getTransportationId() {
         return transportationId;
@@ -49,14 +58,6 @@ public class Transportation {
 
     public void setTransportationName(String transportationName) {
         this.transportationName = transportationName;
-    }
-
-    public Tour getTour() {
-        return tour;
-    }
-
-    public void setTour(Tour tour) {
-        this.tour = tour;
     }
 
     public Date getDepartureDate() {
@@ -75,11 +76,11 @@ public class Transportation {
         this.returnDate = returnDate;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

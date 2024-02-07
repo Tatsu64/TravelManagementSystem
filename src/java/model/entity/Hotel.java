@@ -10,23 +10,29 @@ package model.entity;
  */
 import java.util.Date;
 
+import java.math.BigDecimal;
+
 public class Hotel {
     private int hotelId;
     private String hotelName;
-    private Location location;
-    private Date checkInDate;
-    private Date checkOutDate;
-    private double pricePerNight;
+    private Location location;  // Foreign Key to Location
+    private BigDecimal price;
     private String imageUrl;
     private String address;
 
-    public Hotel(int hotelId, String hotelName, Location location, Date checkInDate, Date checkOutDate, double pricePerNight, String imageUrl, String address) {
+    public Hotel(int hotelId, String hotelName, Location location, BigDecimal price, String imageUrl, String address) {
         this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.location = location;
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
-        this.pricePerNight = pricePerNight;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.address = address;
+    }
+
+    public Hotel(String hotelName, Location location, BigDecimal price, String imageUrl, String address) {
+        this.hotelName = hotelName;
+        this.location = location;
+        this.price = price;
         this.imageUrl = imageUrl;
         this.address = address;
     }
@@ -35,7 +41,7 @@ public class Hotel {
     }
 
     
-    // getters and setters
+    // Getters and Setters
 
     public int getHotelId() {
         return hotelId;
@@ -61,28 +67,12 @@ public class Hotel {
         this.location = location;
     }
 
-    public Date getCheckInDate() {
-        return checkInDate;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setCheckInDate(Date checkInDate) {
-        this.checkInDate = checkInDate;
-    }
-
-    public Date getCheckOutDate() {
-        return checkOutDate;
-    }
-
-    public void setCheckOutDate(Date checkOutDate) {
-        this.checkOutDate = checkOutDate;
-    }
-
-    public double getPricePerNight() {
-        return pricePerNight;
-    }
-
-    public void setPricePerNight(double pricePerNight) {
-        this.pricePerNight = pricePerNight;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getImageUrl() {

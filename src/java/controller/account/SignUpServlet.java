@@ -5,12 +5,20 @@
 package controller.account;
 
 import com.sun.jdi.connect.spi.Connection;
+import static controller.account.SendEmailServlet.emailToExpirationTime;
+import static controller.account.SendEmailServlet.emailToOTP;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.dao.SendEmail;
 import model.dao.UserDAO;
 import model.database.DatabaseConnector;
 import model.entity.User;
@@ -73,7 +81,7 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          
+            java.sql.Connection connection = DatabaseConnector.getConnection();
             // Get a database connection
             // Get user input from request parameters
             String name = request.getParameter("name");
@@ -84,29 +92,52 @@ public class SignUpServlet extends HttpServlet {
             String role = request.getParameter("role");
 
             // Create a User object
-            User newUser = new User();
-            newUser.setName(name);
-            newUser.setEmail(email);
-            newUser.setPassword(password);
-            newUser.setPhone(phone);
-            newUser.setAddress(address);
-            newUser.setRole(role);
+            User user = new User();
+            user.setName(name);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setPhone(phone);
+            user.setAddress(address);
+            user.setRole(role);
 
             // Create a UserDAO with the obtained connection
             UserDAO dao = new UserDAO(DatabaseConnector.getConnection());
-
+            
             // Check if the email already exists
+            try {
             if (dao.checkUserExist(email, name)) {
                  request.setAttribute("mess", "User already existed");
                 // Forward back to the signup page with an error message
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
-                // Email does not exist, proceed to add the user
-                dao.addUser(newUser);
-                 request.setAttribute("mess", "Sign Up Succesfully");
-                // Forward back to the signup page with an error message
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
+                    String otp = generateOTP();
+                    saveOTP(email, otp);        
+                    
+                    SendEmail sendEmail = new SendEmail();
+                    sendEmail.send(email, otp);
+                    
+                    HttpSession session = request.getSession();
+                    LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(5);
+                    session.setAttribute("otpExpirationTime", expirationTime);
+
+                    // Lưu mã OTP và thời điểm hết hạn vào Map
+                    emailToOTP.put(email, otp);
+                    emailToExpirationTime.put(email, expirationTime);
+                    
+                    
+                    session.setAttribute("otp", otp);
+                    
+                    session.setAttribute("auth", user);
+                        
+                    response.sendRedirect("verifySignUp.jsp");
+                    
+                    
+                }
+
+           
+        } catch (Exception ex) {
+            Logger.getLogger(SendEmailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -115,6 +146,19 @@ public class SignUpServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
+    
+    
+    private void saveOTP(String email, String otp) {
+
+        emailToOTP.put(email, otp);
+
+    }
+
+    private String generateOTP() {
+        Random random = new Random();
+        return String.format("%04d", random.nextInt(10000));
+    }
+    
     @Override
     public String getServletInfo() {
         return "Short description";

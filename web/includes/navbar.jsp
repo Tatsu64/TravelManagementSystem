@@ -47,6 +47,7 @@
                 <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                 <a class="nav-link me-4" href="profile.jsp">Profile</a>
                 <a class="nav-link me-4" href="LogoutServlet">Log out</a>
+                <a class="nav-link me-4" href="EmployeeListServlet?">Create Tour</a>
                 <a class="nav-link me-4" href="#">HELLO ${sessionScope.auth.name}</a>
             </c:if>
 
