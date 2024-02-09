@@ -16,6 +16,11 @@
 
         <div class="container">
             <h2>Create a New Tour</h2>
+            
+            <div class="form-group">
+                <label for="locationName">Location Name:</label>
+                <input type="text" id="locationName" name="locationName" class="form-control" required>
+            </div>
 
             <div class="form-group">
                 <label for="tourName">Tour Name:</label>
