@@ -36,6 +36,18 @@
         <servlet-name>CreateTransportationServlet</servlet-name>
         <servlet-class>controller.tour.CreateTransportationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangePassword</servlet-name>
+        <servlet-class>controller.account.ChangePassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendEmailServlet</servlet-name>
+        <servlet-class>controller.account.SendEmailServlet</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>controller.account.ResetPasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -71,6 +83,18 @@
     <servlet-mapping>
         <servlet-name>CreateTransportationServlet</servlet-name>
         <url-pattern>/CreateTransportationServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>ChangePassword</servlet-name>
+        <url-pattern>/ChangePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendEmailServlet</servlet-name>
+        <url-pattern>/SendEmailServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

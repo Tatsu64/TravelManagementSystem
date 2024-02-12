@@ -71,13 +71,15 @@
             </div>
         </section>
 
-        <!-- Sing in  Form -->
+        <!-- Sign in  Form -->
         <section class="sign-in">
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
                         <figure><img src="images/signin-image.jpg" alt="sign up image"></figure>
                         <a href="#" class="signup-image-link" id="show-signup">Create an account</a>
+                        <br>
+                        <a href="forgot-password.jsp" class="signup-image-link" id="show-forgot-password">Forgot Password</a>
                         <br>
                         <a href="index.jsp" class="signup-image-link">Back to Home Page</a>
                     </div>                 
@@ -112,11 +114,9 @@
                     </div>
                 </div>
             </div>
-        </section>
-
+        </section>        
     </div>
 
-                        
 <!-- JS -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="js/main.js"></script>
@@ -126,6 +126,7 @@
         function hideBothSections() {
             $(".signup").hide();
             $(".sign-in").hide();
+            $(".forgot-password").hide(); // Ẩn cả phần forgot password
         }
 
         // Initially hide the signup section
@@ -142,6 +143,12 @@
         $("#show-signin").click(function(){
             hideBothSections(); // Hide both sections before showing the sign-in section
             $(".sign-in").show();
+        });
+
+        // Show forgot password section and hide sign-in section when "Forgot Password" is clicked
+        $("#show-forgot-password").click(function(){
+            hideBothSections(); // Ẩn cả hai phần tử trước khi hiển thị phần tử forgot password
+            $(".forgot-password").show();
         });
 
         // Validation function for email
@@ -203,8 +210,7 @@
                 localStorage.removeItem('password');
             }
         });
-
-        // ... (existing code)
+        
     });
 </script>
 </body><!-- This template was made by Colorlib (https://colorlib.com) -->

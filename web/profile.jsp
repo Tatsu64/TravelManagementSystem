@@ -22,7 +22,7 @@
     <br>
     <br>
     <br>
-    <form action="UpdateProfileServlet" method="get">
+    <form action="UpdateProfileServlet" method="get"> 
         <input type="hidden" value="${auth.userId}" name="id">
         <input type="hidden" value="${auth.password}" name="password">
         <input type="hidden" value="${auth.role}" name="role">
@@ -47,9 +47,9 @@
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list"
-                            href="#account-general">General</a>
+                            href="#account-general">User Profile</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-change-password">Change password</a>
+                            href="#account-change-password"></a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-info"></a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
@@ -100,22 +100,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="account-change-password">
-                            <div class="card-body pb-2">
-                                <div class="form-group">
-                                    <label class="form-label">Current password</label>
-                                    <input type="password" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">New password</label>
-                                    <input type="password" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Repeat new password</label>
-                                    <input type="password" class="form-control">
-                                </div>
-                            </div>
-                        </div>                       
+                  
+              
+                        
                     </div>
                 </div>
             </div>
@@ -133,6 +120,6 @@
     <script type="text/javascript">
 
     </script>
-    </form>
+   </form> 
 </body>
 </html>
