@@ -44,9 +44,21 @@
         <servlet-name>SendEmailServlet</servlet-name>
         <servlet-class>controller.account.SendEmailServlet</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>ResetPasswordServlet</servlet-name>
         <servlet-class>controller.account.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ApprovalTourServlet</servlet-name>
+        <servlet-class>controller.tour.ApprovalTourServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewTourDetail</servlet-name>
+        <servlet-class>controller.tour.ViewTourDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewTourDetailServlet</servlet-name>
+        <servlet-class>controller.tour.ViewTourDetailServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
@@ -84,7 +96,7 @@
         <servlet-name>CreateTransportationServlet</servlet-name>
         <url-pattern>/CreateTransportationServlet</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
         <url-pattern>/ChangePassword</url-pattern>
     </servlet-mapping>
@@ -92,9 +104,21 @@
         <servlet-name>SendEmailServlet</servlet-name>
         <url-pattern>/SendEmailServlet</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ResetPasswordServlet</servlet-name>
         <url-pattern>/ResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApprovalTourServlet</servlet-name>
+        <url-pattern>/ApprovalTourServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewTourDetail</servlet-name>
+        <url-pattern>/ViewTourDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewTourDetailServlet</servlet-name>
+        <url-pattern>/ViewTourDetailServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

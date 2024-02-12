@@ -19,6 +19,7 @@ import model.database.DatabaseConnector;
 import model.entity.Employee;
 import model.entity.Tour;
 import model.entity.TourTransportation;
+import model.entity.Transportation;
 
 public class TourDAO {
     private Connection connection;
@@ -134,8 +135,114 @@ public class TourDAO {
 
         return false;
     }
+    
+    public List<Tour> getToursWithApprovalStatus(int approvalStatus) {
+        List<Tour> tours = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
+        try {
+            // Tạo câu lệnh SQL
+            String sql = "SELECT t.*, e.* FROM Tours t JOIN Employees e ON t.employee_id = e.employee_id WHERE t.approval_status = ?";
+            // Chuẩn bị statement
+            stmt = connection.prepareStatement(sql);
+            // Đặt giá trị cho tham số
+            stmt.setInt(1, approvalStatus);
+            // Thực thi truy vấn
+            rs = stmt.executeQuery();
+            // Xử lý kết quả
+            while (rs.next()) {
+                Tour tour = new Tour();
+                Employee employee = new Employee(); // Tạo một đối tượng Employee cho mỗi tour
+                tour.setTourId(rs.getInt("tour_id"));
+                tour.setTourName(rs.getString("tour_name"));
+                tour.setDescription(rs.getString("description"));
+                tour.setStartDate(rs.getDate("start_date"));
+                tour.setEndDate(rs.getDate("end_date"));
+                tour.setTourPrice(rs.getBigDecimal("tour_price"));
+                tour.setImageUrl(rs.getString("image_url"));
+                // Đặt các trường Employee từ ResultSet
+                employee.setEmployeeId(rs.getInt("employee_id"));
+                employee.setFullName(rs.getString("full_name"));
+                employee.setEmail(rs.getString("email"));
+                employee.setPosition(rs.getString("position"));
+                // Đặt đối tượng Employee cho tour
+                tour.setEmployee(employee);
+                tour.setStartLocation(rs.getString("start_location"));
+                tour.setMaxCapacity(rs.getInt("max_capacity"));
+                tour.setCurrentCapacity(rs.getInt("current_capacity"));
+                tour.setApprovalStatus(rs.getInt("approval_status"));
+                tours.add(tour);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng kết nối, statement và result set
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return tours;
+    }
 
+    public void updateApprovalStatus(int tourId, int approvalStatus) {
+        PreparedStatement stmt = null;
+
+        try {
+            // Tạo câu lệnh SQL
+            String sql = "UPDATE Tours SET approval_status = ? WHERE tour_id = ?";
+            // Chuẩn bị statement
+            stmt = connection.prepareStatement(sql);
+            // Đặt giá trị cho tham số
+            stmt.setInt(1, approvalStatus);
+            stmt.setInt(2, tourId);
+            // Thực thi truy vấn
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng statement
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public List<Transportation> getTransportationsForTour(int tourId) {
+        List<Transportation> transportations = new ArrayList<>();
+        String query = "SELECT * FROM Transportations INNER JOIN TourTransportations ON Transportations.transportation_id = TourTransportations.transportation_id WHERE TourTransportations.tour_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, tourId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Transportation transportation = new Transportation();
+                    transportation.setTransportationId(resultSet.getInt("transportation_id"));
+                    transportation.setTransportationName(resultSet.getString("transportation_name"));
+                    transportation.setDepartureDate(resultSet.getDate("departure_date"));
+                    transportation.setReturnDate(resultSet.getDate("return_date"));
+                    transportation.setPrice(resultSet.getBigDecimal("price"));
+                    transportation.setImageUrl(resultSet.getString("image_url"));
+                    // Điều này giả sử các thông tin khác của Transportation có sẵn trong cơ sở dữ liệu
+
+                    transportations.add(transportation);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý ngoại lệ SQL
+        }
+        return transportations;
+    }
     // Read
     public Tour getTourById(int tourId) {
         try {
