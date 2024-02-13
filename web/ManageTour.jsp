@@ -5,7 +5,7 @@
 <html>
 <head>
     <%@include file="includes/header.jsp" %>
-    <title>Tour Detail</title>
+    <title>Manage Tours</title>
      <style>
          h2{
              margin-left: 5%;

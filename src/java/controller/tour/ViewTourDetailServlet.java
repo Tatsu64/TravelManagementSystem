@@ -6,13 +6,18 @@ package controller.tour;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.dao.ActivityScheduleDAO;
 import model.dao.TourDAO;
 import model.database.DatabaseConnector;
+import model.entity.ActivitySchedule;
 import model.entity.Tour;
 import model.entity.Transportation;
 
@@ -59,20 +64,27 @@ public class ViewTourDetailServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int tourId = Integer.parseInt(request.getParameter("tourId"));
-        TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
-        Tour tour = tourDAO.getTourById(tourId); // Lấy thông tin chi tiết của tour từ cơ sở dữ liệu
-         List<Transportation> transportations = tourDAO.getTransportationsForTour(tourId);
-
-        // Kiểm tra xem tour có tồn tại hay không
-        if (tour != null) {
-            // Truyền thông tin tour và danh sách vận chuyển tới trang JSP để hiển thị
-            request.setAttribute("tour", tour);
-            request.setAttribute("transportations", transportations);
-            request.getRequestDispatcher("/ViewTourDetail.jsp").forward(request, response);
-        } else {
-            // Nếu tour không tồn tại, có thể chuyển hướng người dùng đến một trang thông báo lỗi
-            response.sendRedirect(request.getContextPath() + "/error.jsp");
+        try {
+            int tourId = Integer.parseInt(request.getParameter("tourId"));
+            TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
+            Tour tour = tourDAO.getTourById(tourId); // Lấy thông tin chi tiết của tour từ cơ sở dữ liệu
+            List<Transportation> transportations = tourDAO.getTransportationsForTour(tourId);
+            ActivityScheduleDAO activityScheduleDAO = new ActivityScheduleDAO(DatabaseConnector.getConnection());
+            List<ActivitySchedule> activityScheduleList = activityScheduleDAO.getActivityScheduleList(tourId);
+            // Kiểm tra xem tour có tồn tại hay không
+            if (tour != null) {
+                // Truyền thông tin tour và danh sách vận chuyển tới trang JSP để hiển thị
+                // Set the activityScheduleList as a request attribute
+                request.setAttribute("activityScheduleList", activityScheduleList);
+                request.setAttribute("tour", tour);
+                request.setAttribute("transportations", transportations);
+                request.getRequestDispatcher("/ViewTourDetail.jsp").forward(request, response);
+            } else {
+                // Nếu tour không tồn tại, có thể chuyển hướng người dùng đến một trang thông báo lỗi
+                response.sendRedirect(request.getContextPath() + "/error.jsp");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewTourDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

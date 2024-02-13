@@ -36,6 +36,7 @@
     <br>
     <br>
     <br>
+    <div class="container">
         <h2>Tour Detail</h2>
         <table>
             <tr>
@@ -125,10 +126,35 @@
             </tr>
         </c:forEach>
     </table>
+       
+        <h3>Activity Schedules</h3>
+    <table>
+        <tr>
+            <th>Day Number</th>
+            <th>Activity Name</th>
+            <th>Activity Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Location</th>
+            <th>Description</th>
+        </tr>
+        <c:forEach var="schedule" items="${activityScheduleList}">
+            <tr>
+                <td>${schedule.dayNumber}</td>
+                <td>${schedule.activityName}</td>
+                <td>${schedule.activityDate}</td>
+                <td>${schedule.startTime}</td>
+                <td>${schedule.endTime}</td>
+                <td>${schedule.location}</td>
+                <td>${schedule.description}</td>
+            </tr>
+        </c:forEach>
+    </table>
        <br>
        <br>
        <br>
        <a href="ApprovalTourServlet?" class="btn btn-primary">Back to Manage Tours</a>
+    </div>
        <%@include file="includes/footer.jsp" %>
     </body>
 </html>

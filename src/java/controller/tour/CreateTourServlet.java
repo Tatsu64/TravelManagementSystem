@@ -141,7 +141,7 @@ public class CreateTourServlet extends HttpServlet {
             }
 
             // Redirect to a success page or display a success message
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("ActivityScheduleServlet?tourId=" + generatedTourId);
         } catch (ParseException ex) {
             ex.printStackTrace(); // Handle or log the exception appropriately
             response.sendRedirect("error.jsp"); // Redirect to an error page

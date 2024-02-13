@@ -60,6 +60,10 @@
         <servlet-name>ViewTourDetailServlet</servlet-name>
         <servlet-class>controller.tour.ViewTourDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActivityScheduleServlet</servlet-name>
+        <servlet-class>controller.tour.ActivityScheduleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>ViewTourDetailServlet</servlet-name>
         <url-pattern>/ViewTourDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActivityScheduleServlet</servlet-name>
+        <url-pattern>/ActivityScheduleServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -58,6 +58,10 @@ public class Tour {
         this.approvalStatus = approvalStatus;
     }
 
+    public Tour(int tourId) {
+        this.tourId = tourId;
+    }
+
     public Tour() {
     }
     
