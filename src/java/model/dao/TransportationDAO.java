@@ -25,12 +25,11 @@ public class TransportationDAO {
         this.connection = DatabaseConnector.getConnection();
     }
 
-    // Replace this method with your actual implementation to fetch the transportation list from the database
-   public List<Transportation> getTransportationList() throws SQLException {
+    public List<Transportation> getTransportationList() throws SQLException {
     List<Transportation> transportationList = new ArrayList<>();
 
     // Use a try-with-resources statement to automatically close resources (PreparedStatement and ResultSet)
-    try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Transportations");
+    try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Transportations ORDER BY transportation_id DESC");
          ResultSet resultSet = statement.executeQuery()) {
 
         while (resultSet.next()) {
@@ -50,6 +49,7 @@ public class TransportationDAO {
 
     return transportationList;
 }
+
 
      // Method to create a new transportation record
     public void createTransportation(Transportation transportation) throws SQLException {

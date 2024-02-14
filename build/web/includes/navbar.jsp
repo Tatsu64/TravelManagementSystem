@@ -40,6 +40,7 @@
                         <a href="booking.jsp" class="dropdown-item">Booking</a>
                         <a href="team.jsp" class="dropdown-item">Travel Guides</a>
                         <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
+                        <a href="Change-Password.jsp" class="dropdown-item">Change Password</a>
                         <a href="404.jsp" class="dropdown-item">404 Page</a>
                     </div>
 
@@ -56,7 +57,7 @@
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Manage</a>
                     <div class="dropdown-menu m-0">
                         <a href="destination.jsp" class="dropdown-item">Employees</a>
-                        <a href="booking.jsp" class="dropdown-item">Tours</a>
+                        <a href="ApprovalTourServlet?" class="dropdown-item">Tours</a>
                         <a href="team.jsp" class="dropdown-item">Locations</a>
                         <a href="testimonial.jsp" class="dropdown-item">Hotels</a>
                         <a href="404.jsp" class="dropdown-item">Restaurants</a>

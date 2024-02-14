@@ -240,5 +240,22 @@ public class UserDAO {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+             public boolean changePassword(String email, String newPassword) {
+        try {
+            Connection con = DatabaseConnector.getConnection();
+            String sql = "UPDATE Users SET password = ? WHERE email = ?";
+            
+            try (PreparedStatement statement = con.prepareStatement(sql)) {
+                statement.setString(1, newPassword);
+                statement.setString(2, email);
+                int rowsUpdated = statement.executeUpdate();
+                
+                return rowsUpdated > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý ngoại lệ SQL
+            return false;
+        }
+    }
 }
 

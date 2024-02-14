@@ -76,8 +76,8 @@ public class SendEmailServlet extends HttpServlet {
                     SendEmail sendEmail = new SendEmail();
                     sendEmail.send(email, otp);
                     
-                   HttpSession session = request.getSession();
-                    LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(2);
+                    HttpSession session = request.getSession();
+                    LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(5);
                     session.setAttribute("otpExpirationTime", expirationTime);
 
                     // Lưu mã OTP và thời điểm hết hạn vào Map

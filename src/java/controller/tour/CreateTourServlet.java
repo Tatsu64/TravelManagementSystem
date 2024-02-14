@@ -17,9 +17,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.dao.LocationDAO;
 import model.dao.TourDAO;
 import model.database.DatabaseConnector;
 import model.entity.Employee;
+import model.entity.Location;
 import model.entity.Tour;
 import model.entity.TourTransportation;
 
@@ -80,8 +82,10 @@ public class CreateTourServlet extends HttpServlet {
             String maxCapacityStr = request.getParameter("maxCapacity");
             String currentCapacityStr = request.getParameter("currentCapacity");
             String[] selectedTransportations = request.getParameterValues("selectedTransportations[]");
+            String locationName = request.getParameter("locationName");
 
             // Validate and convert string values to appropriate types
+            locationName = locationName.toUpperCase();
             Date startDate = parseDate(startDateStr);
             Date endDate = parseDate(endDateStr);
             BigDecimal tourPrice = new BigDecimal(tourPriceStr);
@@ -122,6 +126,14 @@ public class CreateTourServlet extends HttpServlet {
             // Assuming you have the tourId available from the form submission
             int generatedTourId = TourDAO.insertTourAndGetId(DatabaseConnector.getConnection(),newTour);
             TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
+            
+            Location newLocation = new Location();
+            newLocation.setLocationName(locationName);
+            newLocation.setTourId(generatedTourId);
+
+            // Thêm Location mới vào cơ sở dữ liệu
+            LocationDAO locationDAO = new LocationDAO(DatabaseConnector.getConnection());
+            int newLocationId = locationDAO.createLocationAndGetId(newLocation);
             // Insert into TourTransportations
             for (String transportationId : selectedTransportations) {
                TourTransportation tourTransportation = new TourTransportation(generatedTourId, Integer.parseInt(transportationId));
@@ -129,7 +141,8 @@ public class CreateTourServlet extends HttpServlet {
             }
 
             // Redirect to a success page or display a success message
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("ActivityScheduleServlet?tourId=" + generatedTourId + "&locationId=" + newLocationId);
+
         } catch (ParseException ex) {
             ex.printStackTrace(); // Handle or log the exception appropriately
             response.sendRedirect("error.jsp"); // Redirect to an error page

@@ -49,5 +49,9 @@ public class Location {
         this.tour = tour;
     }
     
+     public void setTourId(int tourId) {
+        this.tour = new Tour();
+        this.tour.setTourId(tourId);
+    }
 }
 

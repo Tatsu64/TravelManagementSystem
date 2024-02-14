@@ -27,7 +27,9 @@ public class UpdateProfileServlet extends HttpServlet {
             // Cập nhật thông tin người dùng trong cơ sở dữ liệu
             UserDAO dao = new UserDAO(DatabaseConnector.getConnection());
             boolean f2 = dao.updateUserProfile(user);
+            
             if(f2){
+                request.getSession().setAttribute("auth", user);
                 request.setAttribute("succMsg", "User Profile Update Successfully");
                 request.getRequestDispatcher("profile.jsp").forward(request, response);
                 }else{
