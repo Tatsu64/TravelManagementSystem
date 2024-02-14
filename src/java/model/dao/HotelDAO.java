@@ -53,6 +53,27 @@ public class HotelDAO {
         }
         return hotelList;
     }
+    public List<Hotel> getHotelByTourId(int tourId) throws SQLException {
+        List<Hotel> hotels = new ArrayList<>();
+        String query = "SELECT * FROM Hotels INNER JOIN HotelTour ON Hotels.hotel_id = HotelTour.hotel_id WHERE HotelTour.tour_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, tourId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Hotel hotel = new Hotel();
+                    hotel.setHotelId(resultSet.getInt("hotel_id"));
+                    hotel.setHotelName(resultSet.getString("hotel_name"));
+                    hotel.setPrice(resultSet.getBigDecimal("price"));
+                    hotel.setImageUrl(resultSet.getString("image_url"));
+                    hotel.setAddress(resultSet.getString("address"));
+                    hotels.add(hotel);
+                }
+            }
+        }
+
+        return hotels;
+    }
     public boolean createHotel(Hotel hotel) throws SQLException {
         String query = "INSERT INTO Hotels (hotel_name, location_id, price, image_url, address) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

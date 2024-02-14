@@ -32,36 +32,41 @@
     <br>
     <br>
     <div class="container">
-        <input type="hidden" name="locationId" value="${locationId}">
-        <table class="table table-light">
-            <thead>
-                <tr>
-                    <th scope="col">Restaurant Name</th>
-                    <th scope="col">Reservation Date</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Image</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${restaurantList}" var="restaurant">
+        <form action="RestaurantServlet" method="post"> <!-- AddRestaurantServlet is the servlet handling the form submission -->
+            <input type="hidden" name="locationId" value="${locationId}">
+            <input type="hidden" name="tourId" value="${tourId}">
+            <table class="table table-light">
+                <thead>
                     <tr>
-                        <td>${restaurant.restaurantName}</td>
-                        <td>${restaurant.reservationDate}</td>
-                        <td>${restaurant.price}</td>
-                        <td>${restaurant.address}</td>
-                        <td><img src="${restaurant.imageUrl}" alt="Restaurant Image" width="100"></td>
+                        <th scope="col">Select</th>
+                        <th scope="col">Restaurant Name</th>
+                        <th scope="col">Reservation Date</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Image</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-        <a href="AddRestaurant.jsp?locationId=${param.locationId}" class="btn btn-primary">Add Restaurant</a>
+                </thead>
+                <tbody>
+                    <c:forEach items="${restaurantList}" var="restaurant">
+                        <tr>
+                            <td><input type="checkbox" name="selectedRestaurants" value="${restaurant.restaurantId}"></td>
+                            <td>${restaurant.restaurantName}</td>
+                            <td>${restaurant.reservationDate}</td>
+                            <td>${restaurant.price}</td>
+                            <td>${restaurant.address}</td>
+                            <td><img src="${restaurant.imageUrl}" alt="Restaurant Image" width="100"></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Finish</button>
+        </form>
         <br>
         <br>
-        <a href="index.jsp" class="btn btn-secondary">Finish</a>
     </div>
     <footer>
         <%@include file="includes/footer.jsp" %>
     </footer>
 </body>
+
 </html>

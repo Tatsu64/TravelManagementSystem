@@ -26,11 +26,11 @@ public class LocationDAO {
 
     // Phương thức để tạo mới một địa điểm trong cơ sở dữ liệu
     public boolean createLocation(Location location) {
-        String query = "INSERT INTO Locations (location_name, tour_id) VALUES (?, ?)";
+        String query = "INSERT INTO Locations (location_name) VALUES (?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, location.getLocationName());
-            preparedStatement.setInt(2, location.getTour().getTourId());
+
 
             int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -48,52 +48,54 @@ public class LocationDAO {
         }
         return false;
     }
-    // Phương thức để tạo mới một địa điểm trong cơ sở dữ liệu và trả về location_id
+    // Phương thức để lấy danh sách các địa điểm
+    public List<Location> getLocationList() throws SQLException {
+        List<Location> locations = new ArrayList<>();
 
-    public int createLocationAndGetId(Location location) {
-        String query = "INSERT INTO Locations (location_name, tour_id) VALUES (?, ?)";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, location.getLocationName());
-            preparedStatement.setInt(2, location.getTour().getTourId());
+        // Chuỗi truy vấn SQL
+        String query = "SELECT * FROM Locations";
 
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    int locationId = generatedKeys.getInt(1);
-                    System.out.println("A new location was inserted successfully with ID: " + locationId);
-                    return locationId;
-                } else {
-                    throw new SQLException("Creating location failed, no ID obtained.");
-                }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return -1; // Trả về -1 nếu có lỗi xảy ra hoặc không thể lấy được location_id
-    }
+        // Chuẩn bị câu lệnh truy vấn
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            // Thực hiện truy vấn và lấy kết quả
+            try (ResultSet resultSet = statement.executeQuery()) {
+                // Duyệt qua các hàng trong kết quả và tạo đối tượng Location cho mỗi hàng
+                while (resultSet.next()) {
+                    int locationId = resultSet.getInt("location_id");
+                    String locationName = resultSet.getString("location_name");
 
-    // Phương thức để lấy thông tin của Location dựa trên tourId
-    public Location getLocationByTourId(int tourId) throws SQLException {
-        Location location = null; // Khởi tạo đối tượng Location
+                    // Tạo đối tượng Location từ dữ liệu trong hàng kết quả
+                    Location location = new Location(locationId, locationName);
 
-        String query = "SELECT * FROM Locations WHERE tour_id = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, tourId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    // Tạo đối tượng Location và đặt các giá trị từ kết quả truy vấn
-                    location = new Location();
-                    location.setLocationId(resultSet.getInt("location_id"));
-                    location.setLocationName(resultSet.getString("location_name"));
-                    location.setTourId(tourId); // Đặt tourId cho đối tượng Location
+                    // Thêm đối tượng Location vào danh sách
+                    locations.add(location);
                 }
             }
         }
 
-        return location;
+        return locations;
     }
+    // Phương thức để lấy danh sách các địa điểm dựa trên tour_id
+    public List<Location> getLocationByTourId(int tourId) {
+        List<Location> locations = new ArrayList<>();
+        String sql = "SELECT l.* FROM Locations l JOIN TourLocation tl ON l.location_id = tl.location_id WHERE tl.tour_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, tourId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Location location = new Location();
+                    location.setLocationId(rs.getInt("location_id"));
+                    location.setLocationName(rs.getString("location_name"));
+                    locations.add(location);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return locations;
+    }
+
 }
 

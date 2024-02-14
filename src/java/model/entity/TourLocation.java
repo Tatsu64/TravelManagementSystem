@@ -8,13 +8,16 @@ package model.entity;
  *
  * @author ADMIN
  */
-public class TourTransportation {
+public class TourLocation {
     private int tourId;
-    private int transportationId;
+    private int locationId;
 
-    public TourTransportation(int tourId, int transportationId) {
+    public TourLocation() {
+    }
+
+    public TourLocation(int tourId, int locationId) {
         this.tourId = tourId;
-        this.transportationId = transportationId;
+        this.locationId = locationId;
     }
 
     public int getTourId() {
@@ -25,13 +28,11 @@ public class TourTransportation {
         this.tourId = tourId;
     }
 
-    public int getTransportationId() {
-        return transportationId;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setTransportationId(int transportationId) {
-        this.transportationId = transportationId;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 }
-
-

@@ -6,18 +6,21 @@ package controller.tour;
 
 import java.io.PrintWriter;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.HotelDAO;
+import model.dao.TourDAO;
 import model.database.DatabaseConnector;
 import model.entity.Hotel;
-import model.entity.Location;
+import model.entity.HotelTour;
+
 
 /**
  *
@@ -63,6 +66,16 @@ public class HotelServlet extends HttpServlet {
      @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String tourIdStr = request.getParameter("tourId");
+         int tourId;
+            if (tourIdStr != null && !tourIdStr.isEmpty()) {
+                tourId = Integer.parseInt(tourIdStr);
+            } else {
+                // Xử lý khi tourId không tồn tại hoặc là chuỗi rỗng
+                // Ví dụ: Hiển thị trang lỗi hoặc chuyển hướng sang trang khác
+                response.sendRedirect("error.jsp");
+                return;
+            }
         // Lấy location_id từ request
         String locationIdStr = request.getParameter("locationId");
         int locationId;
@@ -79,6 +92,7 @@ public class HotelServlet extends HttpServlet {
         try {
             List<Hotel> hotelList = hotelDAO.getHotelList(locationId);
             // Chuyển danh sách khách sạn sang JSP để hiển thị
+            request.setAttribute("tourId", tourId);
             request.setAttribute("locationId", locationId);
             request.setAttribute("hotelList", hotelList);
             request.getRequestDispatcher("Hotel.jsp").forward(request, response);
@@ -97,47 +111,27 @@ public class HotelServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    try {
-        // Trích xuất thông tin từ yêu cầu HTTP
-        String hotelName = request.getParameter("hotelName");
-        String address = request.getParameter("address");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
-        String imageUrl = request.getParameter("imageUrl");
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Nhận locationId từ request
         int locationId = Integer.parseInt(request.getParameter("locationId"));
+        int tourId = Integer.parseInt(request.getParameter("tourId"));
+        // Nhận danh sách khách sạn đã chọn từ request
+        String[] selectedHotels = request.getParameterValues("selectedHotels");
 
-        // Tạo đối tượng Hotel
-        Hotel hotel = new Hotel();
-        hotel.setHotelName(hotelName);
-        hotel.setAddress(address);
-        hotel.setPrice(price);
-        hotel.setImageUrl(imageUrl);
+        // Tạo một đối tượng DAO để thao tác với cơ sở dữ liệu
+        TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
 
-        // Tạo đối tượng Location và đặt locationId
-        Location location = new Location();
-        location.setLocationId(locationId);
-        hotel.setLocation(location);
+        // Insert into TourTransportations
+            for (String HotelId : selectedHotels) {
+               HotelTour hotelTour = new HotelTour(Integer.parseInt(HotelId), tourId);
+               tourDAO.addHotelTour(hotelTour);
+            }
 
-        // Thực hiện thêm khách sạn vào cơ sở dữ liệu
-        HotelDAO hotelDAO = new HotelDAO(DatabaseConnector.getConnection());
-        boolean success = hotelDAO.createHotel(hotel);
-        
-        if (success) {
-            // Thêm thành công, chuyển hướng đến trang thành công
-            request.setAttribute("locationId", locationId);
-            response.sendRedirect("HotelServlet?locationId=" + locationId);
-        } else {
-            // Thêm không thành công, chuyển hướng đến trang lỗi
-            response.sendRedirect("error.jsp");
-        }
-    } catch (SQLException ex) {
-        // Xử lý ngoại lệ SQLException
-        ex.printStackTrace();
-        response.sendRedirect("error.jsp");
+        // Redirect hoặc forward tới trang tiếp theo sau khi xử lý
+        response.sendRedirect("RestaurantServlet?tourId=" + tourId + "&locationId=" + locationId);
     }
-}
+
 
 
     /**

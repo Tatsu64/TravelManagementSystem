@@ -11,12 +11,10 @@ package model.entity;
 public class Location {
     private int locationId;
     private String locationName;
-    private Tour tour;
 
-    public Location(int locationId, String locationName, Tour tour) {
+    public Location(int locationId, String locationName) {
         this.locationId = locationId;
         this.locationName = locationName;
-        this.tour = tour;
     }
 
     public Location() {
@@ -41,17 +39,5 @@ public class Location {
         this.locationName = locationName;
     }
 
-    public Tour getTour() {
-        return tour;
-    }
-
-    public void setTour(Tour tour) {
-        this.tour = tour;
-    }
-    
-     public void setTourId(int tourId) {
-        this.tour = new Tour();
-        this.tour.setTourId(tourId);
-    }
 }
 

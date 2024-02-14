@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.EmployeeDAO;
+import model.dao.LocationDAO;
 import model.dao.TransportationDAO;
 import model.database.DatabaseConnector;
+import model.entity.Location;
 import model.entity.Transportation;
 
 /**
@@ -79,8 +81,10 @@ public class EmployeeListServlet extends HttpServlet {
         request.setAttribute("employeeList", employeeList);
         TransportationDAO transportationDAO = new TransportationDAO(connection);
          List<Transportation> transportationList = transportationDAO.getTransportationList();
-
+         LocationDAO locationDAO = new LocationDAO(connection);
+          List<Location> locations = locationDAO.getLocationList();
         // Truyền danh sách này đến CreateTour.jsp để hiển thị
+        request.setAttribute("locations", locations);
         request.setAttribute("transportationList", transportationList);
         // Forward to the JSP
         request.getRequestDispatcher("/CreateTour.jsp").forward(request, response);

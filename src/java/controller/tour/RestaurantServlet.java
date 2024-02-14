@@ -20,9 +20,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.RestaurantDAO;
+import model.dao.TourDAO;
 import model.database.DatabaseConnector;
 import model.entity.Location;
 import model.entity.Restaurant;
+import model.entity.RestaurantTour;
 
 /**
  *
@@ -69,6 +71,16 @@ public class RestaurantServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            String tourIdStr = request.getParameter("tourId");
+            int tourId;
+            if (tourIdStr != null && !tourIdStr.isEmpty()) {
+                tourId = Integer.parseInt(tourIdStr);
+            } else {
+                // Xử lý khi tourId không tồn tại hoặc là chuỗi rỗng
+                // Ví dụ: Hiển thị trang lỗi hoặc chuyển hướng sang trang khác
+                response.sendRedirect("error.jsp");
+                return;
+            }
             // Lấy locationId từ request parameter
             String locationIdStr = request.getParameter("locationId");
             int locationId;
@@ -86,6 +98,7 @@ public class RestaurantServlet extends HttpServlet {
             List<Restaurant> restaurantList = restaurantDAO.getRestaurantList(locationId);
 
             // Đặt danh sách nhà hàng làm thuộc tính yêu cầu
+            request.setAttribute("tourId", tourId);
             request.setAttribute("restaurantList", restaurantList);
             request.setAttribute("locationId", locationId);
 
@@ -109,58 +122,21 @@ public class RestaurantServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            // Lấy thông tin từ request
-            String locationIdStr = request.getParameter("locationId");
-            int locationId = Integer.parseInt(locationIdStr);
+        int tourId = Integer.parseInt(request.getParameter("tourId"));
+        // Nhận danh sách khách sạn đã chọn từ request
+        String[] selectedRestaurants = request.getParameterValues("selectedRestaurants");
 
-            String restaurantName = request.getParameter("restaurantName");
-            String reservationDateStr = request.getParameter("reservationDate"); // Chuyển đổi từ String thành Date
-            BigDecimal price = new BigDecimal(request.getParameter("price"));
-            String imageUrl = request.getParameter("imageUrl");
-            String address = request.getParameter("address");
+        // Tạo một đối tượng DAO để thao tác với cơ sở dữ liệu
+        TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
 
-            Date reservationDate = parseDate(reservationDateStr);
-
-            // Tạo đối tượng Restaurant
-            Restaurant restaurant = new Restaurant();
-            restaurant.setRestaurantName(restaurantName);
-
-            // Tạo đối tượng Location chỉ với locationId để đặt vào Restaurant
-            Location location = new Location();
-            location.setLocationId(locationId);
-            restaurant.setLocation(location);
-
-            restaurant.setReservationDate(reservationDate);
-            restaurant.setPrice(price);
-            restaurant.setImageUrl(imageUrl);
-            restaurant.setAddress(address);
-
-            // Gọi phương thức createRestaurant của RestaurantDAO để thêm nhà hàng vào cơ sở dữ liệu
-            RestaurantDAO restaurantDAO = new RestaurantDAO(DatabaseConnector.getConnection());
-            boolean isSuccess = restaurantDAO.createRestaurant(restaurant);
-
-            if (isSuccess) {
-                // Nếu thêm thành công, chuyển hướng đến trang hiển thị danh sách nhà hàng
-                response.sendRedirect("RestaurantServlet?locationId=" + locationId);
-            } else {
-                // Nếu không thành công, có thể xử lý hiển thị thông báo lỗi hoặc chuyển hướng đến trang khác
-                response.sendRedirect("error.jsp");
-            }
-        } catch (NumberFormatException ex) {
-            // Xử lý ngoại lệ
-            ex.printStackTrace();
-            response.sendRedirect("error.jsp");
-        } catch (ParseException ex) {
-            Logger.getLogger(RestaurantServlet.class.getName()).log(Level.SEVERE, null, ex);
+        // Insert into TourTransportations
+        for (String restaurantId : selectedRestaurants) {
+            RestaurantTour restaurantTour = new RestaurantTour(Integer.parseInt(restaurantId), tourId);
+            tourDAO.addRestaurantTour(restaurantTour);
         }
-    }
 
-// Helper method to parse a string into a Date
-    private Date parseDate(String dateStr) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setLenient(false); // Disallow lenient parsing
-        return sdf.parse(dateStr);
+        // Redirect hoặc forward tới trang tiếp theo sau khi xử lý
+        response.sendRedirect("index.jsp");
     }
 
 

@@ -57,6 +57,33 @@ public class RestaurantDAO {
         return restaurantList;
     }
     
+    public List<Restaurant> getRestaurantByTourId(int tourId) throws SQLException {
+        List<Restaurant> restaurantList = new ArrayList<>();
+
+        String query = "SELECT * FROM Restaurants R "
+                + "JOIN RestaurantTour RT ON R.restaurant_id = RT.restaurant_id "
+                + "WHERE RT.tour_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, tourId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Restaurant restaurant = new Restaurant();
+                    restaurant.setRestaurantId(resultSet.getInt("restaurant_id"));
+                    restaurant.setRestaurantName(resultSet.getString("restaurant_name"));
+                    restaurant.setAddress(resultSet.getString("address"));
+                    restaurant.setReservationDate(resultSet.getDate("reservation_date"));
+                    restaurant.setPrice(resultSet.getBigDecimal("price"));
+                    restaurant.setImageUrl(resultSet.getString("image_url"));
+                    // Add restaurant to the list
+                    restaurantList.add(restaurant);
+                }
+            }
+        }
+
+        return restaurantList;
+    }
+    
     public boolean createRestaurant(Restaurant restaurant) {
         String query = "INSERT INTO Restaurants (restaurant_name, location_id, reservation_date, price, image_url, address) VALUES (?, ?, ?, ?, ?, ?)";
         try {

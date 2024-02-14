@@ -36,18 +36,19 @@ CREATE TABLE Tours (
     end_date DATE,
     tour_price DECIMAL(18, 2),
     image_url NVARCHAR(MAX),
-    employee_id INT FOREIGN KEY REFERENCES Employees(employee_id),
+    employee_id INT,
     start_location NVARCHAR(255),
     max_capacity INT,
-    current_capacity INT
+    current_capacity INT,
+    approval_status INT DEFAULT 0,
+    FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
 );
 GO
 
 -- Tạo bảng Locations
 CREATE TABLE Locations (
     location_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-    location_name NVARCHAR(255),
-    tour_id INT FOREIGN KEY REFERENCES Tours(tour_id)
+    location_name NVARCHAR(255)
 );
 GO
 
@@ -55,10 +56,11 @@ GO
 CREATE TABLE Hotels (
     hotel_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     hotel_name NVARCHAR(255),
-    location_id INT FOREIGN KEY REFERENCES Locations(location_id),
+    location_id INT,
     price DECIMAL(18, 2),
     image_url NVARCHAR(MAX),
-    address NVARCHAR(MAX)
+    address NVARCHAR(MAX),
+    FOREIGN KEY (location_id) REFERENCES Locations(location_id)
 );
 GO
 
@@ -77,47 +79,52 @@ GO
 CREATE TABLE Restaurants (
     restaurant_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	restaurant_name NVARCHAR(255),
-    location_id INT FOREIGN KEY REFERENCES Locations(location_id),
+    location_id INT,
     reservation_date DATE,
     price DECIMAL(18, 2),
     image_url NVARCHAR(MAX),
-    address NVARCHAR(MAX)
+    address NVARCHAR(MAX),
+    FOREIGN KEY (location_id) REFERENCES Locations(location_id)
 );
 GO
 
 -- Tạo bảng Bookings
 CREATE TABLE Bookings (
     booking_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-    tour_id INT FOREIGN KEY REFERENCES Tours(tour_id),
-    user_id INT FOREIGN KEY REFERENCES Users(user_id),
+    tour_id INT,
+    user_id INT,
     booking_date DATE,
     number_of_people INT,
-    total_price DECIMAL(18, 2)
+    total_price DECIMAL(18, 2),
+    FOREIGN KEY (tour_id) REFERENCES Tours(tour_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 GO
 
--- Tạo bảng Bills (Loại bỏ cột booking_id và thêm cột mới)
+-- Tạo bảng Bills
 CREATE TABLE Bills (
     bill_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-    booking_id INT UNIQUE FOREIGN KEY REFERENCES Bookings(booking_id),
+    booking_id INT UNIQUE,
     payment_date DATE,
-    payment_method NVARCHAR(50)
+    payment_method NVARCHAR(50),
+    FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
 );
 GO
 
 -- Tạo bảng Reviews
 CREATE TABLE Reviews (
     review_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-    booking_id INT FOREIGN KEY REFERENCES Bookings(booking_id),
+    booking_id INT,
     content NVARCHAR(MAX),
-    rating INT
+    rating INT,
+    FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
 );
 GO
 
 -- Tạo bảng ActivitySchedules
 CREATE TABLE ActivitySchedules (
     schedule_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-    tour_id INT FOREIGN KEY REFERENCES Tours(tour_id),
+    tour_id INT,
     day_number INT,
     activity_name NVARCHAR(255),
     activity_date DATE,
@@ -126,32 +133,40 @@ CREATE TABLE ActivitySchedules (
     location NVARCHAR(255),
     description NVARCHAR(MAX),
     image_url NVARCHAR(MAX),
-    CONSTRAINT FK_ActivitySchedules_Tours FOREIGN KEY (tour_id) REFERENCES Tours(tour_id)
+    FOREIGN KEY (tour_id) REFERENCES Tours(tour_id)
+);
+GO
+-- Tạo bảng TourLocation
+CREATE TABLE TourLocation (
+    tour_id INT,
+    location_id INT,
+    PRIMARY KEY (tour_id, location_id),
+    FOREIGN KEY (tour_id) REFERENCES Tours(tour_id),
+    FOREIGN KEY (location_id) REFERENCES Locations(location_id)
 );
 GO
 
--- Tạo bảng HotelBookings (Mối quan hệ nhiều-nhiều giữa Hotels và Bookings)
-CREATE TABLE HotelBookings (
+-- Tạo bảng HotelTour
+CREATE TABLE HotelTour (
     hotel_id INT,
-    booking_id INT,
-    PRIMARY KEY (hotel_id, booking_id),
+    tour_id INT,
+    PRIMARY KEY (hotel_id, tour_id),
     FOREIGN KEY (hotel_id) REFERENCES Hotels(hotel_id),
-    FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
+    FOREIGN KEY (tour_id) REFERENCES Tours(tour_id)
 );
 GO
 
--- Tạo bảng RestaurantBookings (Mối quan hệ nhiều-nhiều giữa Restaurants và Bookings)
-CREATE TABLE RestaurantBookings (
+-- Tạo bảng RestaurantTour
+CREATE TABLE RestaurantTour (
     restaurant_id INT,
-    booking_id INT,
-    PRIMARY KEY (restaurant_id, booking_id),
+    tour_id INT,
+    PRIMARY KEY (restaurant_id, tour_id),
     FOREIGN KEY (restaurant_id) REFERENCES Restaurants(restaurant_id),
-    FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
+    FOREIGN KEY (tour_id) REFERENCES Tours(tour_id)
 );
 GO
-
--- Tạo bảng TourTransportations (Mối quan hệ nhiều-nhiều giữa Tours và Transportations)
-CREATE TABLE TourTransportations (
+-- Tạo bảng TourTransportation
+CREATE TABLE TourTransportation (
     tour_id INT,
     transportation_id INT,
     PRIMARY KEY (tour_id, transportation_id),
@@ -159,6 +174,3 @@ CREATE TABLE TourTransportations (
     FOREIGN KEY (transportation_id) REFERENCES Transportations(transportation_id)
 );
 GO
-
-ALTER TABLE Tours
-ADD approval_status INT DEFAULT 0;
