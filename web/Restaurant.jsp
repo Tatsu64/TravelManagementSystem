@@ -6,6 +6,23 @@
     <meta charset="UTF-8">
     <title>Restaurant List</title>
     <%@include file="includes/header.jsp" %>
+    <style>
+        h2 {
+            margin-left: 5%;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .hotel-image {
+            max-width: 100px; /* Độ rộng tối đa của hình ảnh */
+            height: auto; /* Độ cao tự động tính dựa trên chiều rộng */
+        }
+    </style>
 </head>
 <body>
     <br>
@@ -43,6 +60,8 @@
         <br>
         <a href="index.jsp" class="btn btn-secondary">Finish</a>
     </div>
-    <%@include file="includes/footer.jsp" %>
+    <footer>
+        <%@include file="includes/footer.jsp" %>
+    </footer>
 </body>
 </html>

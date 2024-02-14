@@ -4,9 +4,9 @@
 <html>
 <head>
     <%@ include file="includes/header.jsp" %>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-    <%@ include file="includes/navbar.jsp" %>
     <br>
     <br>
     <br>
@@ -41,7 +41,7 @@
                 <label for="imageUrl">Image URL:</label>
                 <input type="text" id="imageUrl" name="imageUrl" class="form-control" required>
             </div>
-
+            <br>
             <!-- Back to CreateTour.jsp button -->
             <a href="EmployeeListServlet?" class="btn btn-secondary">Back to Create Tour</a>
             <br>
