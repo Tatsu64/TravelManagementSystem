@@ -21,7 +21,8 @@
         <br>
         <form action="ActivityScheduleServlet" method="post">
             <div class="container">
-            <input type="hidden" id="tourId" name="tourId" value="${param.tourId}">
+                <input type="hidden" name="locationId" value="${param.locationId}">
+                <input type="hidden" id="tourId" name="tourId" value="${param.tourId}">
 
             <div class="form-group">
                 <label for="dayNumber">Day Number:</label>

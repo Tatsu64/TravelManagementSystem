@@ -33,6 +33,7 @@
         <br>
         <br>
         <div class="container">
+            <input type="hidden" name="locationId" value="${locationId}">
             <table class="table table-light">
                 <thead>
                     <tr>
@@ -51,10 +52,10 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <button onclick="location.href='CreateActivitySchedules.jsp?tourId=${tourId}';" type="button" class="btn btn-primary">Add Activity Schedule</button>
+            <button onclick="location.href='CreateActivitySchedules.jsp?tourId=${tourId}&locationId=${locationId}';" type="button" class="btn btn-primary">Add Activity Schedule</button>
             <br>
             <br>
-           <a href="index.jsp" class="btn btn-secondary">Finish</a>
+           <a href="HotelServlet?locationId=${locationId}" class="btn btn-secondary">Next</a>
         </div>
         <footer>
             <%@include file="includes/footer.jsp" %>

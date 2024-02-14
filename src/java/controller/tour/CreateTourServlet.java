@@ -133,7 +133,7 @@ public class CreateTourServlet extends HttpServlet {
 
             // Thêm Location mới vào cơ sở dữ liệu
             LocationDAO locationDAO = new LocationDAO(DatabaseConnector.getConnection());
-            locationDAO.createLocation(newLocation);
+            int newLocationId = locationDAO.createLocationAndGetId(newLocation);
             // Insert into TourTransportations
             for (String transportationId : selectedTransportations) {
                TourTransportation tourTransportation = new TourTransportation(generatedTourId, Integer.parseInt(transportationId));
@@ -141,7 +141,8 @@ public class CreateTourServlet extends HttpServlet {
             }
 
             // Redirect to a success page or display a success message
-            response.sendRedirect("ActivityScheduleServlet?tourId=" + generatedTourId);
+            response.sendRedirect("ActivityScheduleServlet?tourId=" + generatedTourId + "&locationId=" + newLocationId);
+
         } catch (ParseException ex) {
             ex.printStackTrace(); // Handle or log the exception appropriately
             response.sendRedirect("error.jsp"); // Redirect to an error page

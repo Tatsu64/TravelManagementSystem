@@ -37,7 +37,19 @@
     <br>
     <br>
     <div class="container">
-        <h2>Tour Detail</h2>
+        <h3>Location Detail</h3>
+         <table>
+        <tr>
+            <th>Location ID</th>
+            <td>${location.locationId}</td>
+        </tr>
+        <tr>
+            <th>Location Name</th>
+            <td>${location.locationName}</td>
+        </tr>
+
+    </table>
+        <h3>Tour Detail</h3>
         <table>
             <tr>
                 <th>Tour ID</th>
@@ -150,6 +162,48 @@
             </tr>
         </c:forEach>
     </table>
+        
+        <h3>Hotel Information</h3>
+        <table>
+            <tr>
+                <th>Hotel ID</th>
+                <th>Hotel Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Address</th>
+            </tr>
+            <c:forEach var="hotel" items="${hotelList}">
+                <tr>
+                    <td>${hotel.hotelId}</td>
+                    <td>${hotel.hotelName}</td>
+                    <td>${hotel.price}</td>
+                    <td><img src="${hotel.imageUrl}" alt="Hotel Image" width="100"></td>
+                    <td>${hotel.address}</td>
+                </tr>
+            </c:forEach>
+        </table>
+        
+        <h3>Restaurant Information</h3>
+        <table>
+            <tr>
+                <th>Restaurant ID</th>
+                <th>Restaurant Name</th>
+                <th>Reservation Date</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Address</th>
+            </tr>
+            <c:forEach var="restaurant" items="${restaurantList}">
+                <tr>
+                    <td>${restaurant.restaurantId}</td>
+                    <td>${restaurant.restaurantName}</td>
+                    <td>${restaurant.reservationDate}</td>
+                    <td>${restaurant.price}</td>
+                    <td><img src="${restaurant.imageUrl}" alt="Restaurant Image" width="100"></td>
+                    <td>${restaurant.address}</td>
+                </tr>
+            </c:forEach>
+        </table>
        <br>
        <br>
        <br>

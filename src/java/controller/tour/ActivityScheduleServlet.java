@@ -66,41 +66,48 @@ public class ActivityScheduleServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            Connection connection = DatabaseConnector.getConnection();
+   @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    try {
+        Connection connection = DatabaseConnector.getConnection();
 
-            // Create an instance of ActivityScheduleDAO
+        // Nhận tourId và locationId từ request parameter
+        String tourIdStr = request.getParameter("tourId");
+        String locationIdStr = request.getParameter("locationId");
+
+        if (tourIdStr != null) {
+            // Chuyển đổi tourId từ string sang int
+            int tourId = Integer.parseInt(tourIdStr);
+
+            // Fetch the list of activity schedules for the specified tourId
             ActivityScheduleDAO activityScheduleDAO = new ActivityScheduleDAO(connection);
+            List<ActivitySchedule> activityScheduleList = activityScheduleDAO.getActivityScheduleList(tourId);
 
-            // Nhận tourId từ request parameter
-            String tourIdStr = request.getParameter("tourId");
+            // Set the activityScheduleList as a request attribute
+            request.setAttribute("activityScheduleList", activityScheduleList);
 
-            if (tourIdStr != null) {
-                // Chuyển đổi tourId từ string sang int
-                int tourId = Integer.parseInt(tourIdStr);
+            // Forward to the JSP
+            request.setAttribute("tourId", tourId);
 
-                // Fetch the list of activity schedules for the specified tourId
-                List<ActivitySchedule> activityScheduleList = activityScheduleDAO.getActivityScheduleList(tourId);
-
-                // Set the activityScheduleList as a request attribute
-                request.setAttribute("activityScheduleList", activityScheduleList);
-
-                // Forward to the JSP
-                request.setAttribute("tourId", tourId);
-                request.getRequestDispatcher("/ActivitySchedule.jsp").forward(request, response);
-            } else {
-                // Xử lý khi tourId không tồn tại trong request
-                // Ví dụ: Hiển thị trang lỗi hoặc chuyển hướng sang trang khác
-                response.sendRedirect("error.jsp");
+            // Kiểm tra nếu locationId tồn tại thì đặt nó như một thuộc tính của yêu cầu
+            if (locationIdStr != null && !locationIdStr.isEmpty()) {
+                int locationId = Integer.parseInt(locationIdStr);
+                request.setAttribute("locationId", locationId);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ActivityScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("error.jsp"); // Redirect to an error page in case of exception
+
+            request.getRequestDispatcher("/ActivitySchedule.jsp").forward(request, response);
+        } else {
+            // Xử lý khi tourId không tồn tại trong request
+            // Ví dụ: Hiển thị trang lỗi hoặc chuyển hướng sang trang khác
+            response.sendRedirect("error.jsp");
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(ActivityScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+        response.sendRedirect("error.jsp"); // Redirect to an error page in case of exception
     }
+}
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -114,6 +121,12 @@ public class ActivityScheduleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            String locationIdStr = request.getParameter("locationId");
+            int locationId = -1; // Khởi tạo giá trị mặc định cho locationId
+            if (locationIdStr != null && !locationIdStr.isEmpty()) {
+                locationId = Integer.parseInt(locationIdStr);
+            }
+
             // Lấy thông tin từ request
             String tourIdStr = request.getParameter("tourId");
             int tourId;
@@ -159,7 +172,7 @@ public class ActivityScheduleServlet extends HttpServlet {
             activityScheduleDAO.createActivitySchedule(activitySchedule);
 
             // Redirect hoặc forward đến trang khác sau khi thêm thành công
-            response.sendRedirect("ActivityScheduleServlet?tourId=" + tourId);
+            response.sendRedirect("ActivityScheduleServlet?tourId=" + tourId + "&locationId=" + locationId);
         } catch (SQLException ex) {
             // Xử lý ngoại lệ SQLException
             ex.printStackTrace();
@@ -168,6 +181,7 @@ public class ActivityScheduleServlet extends HttpServlet {
             Logger.getLogger(ActivityScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 
 // Helper method to parse a string into a Date
     private Date parseDate(String dateStr) throws ParseException {

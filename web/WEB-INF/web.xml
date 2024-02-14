@@ -64,6 +64,14 @@
         <servlet-name>ActivityScheduleServlet</servlet-name>
         <servlet-class>controller.tour.ActivityScheduleServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HotelServlet</servlet-name>
+        <servlet-class>controller.tour.HotelServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestaurantServlet</servlet-name>
+        <servlet-class>controller.tour.RestaurantServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -127,6 +135,14 @@
     <servlet-mapping>
         <servlet-name>ActivityScheduleServlet</servlet-name>
         <url-pattern>/ActivityScheduleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HotelServlet</servlet-name>
+        <url-pattern>/HotelServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestaurantServlet</servlet-name>
+        <url-pattern>/RestaurantServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -15,9 +15,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.ActivityScheduleDAO;
+import model.dao.HotelDAO;
+import model.dao.LocationDAO;
+import model.dao.RestaurantDAO;
 import model.dao.TourDAO;
 import model.database.DatabaseConnector;
 import model.entity.ActivitySchedule;
+import model.entity.Hotel;
+import model.entity.Location;
+import model.entity.Restaurant;
 import model.entity.Tour;
 import model.entity.Transportation;
 
@@ -71,10 +77,26 @@ public class ViewTourDetailServlet extends HttpServlet {
             List<Transportation> transportations = tourDAO.getTransportationsForTour(tourId);
             ActivityScheduleDAO activityScheduleDAO = new ActivityScheduleDAO(DatabaseConnector.getConnection());
             List<ActivitySchedule> activityScheduleList = activityScheduleDAO.getActivityScheduleList(tourId);
+            
+            LocationDAO locationDAO = new LocationDAO(DatabaseConnector.getConnection());
+            
+            Location location = locationDAO.getLocationByTourId(tourId);
+            int locationId = location.getLocationId();
+            
+            HotelDAO hotelDAO = new HotelDAO(DatabaseConnector.getConnection());
+            List<Hotel> hotelList = hotelDAO.getHotelList(locationId);
+            
+            RestaurantDAO restaurantDAO = new RestaurantDAO(DatabaseConnector.getConnection());
+            List<Restaurant> restaurantList = restaurantDAO.getRestaurantList(locationId);
+
             // Kiểm tra xem tour có tồn tại hay không
             if (tour != null) {
                 // Truyền thông tin tour và danh sách vận chuyển tới trang JSP để hiển thị
                 // Set the activityScheduleList as a request attribute
+                // Chuyển danh sách khách sạn sang JSP để hiển thị
+                request.setAttribute("restaurantList", restaurantList);
+                request.setAttribute("hotelList", hotelList);
+                request.setAttribute("location", location);
                 request.setAttribute("activityScheduleList", activityScheduleList);
                 request.setAttribute("tour", tour);
                 request.setAttribute("transportations", transportations);
