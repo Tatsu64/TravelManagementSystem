@@ -76,8 +76,8 @@
                 <td>${tour.tourPrice}</td>
             </tr>
             <tr>
-                <th>Image URL</th>
-                <td>${tour.imageUrl}</td>
+                <th>Image</th>
+                <td><img src="${tour.imageUrl}" alt="Tour Image" width="100"></td>
             </tr>
             <tr>
                 <th>Start Location</th>
