@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.database.DatabaseConnector;
+import model.entity.User;
 
 /**
  *
@@ -48,35 +49,47 @@ public class ResetPasswordServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Lấy thông tin từ form
-        Connection connection = DatabaseConnector.getConnection();
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        String newPassword = request.getParameter("newPassword");
-        String confirmPassword = request.getParameter("confirmPassword");
-        System.out.println(newPassword);
-        System.out.println(confirmPassword);
-        UserDAO am;
-        try {
-            am = new UserDAO(connection);
-            if (newPassword == null || confirmPassword == null || !newPassword.equals(confirmPassword)) {
-                // Mật khẩu không khớp, chuyển hướng đến trang lỗi
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    Connection connection = DatabaseConnector.getConnection();
+    int userId = Integer.parseInt(request.getParameter("userId"));
+    String newPassword = request.getParameter("newPassword");
+    String confirmPassword = request.getParameter("confirmPassword");
 
-                response.sendRedirect("error.jsp");
-            } else {
-
-                am.updatePassword(newPassword, userId);
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+    try {
+       
+        
+        if (!newPassword.equals(confirmPassword)) {
+            // Passwords don't match, set error message
+            request.setAttribute("mess", "Passwords do not match");
+            request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+            return; // End processing
         }
-        // Kiểm tra newPassword và confirmPassword
-        // Kiểm tra newPassword và confirmPassword
-
+        
+        // Get the user by ID
+        UserDAO userDAO = new UserDAO(connection);
+        User user = userDAO.getUserById(userId);
+        
+        
+        
+        if (user != null) {
+            // Update the password
+            userDAO.updatePassword(newPassword, userId);
+            
+            request.getRequestDispatcher("password-changed-successfully.jsp").forward(request, response);
+        } else {
+            // User not found, redirect to error page
+            response.sendRedirect("404.jsp");
+        }
+    } catch (NumberFormatException ex) {
+        Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+        response.sendRedirect("404.jsp");
+    } catch (Exception ex) {
+        Logger.getLogger(ResetPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+        response.sendRedirect("404.jsp");
     }
+}
 
     @Override
     public String getServletInfo() {

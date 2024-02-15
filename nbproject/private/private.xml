@@ -3,14 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/Restaurant.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/controller/tour/CreateTourServlet.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/model/dao/TransportationDAO.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/AddHotel.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/CreateTransportation.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/CreateTour.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/controller/tour/EmployeeListServlet.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/AddRestaurant.jsp</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/web/verify.jsp</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/src/java/controller/account/ResetPasswordServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/web/password-changed-successfully.jsp</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/src/java/controller/account/VerifyOTPServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/web/profile.jsp</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/src/java/controller/account/SignUpServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/web/resetpassword.jsp</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/src/java/controller/account/UpdateProfileServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/web/verifySignUp.jsp</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/src/java/controller/account/SendEmailServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/src/java/controller/account/UserServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_2/TravelManagementSystem/web/login.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -68,7 +68,7 @@ public class VerifyOTPServlet extends HttpServlet {
         LocalDateTime expirationTime = (LocalDateTime) request.getSession().getAttribute("otpExpirationTime");
         if (isOTPValid(saveOTP, expirationTime) && saveOTP.equals(userOTP)) {
             if (userId != null) {
-
+                request.getParameter("userId");
                 response.sendRedirect("resetpassword.jsp?userId=" + userId);
             } else {
                 try {
