@@ -34,8 +34,8 @@
                                 <span id="email-error" class="text-danger"></span>
                             </div>
                             <input type="hidden" value="${auth.name}" name="name">
-                            <input type="hidden" name="email" value="${auth.email}">
-                            <input type="hidden" name="password" value="${auth.password}">
+                            <input type="hidden" value="${auth.email}" name="email" >
+                            <input type="hidden" value="${auth.password}" name="password" >
                             <input type="hidden" value="${auth.phone}" name="phone">
                             <input type="hidden" value="${auth.address}" name="address">
                             <input type="hidden" value="${auth.role}" name="role">
