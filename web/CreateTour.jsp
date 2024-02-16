@@ -7,7 +7,6 @@
         <title>Create Tour</title>
     </head>
     <body>
-        <%@ include file="includes/navbar.jsp" %>
         <br>
         <br>
         <br>
@@ -53,10 +52,12 @@
                 <br>
                 <br>
                
-                <div class="form-group">
-                    <label for="locationName">Location Name:</label>
-                    <input type="text" id="locationName" name="locationName" class="form-control" required>
-                </div>
+                <label for="location">Select a location:</label>
+                <select id="location" name="locationId" required>
+                    <c:forEach var="location" items="${locations}">
+                        <option value="${location.locationId}">${location.locationName}</option>
+                    </c:forEach>
+                </select><br><br>
 
                 <div class="form-group">
                     <label for="tourName">Tour Name:</label>

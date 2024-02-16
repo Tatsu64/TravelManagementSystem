@@ -37,35 +37,40 @@
     <br>
     <br>
     <div class="container">
-        <input type="hidden" name="locationId" value="${locationId}">
-        <table class="table table-light">
-            <thead>
-                <tr>
-                    <th scope="col">Hotel Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Image</th> 
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${hotelList}" var="hotel">
+        <form action="HotelServlet" method="post"> <!-- Form để gửi dữ liệu khách sạn đã chọn -->
+            <input type="hidden" name="locationId" value="${locationId}">
+            <input type="hidden" name="tourId" value="${tourId}">
+            <table class="table table-light">
+                <thead>
                     <tr>
-                        <td>${hotel.hotelName}</td>
-                        <td>${hotel.price}</td>
-                        <td>${hotel.address}</td>
-                        <td><img src="${hotel.imageUrl}" alt="Hotel Image" class="hotel-image"></td> 
+                        <th scope="col">Select</th> <!-- Cột chứa hộp kiểm -->
+                        <th scope="col">Hotel Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Image</th> 
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-        <button onclick="location.href='AddHotel.jsp?locationId=${locationId}';" type="button" class="btn btn-primary">Add Hotel</button>
+                </thead>
+                <tbody>
+                    <c:forEach items="${hotelList}" var="hotel">
+                        <tr>
+                            <td><input type="checkbox" name="selectedHotels" value="${hotel.hotelId}"></td> <!-- Hộp kiểm cho mỗi khách sạn -->
+                            <td>${hotel.hotelName}</td>
+                            <td>${hotel.price}</td>
+                            <td>${hotel.address}</td>
+                            <td><img src="${hotel.imageUrl}" alt="Hotel Image" class="hotel-image"></td> 
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Next</button> <!-- Nút để gửi dữ liệu khi đã chọn -->
+        </form>
 
         <br>
         <br>
-        <a href="RestaurantServlet?locationId=${locationId}" class="btn btn-secondary">Next</a>
     </div>
     <footer>
         <%@include file="includes/footer.jsp" %>
     </footer>
 </body>
+
 </html>

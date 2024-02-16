@@ -80,14 +80,16 @@ public class ViewTourDetailServlet extends HttpServlet {
             
             LocationDAO locationDAO = new LocationDAO(DatabaseConnector.getConnection());
             
-            Location location = locationDAO.getLocationByTourId(tourId);
-            int locationId = location.getLocationId();
-            
+            // Lấy danh sách địa điểm dựa trên tourId
+            List<Location> locations = locationDAO.getLocationByTourId(tourId);
+
             HotelDAO hotelDAO = new HotelDAO(DatabaseConnector.getConnection());
-            List<Hotel> hotelList = hotelDAO.getHotelList(locationId);
+             // Lấy danh sách khách sạn theo tourId
+            List<Hotel> hotelList = hotelDAO.getHotelByTourId(tourId);
             
             RestaurantDAO restaurantDAO = new RestaurantDAO(DatabaseConnector.getConnection());
-            List<Restaurant> restaurantList = restaurantDAO.getRestaurantList(locationId);
+            // Lấy danh sách nhà hàng dựa trên tourId
+            List<Restaurant> restaurantList = restaurantDAO.getRestaurantByTourId(tourId);
 
             // Kiểm tra xem tour có tồn tại hay không
             if (tour != null) {
@@ -96,7 +98,7 @@ public class ViewTourDetailServlet extends HttpServlet {
                 // Chuyển danh sách khách sạn sang JSP để hiển thị
                 request.setAttribute("restaurantList", restaurantList);
                 request.setAttribute("hotelList", hotelList);
-                request.setAttribute("location", location);
+                request.setAttribute("locations", locations);
                 request.setAttribute("activityScheduleList", activityScheduleList);
                 request.setAttribute("tour", tour);
                 request.setAttribute("transportations", transportations);

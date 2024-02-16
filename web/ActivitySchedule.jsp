@@ -55,7 +55,7 @@
             <button onclick="location.href='CreateActivitySchedules.jsp?tourId=${tourId}&locationId=${locationId}';" type="button" class="btn btn-primary">Add Activity Schedule</button>
             <br>
             <br>
-           <a href="HotelServlet?locationId=${locationId}" class="btn btn-secondary">Next</a>
+           <a href="HotelServlet?tourId=${tourId}&locationId=${locationId}" class="btn btn-secondary">Next</a>
         </div>
         <footer>
             <%@include file="includes/footer.jsp" %>

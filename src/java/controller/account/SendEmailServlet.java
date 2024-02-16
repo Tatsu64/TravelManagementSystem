@@ -65,11 +65,11 @@ public class SendEmailServlet extends HttpServlet {
         try {
             
             UserDAO am = new UserDAO(connection);
-            User a = am.getUserByEmail(email);
-            System.out.println(a);
+            User user = am.getUserByEmail(email);
+            System.out.println(user);
             if (checkUserExists(email)) {
-                if (a == null) {
-                    response.sendRedirect("error.jsp");
+                if (user == null) {
+                    response.sendRedirect("404.jsp");
                 } else {
                     String otp = generateOTP();
                     saveOTP(email, otp);                   
@@ -85,11 +85,14 @@ public class SendEmailServlet extends HttpServlet {
                     emailToExpirationTime.put(email, expirationTime);
 
                     session.setAttribute("otp", otp);
-                    response.sendRedirect("verify.jsp?userId=" + a.getUserId());
+                    
+                    session.setAttribute("auth", user);
+                    
+                    response.sendRedirect("verify.jsp?userId=" + user.getUserId());
                 }
 
             } else {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("404.jsp");
             }
         } catch (Exception ex) {
             Logger.getLogger(SendEmailServlet.class.getName()).log(Level.SEVERE, null, ex);

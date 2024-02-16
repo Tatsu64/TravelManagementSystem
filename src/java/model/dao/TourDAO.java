@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import model.database.DatabaseConnector;
 import model.entity.Employee;
+import model.entity.HotelTour;
+import model.entity.RestaurantTour;
 import model.entity.Tour;
 import model.entity.TourTransportation;
 import model.entity.Transportation;
@@ -108,34 +110,88 @@ public class TourDAO {
 
 
 
-    // Phương thức để thêm tour_id và transportation_id vào bảng TourTransportations
     public boolean addTourTransportation(TourTransportation tourTransportation) {
-        // Câu lệnh SQL để chèn dữ liệu vào bảng TourTransportations
-        String sql = "INSERT INTO TourTransportations (tour_id, transportation_id) VALUES (?, ?)";
+        String sql = "INSERT INTO TourTransportation (tour_id, transportation_id) VALUES (?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, tourTransportation.getTourId());
+            statement.setInt(2, tourTransportation.getTransportationId());
+            int rowsInserted = statement.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi thêm TourTransportation vào bảng: " + e.getMessage());
+            return false;
+        }
+    }
+
+    
+     public void addTourLocation(int tourId, int locationId) throws SQLException {
+        String sql = "INSERT INTO TourLocation (tour_id, location_id) VALUES (?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, tourId);
+            statement.setInt(2, locationId);
+            statement.executeUpdate();
+        }
+    }
+     
+    // Phương thức để thêm hotel_id và tour_id vào bảng HotelTour
+    public boolean addHotelTour(HotelTour hotelTour) {
+        // Câu lệnh SQL để chèn dữ liệu vào bảng HotelTour
+        String sql = "INSERT INTO HotelTour (hotel_id, tour_id) VALUES (?, ?)";
 
         try {
             // Chuẩn bị câu lệnh SQL
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            // Thiết lập các tham số từ đối tượng TourTransportation
-            statement.setInt(1, tourTransportation.getTourId());
-            statement.setInt(2, tourTransportation.getTransportationId());
+            // Thiết lập các tham số từ đối tượng HotelTour
+            statement.setInt(1, hotelTour.getHotelId());
+            statement.setInt(2, hotelTour.getTourId());
 
             // Thực thi câu lệnh SQL
             int rowsInserted = statement.executeUpdate();
 
             // Kiểm tra xem có hàng nào được chèn không
             if (rowsInserted > 0) {
-                System.out.println("TourTransportation đã được thêm vào bảng thành công!");
+                System.out.println("HotelTour đã được thêm vào bảng thành công!");
                 return true;
             }
         } catch (SQLException e) {
-            System.out.println("Lỗi khi thêm TourTransportation vào bảng: " + e.getMessage());
+            System.out.println("Lỗi khi thêm HotelTour vào bảng: " + e.getMessage());
         }
 
         return false;
     }
     
+    // Phương thức để thêm restaurant_id và tour_id vào bảng RestaurantTour
+
+    public boolean addRestaurantTour(RestaurantTour restaurantTour) {
+        // Câu lệnh SQL để chèn dữ liệu vào bảng RestaurantTour
+        String sql = "INSERT INTO RestaurantTour (restaurant_id, tour_id) VALUES (?, ?)";
+
+        try {
+            // Chuẩn bị câu lệnh SQL
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            // Thiết lập các tham số từ đối tượng RestaurantTour
+            statement.setInt(1, restaurantTour.getRestaurantId());
+            statement.setInt(2, restaurantTour.getTourId());
+
+            // Thực thi câu lệnh SQL
+            int rowsInserted = statement.executeUpdate();
+
+            // Kiểm tra xem có hàng nào được chèn không
+            if (rowsInserted > 0) {
+                System.out.println("RestaurantTour đã được thêm vào bảng thành công!");
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi thêm RestaurantTour vào bảng: " + e.getMessage());
+        }
+
+        return false;
+    }
+
     public List<Tour> getToursWithApprovalStatus(int approvalStatus) {
         List<Tour> tours = new ArrayList<>();
         PreparedStatement stmt = null;
@@ -220,29 +276,32 @@ public class TourDAO {
     }
     
     public List<Transportation> getTransportationsForTour(int tourId) {
-        List<Transportation> transportations = new ArrayList<>();
-        String query = "SELECT * FROM Transportations INNER JOIN TourTransportations ON Transportations.transportation_id = TourTransportations.transportation_id WHERE TourTransportations.tour_id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, tourId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Transportation transportation = new Transportation();
-                    transportation.setTransportationId(resultSet.getInt("transportation_id"));
-                    transportation.setTransportationName(resultSet.getString("transportation_name"));
-                    transportation.setDepartureDate(resultSet.getDate("departure_date"));
-                    transportation.setReturnDate(resultSet.getDate("return_date"));
-                    transportation.setPrice(resultSet.getBigDecimal("price"));
-                    transportation.setImageUrl(resultSet.getString("image_url"));
-                    // Điều này giả sử các thông tin khác của Transportation có sẵn trong cơ sở dữ liệu
+    List<Transportation> transportations = new ArrayList<>();
+    String query = "SELECT * FROM Transportations " +
+                   "INNER JOIN TourTransportation ON Transportations.transportation_id = TourTransportation.transportation_id " +
+                   "WHERE TourTransportation.tour_id = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setInt(1, tourId);
+        try (ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                Transportation transportation = new Transportation();
+                transportation.setTransportationId(resultSet.getInt("transportation_id"));
+                transportation.setTransportationName(resultSet.getString("transportation_name"));
+                transportation.setDepartureDate(resultSet.getDate("departure_date"));
+                transportation.setReturnDate(resultSet.getDate("return_date"));
+                transportation.setPrice(resultSet.getBigDecimal("price"));
+                transportation.setImageUrl(resultSet.getString("image_url"));
+                // Các thông tin khác của Transportation có sẵn trong cơ sở dữ liệu
 
-                    transportations.add(transportation);
-                }
+                transportations.add(transportation);
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Xử lý ngoại lệ SQL
         }
-        return transportations;
+    } catch (SQLException e) {
+        e.printStackTrace(); // Xử lý ngoại lệ SQL
     }
+    return transportations;
+}
+
     // Read
     public Tour getTourById(int tourId) {
         try {
