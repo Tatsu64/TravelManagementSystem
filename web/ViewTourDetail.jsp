@@ -82,7 +82,7 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td><img src="${tour.imageUrl}" alt="Tour Image" width="100"></td>
+                <td><img src="images/${tour.imageUrl}" alt="Tour Image" width="100"></td>
             </tr>
             <tr>
                 <th>Start Location</th>

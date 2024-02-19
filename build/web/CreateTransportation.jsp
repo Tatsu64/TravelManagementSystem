@@ -38,8 +38,8 @@
             </div>
 
             <div class="form-group">
-                <label for="imageUrl">Image URL:</label>
-                <input type="text" id="imageUrl" name="imageUrl" class="form-control" required>
+                <label for="imageUrl">Image:</label>
+                <input type="file" class="account-settings-fileinput" name="imageUrl">
             </div>
             <br>
             <!-- Back to CreateTour.jsp button -->
