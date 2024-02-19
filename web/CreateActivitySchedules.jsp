@@ -11,23 +11,7 @@
         <%@ include file="includes/header.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Activity Schedule</title>
-        <style>
-        h2 {
-            margin-left: 5%;
-        }
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            text-align: center;
-        }
-        .hotel-image {
-            max-width: 100px; /* Độ rộng tối đa của hình ảnh */
-            height: auto; /* Độ cao tự động tính dựa trên chiều rộng */
-        }
-    </style>
+        
     </head>
     <body>
         <br>

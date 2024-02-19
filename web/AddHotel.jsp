@@ -48,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label for="imageUrl">Image URL:</label>
-                <input type="text" id="imageUrl" name="imageUrl" class="form-control">
+                <input type="file" class="account-settings-fileinput" name="imageUrl">
             </div>
             <div class="form-group">
                 <label for="address">Address:</label>

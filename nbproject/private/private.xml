@@ -3,18 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/CreateActivitySchedules.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/model/dao/TourDAO.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/verify.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/controller/tour/CreateTourServlet.java</file>
             <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/AddHotel.jsp</file>
             <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/ViewTourDetail.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/password-changed-successfully.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/controller/account/UserServlet.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/controller/tour/ViewTourDetailServlet.java</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/resetpassword.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/verifySignUp.jsp</file>
-            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/controller/account/ResetPasswordServlet.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/CreateTransportation.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/web/CreateTour.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/NetBeansProjects/TravelManagementSystem/src/java/controller/tour/CreateTransportationServlet.java</file>
         </group>
     </open-files>
 </project-private>

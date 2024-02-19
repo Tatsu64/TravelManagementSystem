@@ -4,7 +4,11 @@
  */
 package controller.tour;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -12,12 +16,12 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import model.dao.TransportationDAO;
 import model.database.DatabaseConnector;
 import model.entity.Transportation;
@@ -26,6 +30,9 @@ import model.entity.Transportation;
  *
  * @author ADMIN
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)  // 50MB
 public class CreateTransportationServlet extends HttpServlet {
 
     /**
@@ -66,13 +73,40 @@ public class CreateTransportationServlet extends HttpServlet {
     @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
+      processRequest(request, response);
+    }
+  
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+          try {
             // Retrieve data from the form
             String transportationName = request.getParameter("transportationName");
             String departureDateString = request.getParameter("departureDate");
             String returnDateString = request.getParameter("returnDate");
             String priceString = request.getParameter("price");
-            String imageUrl = request.getParameter("imageUrl");
+             // Handling image upload
+            Part filePart = request.getPart("image");
+            String fileName = getFileName(filePart);
+            String uploadDirectory = "/images";
+            String filePath = getServletContext().getRealPath(uploadDirectory + File.separator + fileName);
+
+            // Save the file to the server
+            try (InputStream input = filePart.getInputStream(); OutputStream output = new FileOutputStream(filePath)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = input.read(buffer)) != -1) {
+                    output.write(buffer, 0, bytesRead);
+                }
+            }
 
             // Convert date strings to Date objects
             Date departureDate = parseDate(departureDateString);
@@ -86,7 +120,7 @@ public class CreateTransportationServlet extends HttpServlet {
             newTransportation.setDepartureDate(departureDate);
             newTransportation.setReturnDate(returnDate);
             newTransportation.setPrice(price);
-            newTransportation.setImageUrl(imageUrl);
+            newTransportation.setImageUrl(fileName);
 
             // Establish a database connection
             Connection connection = DatabaseConnector.getConnection();
@@ -104,7 +138,8 @@ public class CreateTransportationServlet extends HttpServlet {
             ex.printStackTrace(); // Handle the exception appropriately
         }
     }
-    private Date parseDate(String dateStr) {
+    
+      private Date parseDate(String dateStr) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             return sdf.parse(dateStr);
@@ -113,19 +148,21 @@ public class CreateTransportationServlet extends HttpServlet {
             return null;
         }
     }
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    // Helper method to get the file name from the Part
+
+    private String getFileName(Part part) {
+        if (part != null) {
+            String contentDisp = part.getHeader("content-disposition");
+            String[] tokens = contentDisp.split(";");
+            for (String token : tokens) {
+                if (token.trim().startsWith("filename")) {
+                    return token.substring(token.indexOf("=") + 2, token.length() - 1);
+                }
+            }
+        }
+        return "";
     }
+
 
     /**
      * Returns a short description of the servlet.

@@ -12,7 +12,7 @@
         <br>
         <br>
         <br>
-        <form action="CreateTourServlet" method="get">
+        <form action="CreateTourServlet" method="post" enctype="multipart/form-data">
 
             <div class="container">
                 <h2>Create a New Tour</h2>
@@ -51,7 +51,7 @@
                 <a href="CreateTransportation.jsp" class="btn btn-secondary">Add Transportation</a>
                 <br>
                 <br>
-               
+
                 <label for="location">Select a location:</label>
                 <select id="location" name="locationId" required>
                     <c:forEach var="location" items="${locations}">
@@ -83,11 +83,13 @@
                     <label for="tourPrice">Tour Price:</label>
                     <input type="text" id="tourPrice" name="tourPrice" class="form-control" required>
                 </div>
+                <br>
 
                 <div class="form-group">
-                    <label for="imageUrl">Image URL:</label>
-                    <input type="text" id="imageUrl" name="imageUrl" class="form-control" required>
+                    <label for="image">Image:</label>
+                    <input type="file" name="image" id="image">
                 </div>
+                <br>
 
                 <div class="form-group">
                     <label for="employeeId">Employee:</label>
@@ -148,8 +150,8 @@
             <c:forEach items="${transportationList}" var="transportation" varStatus="loop">
                 <c:if test="${loop.index < 4}">
                 var html = '<tr><td><div class="form-check">';
-               html += '<input type="checkbox" id="transportation${transportation.transportationId}" name="selectedTransportations[]" value="${transportation.transportationId}" class="form-check-input">';
-               html += '<label for="transportation${transportation.transportationId}" class="form-check-label">${transportation.transportationName}</label>';
+                html += '<input type="checkbox" id="transportation${transportation.transportationId}" name="selectedTransportations[]" value="${transportation.transportationId}" class="form-check-input">';
+                html += '<label for="transportation${transportation.transportationId}" class="form-check-label">${transportation.transportationName}</label>';
                 html += '</div></td></tr>';
                 container.querySelector('tbody').innerHTML += html;
                 </c:if>

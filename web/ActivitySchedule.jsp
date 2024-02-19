@@ -11,28 +11,17 @@
         <meta charset="UTF-8">
         <title>Activity Schedules</title>
         <%@include file="includes/header.jsp" %>
-        <style>
-            h2{
-                margin-left: 5%;
-            }
-            footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                background-color: #f8f9fa;
-                padding: 20px 0;
-                text-align: center;
-            }
-        </style>
+        
     </head>
     <body>
         <br>
         <br>
         <br>
-        <h2>Activity Schedules</h2>
+        
         <br>
         <br>
         <div class="container">
+            <h2>Activity Schedules</h2>
             <input type="hidden" name="locationId" value="${locationId}">
             <table class="table table-light">
                 <thead>

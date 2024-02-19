@@ -6,28 +6,17 @@
 <head>
     <%@include file="includes/header.jsp" %>
     <title>Manage Tours</title>
-     <style>
-         h2{
-             margin-left: 5%;
-         }
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            text-align: center;
-        }
-    </style>
+   
 </head>
 <body>
     <br>
     <br>
     <br>
-    <h2>Manage Tours</h2>
+    
     <br>
     <br>
     <div class="container">
+        <h2>Manage Tours</h2>
         <table class="table table-light">
             <thead>
                 <tr>

@@ -12,7 +12,7 @@
     <br>
     <br>
     <br>
-    <form action="CreateTransportationServlet" method="get">
+    <form action="CreateTransportationServlet" method="post" enctype="multipart/form-data">
 
         <div class="container">
             <h2>Create a New Transportation</h2>
@@ -36,10 +36,11 @@
                 <label for="price">Price:</label>
                 <input type="text" id="price" name="price" class="form-control" required>
             </div>
+            <br>
 
             <div class="form-group">
-                <label for="imageUrl">Image URL:</label>
-                <input type="text" id="imageUrl" name="imageUrl" class="form-control" required>
+                <label for="image">Image:</label>
+                <input type="file" name="image" id="image">
             </div>
             <br>
             <!-- Back to CreateTour.jsp button -->

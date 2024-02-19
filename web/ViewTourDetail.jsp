@@ -82,7 +82,7 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td><img src="${tour.imageUrl}" alt="Tour Image" width="100"></td>
+                <td><img src="images/${tour.imageUrl}" alt="Tour Image" width="100"></td>
             </tr>
             <tr>
                 <th>Start Location</th>
@@ -139,7 +139,7 @@
                 <td>${transportation.departureDate}</td>
                 <td>${transportation.returnDate}</td>
                 <td>${transportation.price}</td>
-                <td><img src="${transportation.imageUrl}" alt="Transportation Image" width="100"></td>
+                <td><img src="images/${transportation.imageUrl}" alt="Transportation Image" width="100"></td>
             </tr>
         </c:forEach>
     </table>
@@ -184,7 +184,7 @@
                         <td>${hotel.hotelName}</td>
                         <td>${hotel.address}</td>
                         <td>${hotel.price}</td>
-                        <td><img src="${hotel.imageUrl}" alt="Hotel Image" width="100"></td>
+                        <td><img src="images/${hotel.imageUrl}" alt="Hotel Image" width="100"></td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -208,7 +208,7 @@
                         <td>${restaurant.address}</td>
                         <td>${restaurant.reservationDate}</td>
                         <td>${restaurant.price}</td>
-                        <td><img src="${restaurant.imageUrl}" alt="Restaurant Image" width="100"></td>
+                        <td><img src="images/${restaurant.imageUrl}" alt="Restaurant Image" width="100"></td>
                     </tr>
                 </c:forEach>
             </tbody>
