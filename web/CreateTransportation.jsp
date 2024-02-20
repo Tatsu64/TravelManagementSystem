@@ -12,7 +12,7 @@
     <br>
     <br>
     <br>
-    <form action="CreateTransportationServlet" method="post" enctype="multipart/form-data">
+    <form action="CreateTransportationServlet" method="post" enctype="multipart/form-data" onsubmit="return validateDates()">
 
         <div class="container">
             <h2>Create a New Transportation</h2>
@@ -51,5 +51,18 @@
         </div>
     </form>
     <%@ include file="includes/footer.jsp" %>
+    <script>
+    function validateDates() {
+        var departureDate = document.getElementById('departureDate').value;
+        var returnDate = document.getElementById('returnDate').value;
+
+        if (departureDate >= returnDate) {
+            alert("Return date must be after departure date");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 </body>
 </html>

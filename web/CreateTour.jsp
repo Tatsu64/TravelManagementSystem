@@ -12,7 +12,7 @@
         <br>
         <br>
         <br>
-        <form action="CreateTourServlet" method="post" enctype="multipart/form-data">
+        <form action="CreateTourServlet" method="post" enctype="multipart/form-data" onsubmit="return validateDates() && validateCapacities()">
 
             <div class="container">
                 <h2>Create a New Tour</h2>
@@ -159,6 +159,26 @@
 
                 showMoreBtn.style.display = 'inline';
                 showLessBtn.style.display = 'none';
+            }
+            function validateDates() {
+                var startDate = document.getElementById('startDate').value;
+                var endDate = document.getElementById('endDate').value;
+
+                if (startDate >= endDate) {
+                    alert("End date must be after start date");
+                    return false;
+                }
+                return true;
+            }
+            function validateCapacities() {
+                var maxCapacity = parseInt(document.getElementById('maxCapacity').value);
+                var currentCapacity = parseInt(document.getElementById('currentCapacity').value);
+
+                if (currentCapacity > maxCapacity) {
+                    alert("Current capacity cannot exceed max capacity");
+                    return false;
+                }
+                return true;
             }
         </script>
     </body>
