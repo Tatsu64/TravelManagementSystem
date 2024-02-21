@@ -40,7 +40,6 @@
                         <a href="booking.jsp" class="dropdown-item">Booking</a>
                         <a href="team.jsp" class="dropdown-item">Travel Guides</a>
                         <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
-                        <a href="Change-Password.jsp" class="dropdown-item">Change Password</a>
                         <a href="404.jsp" class="dropdown-item">404 Page</a>
                     </div>
 

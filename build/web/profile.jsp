@@ -17,7 +17,6 @@
 </head>
 
 <body>
-    <%@include file="includes/navbar.jsp" %>
     <br>
     <br>
     <br>
@@ -48,8 +47,8 @@
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list"
                             href="#account-general">User Profile</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-change-password"></a>
+                        <a class="list-group-item list-group-item-action" 
+                            href="Change-Password.jsp">Change Password</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-info"></a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
