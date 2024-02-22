@@ -3,7 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/Downloads/bài-20240222T065307Z-001/bài/TravelManagementSystem-main/src/java/controller/pub/HomeServlet.java</file>
+=======
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/src/java/controller/account/ResetPasswordServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/src/java/controller/account/SendEmailServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/src/java/controller/account/LogoutServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/web/profile.jsp</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/src/java/controller/account/ChangePassword.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/src/java/controller/account/SignUpServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/web/Change-Password.jsp</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/src/java/controller/account/UpdateProfileServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_DEMO_3/TravelManagementSystem/web/includes/navbar.jsp</file>
+>>>>>>> 00dd0788b8c28969c463fdbac03fa71119bec581
         </group>
     </open-files>
 </project-private>

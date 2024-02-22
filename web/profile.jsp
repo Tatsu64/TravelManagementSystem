@@ -21,7 +21,7 @@
     <br>
     <br>
     <br>
-    <form action="UpdateProfileServlet" method="get"> 
+    <form action="UpdateProfileServlet" method="post"> 
         <input type="hidden" value="${auth.userId}" name="id">
         <input type="hidden" value="${auth.password}" name="password">
         <input type="hidden" value="${auth.role}" name="role">
