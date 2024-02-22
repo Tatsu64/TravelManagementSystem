@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
             <c:if test="${sessionScope.auth == null}"> 
-                <a href="index.jsp" class="nav-item nav-link">Home</a>
+                <a href="Home" class="nav-item nav-link">Home</a>
                 <a href="about.jsp" class="nav-item nav-link">About</a>
                 <a href="service.jsp" class="nav-item nav-link">Services</a>
                 <a href="package.jsp" class="nav-item nav-link">Packages</a>
@@ -29,7 +29,7 @@
             </c:if>
 
             <c:if test="${sessionScope.auth.role == 'User'}"> 
-                <a href="index.jsp" class="nav-item nav-link">Home</a>
+                <a href="Home" class="nav-item nav-link">Home</a>
                 <a href="about.jsp" class="nav-item nav-link">About</a>
                 <a href="service.jsp" class="nav-item nav-link">Services</a>
                 <a href="package.jsp" class="nav-item nav-link">Packages</a>
@@ -40,6 +40,7 @@
                         <a href="booking.jsp" class="dropdown-item">Booking</a>
                         <a href="team.jsp" class="dropdown-item">Travel Guides</a>
                         <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
+                        <a href="Change-Password.jsp" class="dropdown-item">Change Password</a>
                         <a href="404.jsp" class="dropdown-item">404 Page</a>
                     </div>
 

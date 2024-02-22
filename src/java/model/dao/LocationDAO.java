@@ -4,26 +4,31 @@
  */
 package model.dao;
 
-/**
- *
- * @author ADMIN
- */
+import model.entity.MenuLocation;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import static model.database.DatabaseConnector.connection;
+import model.entity.Employee;
 import model.entity.Location;
 
+/**
+ *
+ * @author toden
+ */
 public class LocationDAO {
-    private Connection connection;
 
-    // Constructor
     public LocationDAO(Connection connection) {
-        this.connection = connection;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public int createLocationAndGetId(Location newLocation) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     // Phương thức để tạo mới một địa điểm trong cơ sở dữ liệu
     public boolean createLocation(Location location) {
         String query = "INSERT INTO Locations (location_name) VALUES (?)";
@@ -97,5 +102,16 @@ public class LocationDAO {
         return locations;
     }
 
-}
+    public static List<MenuLocation> getMenuLocation() throws SQLException {
+        List<MenuLocation> locations = new ArrayList<>();
+        try ( PreparedStatement statement = connection.prepareStatement("select * from Locations");  ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                String name = rs.getNString(2);
 
+                locations.add(new MenuLocation(name,"https://t4.ftcdn.net/jpg/02/80/82/81/360_F_280828158_ZZ2W8atYMHiSkLoDzxgDHNhdmXJ31jCR.jpg"));
+            }
+        }
+        return locations;
+    }
+
+}
