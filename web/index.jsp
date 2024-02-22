@@ -256,7 +256,7 @@
                         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                             <div class="package-item">
                                 <div class="overflow-hidden">
-                                    <img class="img-fluid" src="${ht.getImage()}" alt="">
+                                    <img class="img-fluid" src="images/${ht.getImage()}" alt="">
                                 </div>
                                 <div class="d-flex border-bottom">
                                     <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>${ht.getLocation()}</small>
@@ -295,7 +295,7 @@
                                         <div class="col-lg-12 col-md-12">
                                             <div class="package-item">
                                                 <div class="overflow-hidden">
-                                                    <img class="img-fluid" src="${ht.getImage()}" alt="">
+                                                    <img class="img-fluid" src="images/${ht.getImage()}" alt="">
                                                 </div>
                                                 <div class="d-flex border-bottom">
                                                     <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>${ht.getLocation()}</small>

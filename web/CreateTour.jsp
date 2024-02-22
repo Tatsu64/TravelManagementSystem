@@ -117,7 +117,7 @@
                 <br>
                 <br>
                 <button type="submit" class="btn btn-dark">Create Tour</button>
-                <a href="index.jsp" class="btn btn-secondary">Back to HomePage</a>
+                <a href="Home" class="btn btn-secondary">Back to HomePage</a>
             </div>
         </form>
         <%@ include file="includes/footer.jsp" %>

@@ -116,7 +116,7 @@ public class TourDAO {
     // Phương thức để thêm tour_id và transportation_id vào bảng TourTransportations
     public boolean addTourTransportation(TourTransportation tourTransportation) {
         // Câu lệnh SQL để chèn dữ liệu vào bảng TourTransportations
-        String sql = "INSERT INTO TourTransportations (tour_id, transportation_id) VALUES (?, ?)";
+        String sql = "INSERT INTO TourTransportation (tour_id, transportation_id) VALUES (?, ?)";
 
         try {
             // Chuẩn bị câu lệnh SQL
@@ -479,7 +479,7 @@ public class TourDAO {
         tour.setImage(resultSet.getString("image_url"));
 
         tour.setLocation(resultSet.getString("start_location"));
-        tour.setPerson(resultSet.getInt("max_capacity"));
+        tour.setPerson(resultSet.getInt("max_capacity") - resultSet.getInt("current_capacity"));
 
         return tour;
     }

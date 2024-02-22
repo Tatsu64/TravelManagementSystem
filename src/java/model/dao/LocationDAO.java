@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import static model.database.DatabaseConnector.connection;
-import model.entity.Employee;
 import model.entity.Location;
 
 /**
@@ -22,7 +21,7 @@ import model.entity.Location;
 public class LocationDAO {
 
     public LocationDAO(Connection connection) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      
     }
 
     public int createLocationAndGetId(Location newLocation) {
