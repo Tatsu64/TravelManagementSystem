@@ -12,10 +12,18 @@ public class DatabaseConnector {
     private static final String USERNAME = "sa";
     private static final String PASSWORD = "sa";
 
-    private static Connection connection;
+    public static Connection connection;
 
-    private DatabaseConnector() {
+    public DatabaseConnector() {
         // Private constructor to prevent instantiation
+        if (connection == null) {
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace(); // Handle the exception appropriately
+            }
+        }
     }
 
     public static Connection getConnection() {
@@ -37,6 +45,15 @@ public class DatabaseConnector {
             } catch (SQLException e) {
                 e.printStackTrace(); // Handle the exception appropriately
             }
+        }
+    }
+    
+    public static void main(String[] args) {
+        try{
+            new DatabaseConnector();
+            System.out.println("ket not thanh cong");
+        }catch(Exception ex){
+             System.out.println("ket not that bat "+ ex.getMessage());
         }
     }
 }

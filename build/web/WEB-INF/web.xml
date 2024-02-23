@@ -72,6 +72,18 @@
         <servlet-name>RestaurantServlet</servlet-name>
         <servlet-class>controller.tour.RestaurantServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>controller.pub.HomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>controller.pub.OrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailServlet</servlet-name>
+        <servlet-class>controller.pub.DetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -143,6 +155,18 @@
     <servlet-mapping>
         <servlet-name>RestaurantServlet</servlet-name>
         <url-pattern>/RestaurantServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/Order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailServlet</servlet-name>
+        <url-pattern>/Detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

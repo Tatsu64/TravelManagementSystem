@@ -17,12 +17,11 @@
 </head>
 
 <body>
-    <%@include file="includes/navbar.jsp" %>
     <br>
     <br>
     <br>
     <br>
-    <form action="UpdateProfileServlet" method="get"> 
+    <form action="UpdateProfileServlet" method="post"> 
         <input type="hidden" value="${auth.userId}" name="id">
         <input type="hidden" value="${auth.password}" name="password">
         <input type="hidden" value="${auth.role}" name="role">
@@ -48,8 +47,8 @@
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list"
                             href="#account-general">User Profile</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-change-password"></a>
+                        <a class="list-group-item list-group-item-action" 
+                            href="Change-Password.jsp">Change Password</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-info"></a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
