@@ -17,26 +17,20 @@ public class Restaurant {
     private int restaurantId;
     private String restaurantName;
     private Location location;  // Foreign Key to Location 
-    private Date reservationDate;
-    private BigDecimal price;
     private String imageUrl;
     private String address;
 
-    public Restaurant(int restaurantId, String restaurantName, Location location, Date reservationDate, BigDecimal price, String imageUrl, String address) {
+    public Restaurant(int restaurantId, String restaurantName, Location location, String imageUrl, String address) {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.location = location;
-        this.reservationDate = reservationDate;
-        this.price = price;
         this.imageUrl = imageUrl;
         this.address = address;
     }
 
-    public Restaurant(String restaurantName, Location location, Date reservationDate, BigDecimal price, String imageUrl, String address) {
+    public Restaurant(String restaurantName, Location location, String imageUrl, String address) {
         this.restaurantName = restaurantName;
         this.location = location;
-        this.reservationDate = reservationDate;
-        this.price = price;
         this.imageUrl = imageUrl;
         this.address = address;
     }
@@ -69,22 +63,6 @@ public class Restaurant {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Date getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(Date reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public String getImageUrl() {

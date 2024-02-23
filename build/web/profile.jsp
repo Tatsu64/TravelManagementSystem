@@ -21,7 +21,7 @@
     <br>
     <br>
     <br>
-    <form action="UpdateProfileServlet" method="post"> 
+    <form action="UpdateProfileServlet" method="post" onsubmit="return validatePhoneNumber();"> 
         <input type="hidden" value="${auth.userId}" name="id">
         <input type="hidden" value="${auth.password}" name="password">
         <input type="hidden" value="${auth.role}" name="role">
@@ -117,7 +117,16 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
-
+            function validatePhoneNumber() {
+                    var phoneNumber = document.getElementsByName("phone")[0].value;
+                    // Regular expression to validate a phone number (assuming a simple format)
+                    var phoneRegex = /^\d{10}$/;
+                    if (!phoneRegex.test(phoneNumber)) {
+                        alert("Please enter a valid 10-digit phone number.");
+                        return false;
+                    }
+                    return true;
+                }     
     </script>
    </form> 
 </body>

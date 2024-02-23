@@ -24,12 +24,10 @@ public class Tour {
     private Employee employee;  // Đây là khóa ngoại tới Employee
     private String startLocation;
     private int maxCapacity;
-    private int currentCapacity;
-    private int approvalStatus; // Thêm trường này để lưu trạng thái xét duyệt
 
     // Constructors, getters, and setters
 
-    public Tour(int tourId, String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity, int currentCapacity, int approvalStatus) {
+    public Tour(int tourId, String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity) {
         this.tourId = tourId;
         this.tourName = tourName;
         this.description = description;
@@ -40,11 +38,9 @@ public class Tour {
         this.employee = employee;
         this.startLocation = startLocation;
         this.maxCapacity = maxCapacity;
-        this.currentCapacity = currentCapacity;
-        this.approvalStatus = approvalStatus;
     }
 
-    public Tour(String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity, int currentCapacity, int approvalStatus) {
+    public Tour(String tourName, String description, Date startDate, Date endDate, BigDecimal tourPrice, String imageUrl, Employee employee, String startLocation, int maxCapacity) {
         this.tourName = tourName;
         this.description = description;
         this.startDate = startDate;
@@ -54,8 +50,6 @@ public class Tour {
         this.employee = employee;
         this.startLocation = startLocation;
         this.maxCapacity = maxCapacity;
-        this.currentCapacity = currentCapacity;
-        this.approvalStatus = approvalStatus;
     }
 
     public Tour(int tourId) {
@@ -146,20 +140,4 @@ public class Tour {
         this.maxCapacity = maxCapacity;
     }
 
-    public int getCurrentCapacity() {
-        return currentCapacity;
-    }
-
-    public void setCurrentCapacity(int currentCapacity) {
-        this.currentCapacity = currentCapacity;
-    }
-
-    public int getApprovalStatus() {
-        return approvalStatus;
-    }
-
-    public void setApprovalStatus(int approvalStatus) {
-        this.approvalStatus = approvalStatus;
-    }
-    
 }

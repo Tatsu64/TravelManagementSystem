@@ -45,8 +45,6 @@ public class RestaurantDAO {
                     // Đặt đối tượng Location cho nhà hàng
                     restaurant.setLocation(location);
 
-                    restaurant.setReservationDate(resultSet.getDate("reservation_date"));
-                    restaurant.setPrice(resultSet.getBigDecimal("price"));
                     restaurant.setImageUrl(resultSet.getString("image_url"));
                     restaurant.setAddress(resultSet.getString("address"));
                     restaurantList.add(restaurant);
@@ -72,8 +70,6 @@ public class RestaurantDAO {
                     restaurant.setRestaurantId(resultSet.getInt("restaurant_id"));
                     restaurant.setRestaurantName(resultSet.getString("restaurant_name"));
                     restaurant.setAddress(resultSet.getString("address"));
-                    restaurant.setReservationDate(resultSet.getDate("reservation_date"));
-                    restaurant.setPrice(resultSet.getBigDecimal("price"));
                     restaurant.setImageUrl(resultSet.getString("image_url"));
                     // Add restaurant to the list
                     restaurantList.add(restaurant);
@@ -85,15 +81,13 @@ public class RestaurantDAO {
     }
     
     public boolean createRestaurant(Restaurant restaurant) {
-        String query = "INSERT INTO Restaurants (restaurant_name, location_id, reservation_date, price, image_url, address) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Restaurants (restaurant_name, location_id, image_url, address) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, restaurant.getRestaurantName());
             preparedStatement.setInt(2, restaurant.getLocation().getLocationId());
-            preparedStatement.setDate(3, new java.sql.Date(restaurant.getReservationDate().getTime()));
-            preparedStatement.setBigDecimal(4, restaurant.getPrice());
-            preparedStatement.setString(5, restaurant.getImageUrl());
-            preparedStatement.setString(6, restaurant.getAddress());
+            preparedStatement.setString(3, restaurant.getImageUrl());
+            preparedStatement.setString(4, restaurant.getAddress());
 
             int rowsInserted = preparedStatement.executeUpdate();
             return rowsInserted > 0;

@@ -11,38 +11,28 @@ package model.entity;
 import java.util.Date;
 
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.util.Date;
 
 public class Transportation {
     private int transportationId;
     private String transportationName;
-    private Date departureDate;
-    private Date returnDate;
-    private BigDecimal price;
+    private Time departureTime;
+    private Time returnTime;
     private String imageUrl;
 
-    public Transportation(int transportationId, String transportationName, Date departureDate, Date returnDate, BigDecimal price, String imageUrl) {
+    public Transportation(int transportationId, String transportationName, Time depatureTime, Time returnTime, String imageUrl) {
         this.transportationId = transportationId;
         this.transportationName = transportationName;
-        this.departureDate = departureDate;
-        this.returnDate = returnDate;
-        this.price = price;
+        this.departureTime = depatureTime;
+        this.returnTime = returnTime;
         this.imageUrl = imageUrl;
     }
 
-    public Transportation(String transportationName, Date departureDate, Date returnDate, BigDecimal price, String imageUrl) {
-        this.transportationName = transportationName;
-        this.departureDate = departureDate;
-        this.returnDate = returnDate;
-        this.price = price;
-        this.imageUrl = imageUrl;
-    }
+   
 
     public Transportation() {
     }
-
-    
-    // Getters and Setters
 
     public int getTransportationId() {
         return transportationId;
@@ -60,28 +50,20 @@ public class Transportation {
         this.transportationName = transportationName;
     }
 
-    public Date getDepartureDate() {
-        return departureDate;
+    public Time getDepartureTime() {
+        return departureTime;
     }
 
-    public void setDepartureDate(Date departureDate) {
-        this.departureDate = departureDate;
+    public void setDepartureTime(Time depatureTime) {
+        this.departureTime = depatureTime;
     }
 
-    public Date getReturnDate() {
-        return returnDate;
+    public Time getReturnTime() {
+        return returnTime;
     }
 
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setReturnTime(Time returnTime) {
+        this.returnTime = returnTime;
     }
 
     public String getImageUrl() {
@@ -91,5 +73,8 @@ public class Transportation {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    
+  
     
 }

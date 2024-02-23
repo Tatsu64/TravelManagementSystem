@@ -43,7 +43,6 @@ public class ActivityScheduleDAO {
                 activitySchedule.setScheduleId(resultSet.getInt("schedule_id"));
                 activitySchedule.setDayNumber(resultSet.getInt("day_number"));
                 activitySchedule.setActivityName(resultSet.getString("activity_name"));
-                activitySchedule.setActivityDate(resultSet.getDate("activity_date"));
                 activitySchedule.setStartTime(resultSet.getTime("start_time"));
                 activitySchedule.setEndTime(resultSet.getTime("end_time"));
                 activitySchedule.setLocation(resultSet.getString("location"));
@@ -57,17 +56,16 @@ public class ActivityScheduleDAO {
         return activitySchedules;
     }
      public void createActivitySchedule(ActivitySchedule activitySchedule) throws SQLException {
-        String query = "INSERT INTO ActivitySchedules (tour_id, day_number, activity_name, activity_date, start_time, end_time, location, description, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO ActivitySchedules (tour_id, day_number, activity_name, start_time, end_time, location, description, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, activitySchedule.getTour().getTourId());
             preparedStatement.setInt(2, activitySchedule.getDayNumber());
-            preparedStatement.setString(3, activitySchedule.getActivityName());
-            preparedStatement.setDate(4, new java.sql.Date(activitySchedule.getActivityDate().getTime()));          
-            preparedStatement.setTime(5, activitySchedule.getStartTime());
-            preparedStatement.setTime(6, activitySchedule.getEndTime());
-            preparedStatement.setString(7, activitySchedule.getLocation());
-            preparedStatement.setString(8, activitySchedule.getDescription());
-            preparedStatement.setString(9, activitySchedule.getImageUrl());
+            preparedStatement.setString(3, activitySchedule.getActivityName());   
+            preparedStatement.setTime(4, activitySchedule.getStartTime());
+            preparedStatement.setTime(5, activitySchedule.getEndTime());
+            preparedStatement.setString(6, activitySchedule.getLocation());
+            preparedStatement.setString(7, activitySchedule.getDescription());
+            preparedStatement.setString(8, activitySchedule.getImageUrl());
 
             preparedStatement.executeUpdate();
         }

@@ -16,23 +16,20 @@ public class Hotel {
     private int hotelId;
     private String hotelName;
     private Location location;  // Foreign Key to Location
-    private BigDecimal price;
     private String imageUrl;
     private String address;
 
-    public Hotel(int hotelId, String hotelName, Location location, BigDecimal price, String imageUrl, String address) {
+    public Hotel(int hotelId, String hotelName, Location location, String imageUrl, String address) {
         this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.location = location;
-        this.price = price;
         this.imageUrl = imageUrl;
         this.address = address;
     }
 
-    public Hotel(String hotelName, Location location, BigDecimal price, String imageUrl, String address) {
+    public Hotel(String hotelName, Location location, String imageUrl, String address) {
         this.hotelName = hotelName;
         this.location = location;
-        this.price = price;
         this.imageUrl = imageUrl;
         this.address = address;
     }
@@ -65,14 +62,6 @@ public class Hotel {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public String getImageUrl() {

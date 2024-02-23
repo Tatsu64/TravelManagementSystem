@@ -31,12 +31,8 @@
                         <td>${tour.tourId}</td>
                         <td>${tour.tourName}</td>
                         <td>
-                            <form action="ApprovalTourServlet" method="post">
                                 <input type="hidden" name="tourId" value="${tour.tourId}">
-                                <input type="submit" name="action" value="Accept">
-                                <input type="submit" name="action" value="Reject">
                                 <button type="button" onclick="window.location.href='ViewTourDetailServlet?tourId=${tour.tourId}'">View Detail</button>
-                            </form>
                         </td>
                     </tr>
                 </c:forEach>
@@ -45,7 +41,7 @@
         <br>
         <br>
        
-        <a href="index.jsp" class="btn btn-primary">Back to Homepage</a>
+        <a href="Home" class="btn btn-primary">Back to Homepage</a>
     </div>
     <footer>
     <%@include file="includes/footer.jsp" %>

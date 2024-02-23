@@ -42,7 +42,6 @@ public class HotelDAO {
                     // Đặt location cho hotel
                     hotel.setLocation(location);
                     
-                    hotel.setPrice(rs.getBigDecimal("price"));
                     hotel.setImageUrl(rs.getString("image_url"));
                     hotel.setAddress(rs.getString("address"));
                     
@@ -64,7 +63,6 @@ public class HotelDAO {
                     Hotel hotel = new Hotel();
                     hotel.setHotelId(resultSet.getInt("hotel_id"));
                     hotel.setHotelName(resultSet.getString("hotel_name"));
-                    hotel.setPrice(resultSet.getBigDecimal("price"));
                     hotel.setImageUrl(resultSet.getString("image_url"));
                     hotel.setAddress(resultSet.getString("address"));
                     hotels.add(hotel);
@@ -75,13 +73,12 @@ public class HotelDAO {
         return hotels;
     }
     public boolean createHotel(Hotel hotel) throws SQLException {
-        String query = "INSERT INTO Hotels (hotel_name, location_id, price, image_url, address) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Hotels (hotel_name, location_id, image_url, address) VALUES (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, hotel.getHotelName());
             preparedStatement.setInt(2, hotel.getLocation().getLocationId());
-            preparedStatement.setBigDecimal(3, hotel.getPrice());
-            preparedStatement.setString(4, hotel.getImageUrl());
-            preparedStatement.setString(5, hotel.getAddress());
+            preparedStatement.setString(3, hotel.getImageUrl());
+            preparedStatement.setString(4, hotel.getAddress());
 
             int rowsInserted = preparedStatement.executeUpdate();
             return rowsInserted > 0;

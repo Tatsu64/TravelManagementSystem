@@ -37,10 +37,9 @@ public class TransportationDAO {
             Transportation transportation = new Transportation();
             transportation.setTransportationId(resultSet.getInt("transportation_id"));
             transportation.setTransportationName(resultSet.getString("transportation_name"));
-            transportation.setDepartureDate(resultSet.getDate("departure_date"));
-            transportation.setReturnDate(resultSet.getDate("return_date"));
-            transportation.setPrice(resultSet.getBigDecimal("price"));
             transportation.setImageUrl(resultSet.getString("image_url"));
+            transportation.setDepartureTime(resultSet.getTime("departure_time"));
+            transportation.setReturnTime(resultSet.getTime("return_time"));
             // Set other properties as needed
 
             transportationList.add(transportation);
@@ -53,15 +52,13 @@ public class TransportationDAO {
 
      // Method to create a new transportation record
     public void createTransportation(Transportation transportation) throws SQLException {
-        String query = "INSERT INTO Transportations (transportation_name, departure_date, return_date, price, image_url) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Transportations (transportation_name, image_url, departure_time, return_time) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, transportation.getTransportationName());
-            statement.setDate(2, new java.sql.Date(transportation.getDepartureDate().getTime()));
-            statement.setDate(3, new java.sql.Date(transportation.getReturnDate().getTime()));
-            statement.setBigDecimal(4, transportation.getPrice());
-            statement.setString(5, transportation.getImageUrl());
-
+            statement.setString(2, transportation.getImageUrl());
+            statement.setTime(3, transportation.getDepartureTime());
+            statement.setTime(4, transportation.getReturnTime());
             // Execute the insert statement
             statement.executeUpdate();
         }

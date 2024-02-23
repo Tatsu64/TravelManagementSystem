@@ -60,7 +60,7 @@ public class ApprovalTourServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
-        List<Tour> tours = tourDAO.getToursWithApprovalStatus(0); // Lấy danh sách các tour với approval_status = 0
+        List<Tour> tours = tourDAO.getTours(); // Lấy danh sách các tour với approval_status = 0
         request.setAttribute("tours", tours); // Đặt danh sách các tour vào thuộc tính "tours" của request
         request.getRequestDispatcher("/ManageTour.jsp").forward(request, response); 
     }
@@ -75,17 +75,7 @@ public class ApprovalTourServlet extends HttpServlet {
      */
     @Override
      protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        int tourId = Integer.parseInt(request.getParameter("tourId"));
-        TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
-        if ("Accept".equals(action)) {
-            tourDAO.updateApprovalStatus(tourId, 1); // Cập nhật approval_status thành 1
-        } else if ("Reject".equals(action)) {
-            tourDAO.updateApprovalStatus(tourId, 2); // Cập nhật approval_status thành 2
-        }
-
-        // Sau khi xử lý yêu cầu, chuyển hướng người dùng trở lại trang quản lý tour
-        response.sendRedirect(request.getContextPath() + "/ApprovalTourServlet");
+      
     }
 
     /**
