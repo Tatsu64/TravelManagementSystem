@@ -45,7 +45,7 @@
         <br>
         <br>
        
-        <a href="index.jsp" class="btn btn-primary">Back to Homepage</a>
+        <a href="Home" class="btn btn-primary">Back to Homepage</a>
     </div>
     <footer>
     <%@include file="includes/footer.jsp" %>

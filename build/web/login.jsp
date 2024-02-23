@@ -86,7 +86,7 @@
                     <div class="signin-form">
                         <h2 class="form-title">Login</h2>
                         <p style="color: red" class="text-danger">${mess}</p>
-                        <form action="UserServlet" method="get">
+                        <form action="UserServlet" method="post">
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="email" id="your_email" placeholder="Your Email"/>

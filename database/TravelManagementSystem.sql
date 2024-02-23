@@ -162,3 +162,28 @@ GO
 
 ALTER TABLE Tours
 ADD approval_status INT DEFAULT 0;
+
+ALTER TABLE Tours
+DROP COLUMN end_date;
+
+ALTER TABLE Tours
+DROP COLUMN start_date;
+
+CREATE TABLE TourDates (
+    tour_date_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    start_date DATE,
+    end_date DATE
+);
+
+CREATE TABLE Tour_TourDates (
+    tour_id INT,
+    tour_date_id INT,
+    PRIMARY KEY (tour_id, tour_date_id),
+    FOREIGN KEY (tour_id) REFERENCES Tours(tour_id),
+    FOREIGN KEY (tour_date_id) REFERENCES TourDates(tour_date_id)
+);
+
+
+
+
+
