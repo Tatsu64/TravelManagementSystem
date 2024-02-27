@@ -138,29 +138,27 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
                 response.sendRedirect("error.jsp");
                 return;
             }
+            int update = Integer.parseInt(request.getParameter("update"));
             int dayNumber = Integer.parseInt(request.getParameter("dayNumber"));
             String activityName = request.getParameter("activityName");
-            String activityDateStr = request.getParameter("activityDate");
             String startTimeStr = request.getParameter("startTime");
             String endTimeStr = request.getParameter("endTime");
             String location = request.getParameter("location");
             String description = request.getParameter("activityDescription");
             String imageUrl = request.getParameter("imageUrl");
 
-            Date activityDate = parseDate(activityDateStr);
 
             // Chuyển đổi startTimeStr thành startTime có cùng ngày với activityDate
-            Time startTime = parseTime(activityDateStr, startTimeStr);
+            Time startTime = parseTime(startTimeStr);
 
             // Chuyển đổi endTimeStr thành endTime có cùng ngày với activityDate
-            Time endTime = parseTime(activityDateStr, endTimeStr);
+            Time endTime = parseTime(endTimeStr);
 
             // Tạo đối tượng ActivitySchedule
             ActivitySchedule activitySchedule = new ActivitySchedule();
             activitySchedule.setTour(new Tour(tourId)); // Đặt tourId vào đối tượng Tour
             activitySchedule.setDayNumber(dayNumber);
             activitySchedule.setActivityName(activityName);
-            activitySchedule.setActivityDate(activityDate);
             activitySchedule.setStartTime(startTime);
             activitySchedule.setEndTime(endTime);
             activitySchedule.setLocation(location);
@@ -172,13 +170,15 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             activityScheduleDAO.createActivitySchedule(activitySchedule);
 
             // Redirect hoặc forward đến trang khác sau khi thêm thành công
+            if(update!=1){
             response.sendRedirect("ActivityScheduleServlet?tourId=" + tourId + "&locationId=" + locationId);
+            } else {
+                response.sendRedirect("ViewUpdateTourServlet?tourId=" + tourId);
+            }
         } catch (SQLException ex) {
             // Xử lý ngoại lệ SQLException
             ex.printStackTrace();
             response.sendRedirect("404.jsp");
-        } catch (ParseException ex) {
-            Logger.getLogger(ActivityScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -191,14 +191,14 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     }
 
 // Helper method to parse a string into a Time with the same date as activityDate
-    private Time parseTime(String activityDateStr, String timeStr) {
+   private Time parseTime(String timeStr) {
         if (timeStr == null || timeStr.isEmpty()) {
             return null; // Trả về null nếu chuỗi thời gian là null hoặc rỗng
         }
 
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            Date date = sdf.parse(activityDateStr + " " + timeStr);
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            java.util.Date date = sdf.parse(timeStr);
             return new Time(date.getTime());
         } catch (ParseException e) {
             e.printStackTrace();

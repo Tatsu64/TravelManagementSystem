@@ -8,7 +8,6 @@ package model.dao;
  *
  * @author ADMIN
  */
-
 import model.entity.HomeTour;
 import static helper.Helper.convertToLocalDate;
 import java.sql.Connection;
@@ -41,7 +40,7 @@ public class TourDAO {
             String query = "INSERT INTO Tours (tour_name, description, tour_price, image_url, employee_id, start_location, max_capacity) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            try ( PreparedStatement statement = connection.prepareStatement(query)) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, tour.getTourName());
                 statement.setString(2, tour.getDescription());
                 statement.setBigDecimal(3, tour.getTourPrice());
@@ -132,7 +131,50 @@ public class TourDAO {
 
         return false;
     }
-    
+
+    public void updateTourTransportation(int tourId, List<Integer> selectedTransportations) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = DatabaseConnector.getConnection();
+            // Xóa tất cả các bản ghi về vận chuyển của tour trong bảng trung gian trước khi thêm lại thông tin vận chuyển mới
+            String deleteQuery = "DELETE FROM TourTransportation WHERE tour_id = ?";
+            stmt = conn.prepareStatement(deleteQuery);
+            stmt.setInt(1, tourId);
+            stmt.executeUpdate();
+
+            // Thêm thông tin vận chuyển mới vào bảng trung gian
+            String insertQuery = "INSERT INTO TourTransportation (tour_id, transportation_id) VALUES (?, ?)";
+            stmt = conn.prepareStatement(insertQuery);
+            for (int transportationId : selectedTransportations) {
+                stmt.setInt(1, tourId);
+                stmt.setInt(2, transportationId);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Phương thức lấy danh sách các IDs của transportation liên kết với một tour cụ thể
+    public List<Integer> getTourTransportationIds(int tourId) throws SQLException {
+        List<Integer> transportationIds = new ArrayList<>();
+
+        String query = "SELECT transportation_id FROM tour_transportation WHERE tour_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, tourId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int transportationId = resultSet.getInt("transportation_id");
+                    transportationIds.add(transportationId);
+                }
+            }
+        }
+
+        return transportationIds;
+    }
+
     public void addTourLocation(int tourId, int locationId) throws SQLException {
         String sql = "INSERT INTO TourLocation (tour_id, location_id) VALUES (?, ?)";
 
@@ -142,7 +184,7 @@ public class TourDAO {
             statement.executeUpdate();
         }
     }
-     
+
     // Phương thức để thêm hotel_id và tour_id vào bảng HotelTour
     public boolean addHotelTour(HotelTour hotelTour) {
         // Câu lệnh SQL để chèn dữ liệu vào bảng HotelTour
@@ -170,9 +212,8 @@ public class TourDAO {
 
         return false;
     }
-    
-    // Phương thức để thêm restaurant_id và tour_id vào bảng RestaurantTour
 
+    // Phương thức để thêm restaurant_id và tour_id vào bảng RestaurantTour
     public boolean addRestaurantTour(RestaurantTour restaurantTour) {
         // Câu lệnh SQL để chèn dữ liệu vào bảng RestaurantTour
         String sql = "INSERT INTO RestaurantTour (restaurant_id, tour_id) VALUES (?, ?)";
@@ -199,6 +240,59 @@ public class TourDAO {
 
         return false;
     }
+
+    public void updateHotelTour(int tourId, List<Integer> hotelIds) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = DatabaseConnector.getConnection();
+            // Xóa tất cả các bản ghi về khách sạn của tour trong bảng trung gian trước khi thêm lại thông tin khách sạn mới
+            String deleteQuery = "DELETE FROM HotelTour WHERE tour_id = ?";
+            stmt = conn.prepareStatement(deleteQuery);
+            stmt.setInt(1, tourId);
+            stmt.executeUpdate();
+
+            // Thêm thông tin khách sạn mới vào bảng trung gian
+            String insertQuery = "INSERT INTO HotelTour (tour_id, hotel_id) VALUES (?, ?)";
+            stmt = conn.prepareStatement(insertQuery);
+            for (int hotelId : hotelIds) {
+                stmt.setInt(1, tourId);
+                stmt.setInt(2, hotelId);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void updateRestaurantTour(int tourId, List<Integer> restaurantIds) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = DatabaseConnector.getConnection();
+            // Xóa tất cả các bản ghi về nhà hàng của tour trong bảng trung gian trước khi thêm lại thông tin nhà hàng mới
+            String deleteQuery = "DELETE FROM RestaurantTour WHERE tour_id = ?";
+            stmt = conn.prepareStatement(deleteQuery);
+            stmt.setInt(1, tourId);
+            stmt.executeUpdate();
+
+            // Thêm thông tin nhà hàng mới vào bảng trung gian
+            String insertQuery = "INSERT INTO RestaurantTour (tour_id, restaurant_id) VALUES (?, ?)";
+            stmt = conn.prepareStatement(insertQuery);
+            for (int restaurantId : restaurantIds) {
+                stmt.setInt(1, tourId);
+                stmt.setInt(2, restaurantId);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public List<Tour> getTours() {
         List<Tour> tours = new ArrayList<>();
@@ -251,40 +345,40 @@ public class TourDAO {
     }
 
     public List<Transportation> getTransportationsForTour(int tourId) {
-    List<Transportation> transportations = new ArrayList<>();
-    String query = "SELECT * FROM Transportations " +
-                   "INNER JOIN TourTransportation ON Transportations.transportation_id = TourTransportation.transportation_id " +
-                   "WHERE TourTransportation.tour_id = ?";
-    try (PreparedStatement statement = connection.prepareStatement(query)) {
-        statement.setInt(1, tourId);
-        try (ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                Transportation transportation = new Transportation();
-                transportation.setTransportationId(resultSet.getInt("transportation_id"));
-                transportation.setTransportationName(resultSet.getString("transportation_name"));
-                transportation.setImageUrl(resultSet.getString("image_url"));
-                transportation.setDepartureTime(resultSet.getTime("departure_time"));
-                transportation.setReturnTime(resultSet.getTime("return_time"));
-                // Các thông tin khác của Transportation có sẵn trong cơ sở dữ liệu
+        List<Transportation> transportations = new ArrayList<>();
+        String query = "SELECT * FROM Transportations "
+                + "INNER JOIN TourTransportation ON Transportations.transportation_id = TourTransportation.transportation_id "
+                + "WHERE TourTransportation.tour_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, tourId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Transportation transportation = new Transportation();
+                    transportation.setTransportationId(resultSet.getInt("transportation_id"));
+                    transportation.setTransportationName(resultSet.getString("transportation_name"));
+                    transportation.setImageUrl(resultSet.getString("image_url"));
+                    transportation.setDepartureTime(resultSet.getTime("departure_time"));
+                    transportation.setReturnTime(resultSet.getTime("return_time"));
+                    // Các thông tin khác của Transportation có sẵn trong cơ sở dữ liệu
 
-                transportations.add(transportation);
+                    transportations.add(transportation);
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý ngoại lệ SQL
         }
-    } catch (SQLException e) {
-        e.printStackTrace(); // Xử lý ngoại lệ SQL
+        return transportations;
     }
-    return transportations;
-}
 
     // Read
     public Tour getTourById(int tourId) {
         try {
             String query = "SELECT * FROM Tours WHERE tour_id = ?";
 
-            try ( PreparedStatement statement = connection.prepareStatement(query)) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, tourId);
 
-                try ( ResultSet resultSet = statement.executeQuery()) {
+                try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
                         return extractTourFromResultSet(resultSet);
                     }
@@ -296,15 +390,15 @@ public class TourDAO {
 
         return null;
     }
-    
+
     public static HomeTour getHomeTourById(int tourId) {
         try {
             String query = "SELECT * FROM Tours WHERE tour_id = ?";
 
-            try ( PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query)) {
+            try (PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query)) {
                 statement.setInt(1, tourId);
 
-                try ( ResultSet resultSet = statement.executeQuery()) {
+                try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
                         return extractHomeTourFromResultSet(resultSet);
                     }
@@ -323,7 +417,7 @@ public class TourDAO {
         try {
             String query = "SELECT * FROM Tours";
 
-            try ( PreparedStatement statement = connection.prepareStatement(query);  ResultSet resultSet = statement.executeQuery()) {
+            try (PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Tour tour = extractTourFromResultSet(resultSet);
                     tours.add(tour);
@@ -342,7 +436,7 @@ public class TourDAO {
         try {
             String query = "SELECT * FROM Tours";
 
-            try ( PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query);  ResultSet resultSet = statement.executeQuery()) {
+            try (PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     HomeTour tour = extractHomeTourFromResultSet(resultSet);
                     tours.add(tour);
@@ -355,17 +449,60 @@ public class TourDAO {
         return tours;
     }
 
-    // Delete
+    // Phương thức xóa tour từ cơ sở dữ liệu
     public void deleteTour(int tourId) {
-        try {
-            String query = "DELETE FROM Tours WHERE tour_id = ?";
+        Connection connection = null;
+        PreparedStatement statement = null;
 
-            try ( PreparedStatement statement = connection.prepareStatement(query)) {
+        try {
+            // Lấy kết nối từ ConnectionPool hoặc DriverManager, ở đây giả sử sử dụng ConnectionPool
+            connection = DatabaseConnector.getConnection();
+
+            // Xóa các tham chiếu từ các bảng trung gian
+            String[] deleteQueries = {
+                "DELETE FROM ActivitySchedules WHERE tour_id = ?",
+                "DELETE FROM TourDates WHERE tour_id = ?",
+                "DELETE FROM HotelTour WHERE tour_id = ?",
+                "DELETE FROM RestaurantTour WHERE tour_id = ?",
+                "DELETE FROM TourLocation WHERE tour_id = ?",
+                "DELETE FROM TourTransportation WHERE tour_id = ?"
+            };
+
+            for (String query : deleteQueries) {
+                statement = connection.prepareStatement(query);
                 statement.setInt(1, tourId);
                 statement.executeUpdate();
+                statement.close();
             }
+
+            // Xóa tour từ bảng Tours
+            String deleteTourQuery = "DELETE FROM Tours WHERE tour_id = ?";
+            statement = connection.prepareStatement(deleteTourQuery);
+            statement.setInt(1, tourId);
+            statement.executeUpdate();
+            statement.close();
+
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle or log the exception appropriately
+            e.printStackTrace(); // Xử lý hoặc ghi log lỗi
+        }
+    }
+
+    public void updateTour(Tour tour) {
+        String query = "UPDATE Tours SET tour_name=?, description=?, tour_price=?, image_url=?, employee_id=?, start_location=?, max_capacity=? WHERE tour_id=?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, tour.getTourName());
+            preparedStatement.setString(2, tour.getDescription());
+            preparedStatement.setBigDecimal(3, tour.getTourPrice());
+            preparedStatement.setString(4, tour.getImageUrl());
+            preparedStatement.setInt(5, tour.getEmployee().getEmployeeId());
+            preparedStatement.setString(6, tour.getStartLocation());
+            preparedStatement.setInt(7, tour.getMaxCapacity());
+            preparedStatement.setInt(8, tour.getTourId());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

@@ -36,7 +36,7 @@ import model.entity.Transportation;
  *
  * @author ADMIN
  */
-public class ViewTourDetailServlet extends HttpServlet {
+public class ViewUpdateTourServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,10 +55,10 @@ public class ViewTourDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewTourDetailServlet</title>");            
+            out.println("<title>Servlet ViewUpdateTourServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewTourDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewUpdateTourServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,48 +74,53 @@ public class ViewTourDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             int tourId = Integer.parseInt(request.getParameter("tourId"));
             TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
-            Tour tour = tourDAO.getTourById(tourId); // Lấy thông tin chi tiết của tour từ cơ sở dữ liệu
-            List<Transportation> transportations = tourDAO.getTransportationsForTour(tourId);
+            Tour tour = tourDAO.getTourById(tourId);
+            
+            EmployeeDAO employeeDAO = new EmployeeDAO(DatabaseConnector.getConnection());
+            List<Employee> employeeList = employeeDAO.getEmployeeList();
+            
+            TransportationDAO transportationDAO = new TransportationDAO(DatabaseConnector.getConnection());
+            List<Transportation> transportationList = transportationDAO.getTransportationList();
+            List<Transportation> selectedTransportations = tourDAO.getTransportationsForTour(tourId);
+            
             ActivityScheduleDAO activityScheduleDAO = new ActivityScheduleDAO(DatabaseConnector.getConnection());
             List<ActivitySchedule> activityScheduleList = activityScheduleDAO.getActivityScheduleList(tourId);
+            
             TourDatesDAO tourDatesDAO = new TourDatesDAO(DatabaseConnector.getConnection());
             List<TourDates> tourDatesList = tourDatesDAO.getTourDatesList(tourId);
-
-        
-            LocationDAO locationDAO = new LocationDAO(DatabaseConnector.getConnection());
             
-            // Lấy danh sách địa điểm dựa trên tourId
+            LocationDAO locationDAO = new LocationDAO(DatabaseConnector.getConnection());
             List<Location> locations = locationDAO.getLocationByTourId(tourId);
 
+            int locationId = -1; // Initialize with a default value
+            if (!locations.isEmpty()) {
+                Location location = locations.get(0); // Get the first (and presumably only) location
+                locationId = location.getLocationId();
+            }
             HotelDAO hotelDAO = new HotelDAO(DatabaseConnector.getConnection());
-             // Lấy danh sách khách sạn theo tourId
-            List<Hotel> hotelList = hotelDAO.getHotelByTourId(tourId);
+            List<Hotel> hotelList = hotelDAO.getHotelList(locationId);
+            List<Hotel> selectedHotels = hotelDAO.getHotelByTourId(tourId);
             
             RestaurantDAO restaurantDAO = new RestaurantDAO(DatabaseConnector.getConnection());
-            // Lấy danh sách nhà hàng dựa trên tourId
-            List<Restaurant> restaurantList = restaurantDAO.getRestaurantByTourId(tourId);
-
-            // Kiểm tra xem tour có tồn tại hay không
-            if (tour != null) {
-                // Truyền thông tin tour và danh sách vận chuyển tới trang JSP để hiển thị
-                // Set the activityScheduleList as a request attribute
-                // Chuyển danh sách khách sạn sang JSP để hiển thị
-                request.setAttribute("tourDatesList", tourDatesList);
-                request.setAttribute("restaurantList", restaurantList);
-                request.setAttribute("hotelList", hotelList);
-                request.setAttribute("locations", locations);
-                request.setAttribute("activityScheduleList", activityScheduleList);
-                request.setAttribute("tour", tour);
-                request.setAttribute("transportations", transportations);
-                request.getRequestDispatcher("/ViewTourDetail.jsp").forward(request, response);
-            } else {
-                // Nếu tour không tồn tại, có thể chuyển hướng người dùng đến một trang thông báo lỗi
-                response.sendRedirect(request.getContextPath() + "/error.jsp");
-            }
+            List<Restaurant> restaurantList = restaurantDAO.getRestaurantList(locationId);
+            List<Restaurant> selectedRestaurants = restaurantDAO.getRestaurantByTourId(tourId);
+            
+            request.setAttribute("restaurantList", restaurantList);
+            request.setAttribute("selectedRestaurants", selectedRestaurants);
+            request.setAttribute("hotelList", hotelList);
+            request.setAttribute("selectedHotels", selectedHotels);
+            request.setAttribute("activityScheduleList", activityScheduleList);
+            request.setAttribute("tourDatesList", tourDatesList);
+            request.setAttribute("selectedTransportations", selectedTransportations);
+            request.setAttribute("transportationList", transportationList);
+            request.setAttribute("employeeList", employeeList);
+            request.setAttribute("tour", tour);
+            request.getRequestDispatcher("/UpdateTour.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ViewTourDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,7 +137,7 @@ public class ViewTourDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**

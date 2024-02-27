@@ -84,6 +84,26 @@
         <servlet-name>DetailServlet</servlet-name>
         <servlet-class>controller.pub.DetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TourDatesServlet</servlet-name>
+        <servlet-class>controller.tour.TourDatesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeleteTourServlet</servlet-name>
+        <servlet-class>controller.tour.EditDeleteTourServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeleteActivityScheduleServlet</servlet-name>
+        <servlet-class>controller.tour.EditDeleteActivityScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewUpdateTourServlet</servlet-name>
+        <servlet-class>controller.tour.ViewUpdateTourServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeleteTourDatesServlet</servlet-name>
+        <servlet-class>controller.tour.EditDeleteTourDatesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -167,6 +187,26 @@
     <servlet-mapping>
         <servlet-name>DetailServlet</servlet-name>
         <url-pattern>/Detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TourDatesServlet</servlet-name>
+        <url-pattern>/TourDatesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeleteTourServlet</servlet-name>
+        <url-pattern>/EditDeleteTourServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeleteActivityScheduleServlet</servlet-name>
+        <url-pattern>/EditDeleteActivityScheduleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewUpdateTourServlet</servlet-name>
+        <url-pattern>/ViewUpdateTourServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeleteTourDatesServlet</servlet-name>
+        <url-pattern>/EditDeleteTourDatesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

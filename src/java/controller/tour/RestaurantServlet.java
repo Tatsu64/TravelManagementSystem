@@ -136,7 +136,7 @@ public class RestaurantServlet extends HttpServlet {
         }
 
         // Redirect hoặc forward tới trang tiếp theo sau khi xử lý
-        response.sendRedirect("Home");
+        response.sendRedirect("TourDatesServlet?tourId=" + tourId);
     }
 
 

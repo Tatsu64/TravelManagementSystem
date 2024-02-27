@@ -12,7 +12,7 @@
     <br>
     <br>
     <br>
-    <form action="CreateTransportationServlet" method="post" enctype="multipart/form-data" onsubmit="return validateDates()">
+    <form action="CreateTransportationServlet" method="post" enctype="multipart/form-data" ">
 
         <div class="container">
             <h2>Create a New Transportation</h2>
@@ -23,21 +23,15 @@
             </div>
 
             <div class="form-group">
-                <label for="departureDate">Departure Date:</label>
-                <input type="date" id="departureDate" name="departureDate" class="form-control" required>
+                <label for="departureTime">Departure Time:</label>
+                <input type="time" id="departureTime" name="departureTime" class="form-control" required>
             </div>
 
             <div class="form-group">
-                <label for="returnDate">Return Date:</label>
-                <input type="date" id="returnDate" name="returnDate" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="text" id="price" name="price" class="form-control" required>
+                <label for="returnTime">Return Time:</label>
+                <input type="time" id="returnTime" name="returnTime" class="form-control" required>
             </div>
             <br>
-
             <div class="form-group">
                 <label for="image">Image:</label>
                 <input type="file" name="image" id="image">
@@ -51,18 +45,7 @@
         </div>
     </form>
     <%@ include file="includes/footer.jsp" %>
-    <script>
-    function validateDates() {
-        var departureDate = document.getElementById('departureDate').value;
-        var returnDate = document.getElementById('returnDate').value;
-
-        if (departureDate >= returnDate) {
-            alert("Return date must be after departure date");
-            return false;
-        }
-        return true;
-    }
-</script>
+ 
 
 </body>
 </html>

@@ -70,16 +70,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="startDate">Start Date:</label>
-                    <input type="date" id="startDate" name="startDate" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="endDate">End Date:</label>
-                    <input type="date" id="endDate" name="endDate" class="form-control" required>
-                </div>
-
-                <div class="form-group">
                     <label for="tourPrice">Tour Price:</label>
                     <input type="text" id="tourPrice" name="tourPrice" class="form-control" required>
                 </div>
@@ -110,14 +100,10 @@
                     <input type="text" id="maxCapacity" name="maxCapacity" class="form-control" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="currentCapacity">Current Capacity:</label>
-                    <input type="text" id="currentCapacity" name="currentCapacity" class="form-control" required>
-                </div>
                 <br>
                 <br>
                 <button type="submit" class="btn btn-dark">Create Tour</button>
-                <a href="Home" class="btn btn-secondary">Back to HomePage</a>
+                <a href="ApprovalTourServlet?" class="btn btn-secondary">Back to Manage Tour</a>
             </div>
         </form>
         <%@ include file="includes/footer.jsp" %>
@@ -159,26 +145,6 @@
 
                 showMoreBtn.style.display = 'inline';
                 showLessBtn.style.display = 'none';
-            }
-            function validateDates() {
-                var startDate = document.getElementById('startDate').value;
-                var endDate = document.getElementById('endDate').value;
-
-                if (startDate >= endDate) {
-                    alert("End date must be after start date");
-                    return false;
-                }
-                return true;
-            }
-            function validateCapacities() {
-                var maxCapacity = parseInt(document.getElementById('maxCapacity').value);
-                var currentCapacity = parseInt(document.getElementById('currentCapacity').value);
-
-                if (currentCapacity > maxCapacity) {
-                    alert("Current capacity cannot exceed max capacity");
-                    return false;
-                }
-                return true;
             }
         </script>
     </body>

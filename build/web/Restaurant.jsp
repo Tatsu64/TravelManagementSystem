@@ -25,8 +25,6 @@
                     <tr>
                         <th scope="col">Select</th>
                         <th scope="col">Restaurant Name</th>
-                        <th scope="col">Reservation Date</th>
-                        <th scope="col">Price</th>
                         <th scope="col">Address</th>
                         <th scope="col">Image</th>
                     </tr>
@@ -36,15 +34,13 @@
                         <tr>
                             <td><input type="checkbox" name="selectedRestaurants" value="${restaurant.restaurantId}"></td>
                             <td>${restaurant.restaurantName}</td>
-                            <td>${restaurant.reservationDate}</td>
-                            <td>${restaurant.price}</td>
                             <td>${restaurant.address}</td>
                             <td><img src="${restaurant.imageUrl}" alt="Restaurant Image" width="100"></td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Finish</button>
+            <button type="submit" class="btn btn-primary">Next</button>
         </form>
         <br>
         <br>

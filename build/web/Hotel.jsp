@@ -30,7 +30,6 @@
                     <tr>
                         <th scope="col">Select</th> <!-- Cột chứa hộp kiểm -->
                         <th scope="col">Hotel Name</th>
-                        <th scope="col">Price</th>
                         <th scope="col">Address</th>
                         <th scope="col">Image</th> 
                     </tr>
@@ -40,7 +39,6 @@
                         <tr>
                             <td><input type="checkbox" name="selectedHotels" value="${hotel.hotelId}"></td> <!-- Hộp kiểm cho mỗi khách sạn -->
                             <td>${hotel.hotelName}</td>
-                            <td>${hotel.price}</td>
                             <td>${hotel.address}</td>
                             <td><img src="${hotel.imageUrl}" alt="Hotel Image" class="hotel-image"></td> 
                         </tr>

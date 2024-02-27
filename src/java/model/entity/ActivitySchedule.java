@@ -16,19 +16,17 @@ public class ActivitySchedule {
     private Tour tour;  // Foreign Key to Tour
     private int dayNumber;
     private String activityName;
-    private Date activityDate;
     private Time startTime;
     private Time endTime;
     private String location;
     private String description;
     private String imageUrl;
 
-    public ActivitySchedule(int scheduleId, Tour tour, int dayNumber, String activityName, Date activityDate, Time startTime, Time endTime, String location, String description, String imageUrl) {
+    public ActivitySchedule(int scheduleId, Tour tour, int dayNumber, String activityName, Time startTime, Time endTime, String location, String description, String imageUrl) {
         this.scheduleId = scheduleId;
         this.tour = tour;
         this.dayNumber = dayNumber;
         this.activityName = activityName;
-        this.activityDate = activityDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
@@ -36,11 +34,10 @@ public class ActivitySchedule {
         this.imageUrl = imageUrl;
     }
 
-    public ActivitySchedule(Tour tour, int dayNumber, String activityName, Date activityDate, Time startTime, Time endTime, String location, String description, String imageUrl) {
+    public ActivitySchedule(Tour tour, int dayNumber, String activityName, Time startTime, Time endTime, String location, String description, String imageUrl) {
         this.tour = tour;
         this.dayNumber = dayNumber;
         this.activityName = activityName;
-        this.activityDate = activityDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
@@ -84,14 +81,6 @@ public class ActivitySchedule {
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
-    }
-
-    public Date getActivityDate() {
-        return activityDate;
-    }
-
-    public void setActivityDate(Date activityDate) {
-        this.activityDate = activityDate;
     }
 
     public Time getStartTime() {

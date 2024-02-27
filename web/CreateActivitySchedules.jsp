@@ -21,6 +21,7 @@
         <br>
         <form action="ActivityScheduleServlet" method="post" onsubmit="return validateForm()">
             <div class="container">
+                <input type="hidden" name="update" value="${param.update}">
                 <input type="hidden" name="locationId" value="${param.locationId}">
                 <input type="hidden" id="tourId" name="tourId" value="${param.tourId}">
 
@@ -31,10 +32,6 @@
                 <div class="form-group">
                     <label for="activityName">Activity Name:</label>
                     <input type="text" id="activityName" name="activityName" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="activityDate">Activity Date:</label>
-                    <input type="date" id="activityDate" name="activityDate" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="startTime">Start Time:</label>

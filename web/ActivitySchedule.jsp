@@ -28,7 +28,7 @@
                     <tr>
                         <th scope="col">Day Number</th>
                         <th scope="col">Activity Name</th>
-                        <th scope="col">Activity Date</th>
+                        <th scope="col">Location</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,12 +36,12 @@
                         <tr>
                             <td>${schedule.dayNumber}</td>
                             <td>${schedule.activityName}</td>
-                            <td>${schedule.activityDate}</td>
+                            <td>${schedule.location}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <button onclick="location.href='CreateActivitySchedules.jsp?tourId=${tourId}&locationId=${locationId}';" type="button" class="btn btn-primary">Add Activity Schedule</button>
+            <button onclick="location.href='CreateActivitySchedules.jsp?tourId=${tourId}&update=0&locationId=${locationId}';" type="button" class="btn btn-primary">Add Activity Schedule</button>
             <br>
             <br>
            <a href="HotelServlet?tourId=${tourId}&locationId=${locationId}" class="btn btn-secondary">Next</a>

@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -90,9 +91,8 @@ public class CreateTransportationServlet extends HttpServlet {
           try {
             // Retrieve data from the form
             String transportationName = request.getParameter("transportationName");
-            String departureDateString = request.getParameter("departureDate");
-            String returnDateString = request.getParameter("returnDate");
-            String priceString = request.getParameter("price");
+            String departureTimeString = request.getParameter("departureTime");
+            String returnTimeString = request.getParameter("returnTime");
              // Handling image upload
             Part filePart = request.getPart("image");
             String fileName = getFileName(filePart);
@@ -109,17 +109,15 @@ public class CreateTransportationServlet extends HttpServlet {
             }
 
             // Convert date strings to Date objects
-            Date departureDate = parseDate(departureDateString);
-            Date returnDate = parseDate(returnDateString);
+            Time departureTime = parseTime(departureTimeString);
+            Time returnTime = parseTime(returnTimeString);
             // Convert price string to BigDecimal
-            BigDecimal price = new BigDecimal(priceString);
 
             // Create a new Transportation object
             Transportation newTransportation = new Transportation();
             newTransportation.setTransportationName(transportationName);
-            newTransportation.setDepartureDate(departureDate);
-            newTransportation.setReturnDate(returnDate);
-            newTransportation.setPrice(price);
+            newTransportation.setDepartureTime(departureTime);
+            newTransportation.setReturnTime(returnTime);
             newTransportation.setImageUrl(fileName);
 
             // Establish a database connection
@@ -146,6 +144,22 @@ public class CreateTransportationServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace(); // Handle or log the exception appropriately
             return null;
+        }
+    }
+      
+   // Helper method to parse a string into a Time with the same date as activityDate
+   private Time parseTime(String timeStr) {
+        if (timeStr == null || timeStr.isEmpty()) {
+            return null; // Trả về null nếu chuỗi thời gian là null hoặc rỗng
+        }
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            java.util.Date date = sdf.parse(timeStr);
+            return new Time(date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null; // Trả về null nếu có lỗi xảy ra trong quá trình chuyển đổi
         }
     }
     // Helper method to get the file name from the Part

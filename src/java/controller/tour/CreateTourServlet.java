@@ -91,30 +91,23 @@ public class CreateTourServlet extends HttpServlet {
             // Retrieve other form data
             String tourName = request.getParameter("tourName");
             String description = request.getParameter("description");
-            String startDateStr = request.getParameter("startDate");
-            String endDateStr = request.getParameter("endDate");
             String tourPriceStr = request.getParameter("tourPrice");
             String employeeIdStr = request.getParameter("employeeId");
             String startLocation = request.getParameter("startLocation");
             String maxCapacityStr = request.getParameter("maxCapacity");
-            String currentCapacityStr = request.getParameter("currentCapacity");
             String[] selectedTransportations = request.getParameterValues("selectedTransportations[]");
             String locationIdStr = request.getParameter("locationId");
 
-            Date startDate = parseDate(startDateStr);
-            Date endDate = parseDate(endDateStr);
             BigDecimal tourPrice = new BigDecimal(tourPriceStr);
 
             int employeeId;
             int maxCapacity;
-            int currentCapacity;
             int locationId;
 
             try {
                 locationId = Integer.parseInt(locationIdStr);
                 employeeId = Integer.parseInt(employeeIdStr);
                 maxCapacity = Integer.parseInt(maxCapacityStr);
-                currentCapacity = Integer.parseInt(currentCapacityStr);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 response.sendRedirect("error.jsp");
@@ -140,8 +133,6 @@ public class CreateTourServlet extends HttpServlet {
             Tour newTour = new Tour();
             newTour.setTourName(tourName);
             newTour.setDescription(description);
-            newTour.setStartDate(startDate);
-            newTour.setEndDate(endDate);
             newTour.setTourPrice(tourPrice);
             newTour.setImageUrl(fileName); // Save the file path to database instead of image URL
 
@@ -152,7 +143,6 @@ public class CreateTourServlet extends HttpServlet {
 
             newTour.setStartLocation(startLocation);
             newTour.setMaxCapacity(maxCapacity);
-            newTour.setCurrentCapacity(currentCapacity);
 
             // Assuming you have the tourId available from the form submission
             int generatedTourId = TourDAO.insertTourAndGetId(DatabaseConnector.getConnection(), newTour);
@@ -168,12 +158,12 @@ public class CreateTourServlet extends HttpServlet {
             // Redirect to a success page or display a success message
             response.sendRedirect("ActivityScheduleServlet?tourId=" + generatedTourId + "&locationId=" + locationId);
 
-        } catch (ParseException ex) {
-            ex.printStackTrace(); // Handle or log the exception appropriately
-            response.sendRedirect("error.jsp"); // Redirect to an error page
-        } catch (SQLException ex) {
+        }catch (SQLException ex) {
             Logger.getLogger(CreateTourServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // Handle or log the exception appropriately
+        // Redirect to an error page
+        
     }
 
     // Helper method to parse a string into a Date
