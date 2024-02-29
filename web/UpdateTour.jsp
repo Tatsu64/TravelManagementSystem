@@ -100,7 +100,7 @@
                             <td>${schedule.location}</td>
                             <td>
                                 <button onclick="location.href = 'EditDeleteActivityScheduleServlet?scheduleId=${schedule.scheduleId}&action=update&tourId=${tour.tourId}'" type="button" class="btn btn-warning">Update</button>
-                                <button onclick="window.location.href = 'EditDeleteActivityScheduleServlet?scheduleId=${schedule.scheduleId}&action=delete&tourId=${tour.tourId}'" type="button" class="btn btn-danger">Delete</button>
+                                <button onclick="if (confirm('Are you sure you want to delete this activity?')) window.location.href = 'EditDeleteActivityScheduleServlet?scheduleId=${schedule.scheduleId}&action=delete&tourId=${tour.tourId}'" type="button" class="btn btn-danger">Delete</button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -128,7 +128,7 @@
                                 <td>${tourDate.currentCapacity}</td>
                                 <td>
                                 <button onclick="location.href = 'EditDeleteTourDatesServlet?tourDateId=${tourDate.tourDateId}&action=update&tourId=${tour.tourId}'" type="button" class="btn btn-warning">Update</button>
-                                <button onclick="window.location.href = 'EditDeleteTourDatesServlet?tourDateId=${tourDate.tourDateId}&action=delete&tourId=${tour.tourId}'" type="button" class="btn btn-danger">Delete</button>
+                                <button onclick="if (confirm('Are you sure you want to delete this tour date?')) window.location.href = 'EditDeleteTourDatesServlet?tourDateId=${tourDate.tourDateId}&action=delete&tourId=${tour.tourId}'" type="button" class="btn btn-danger">Delete</button>
                             </td>
                             </tr>
                         </c:forEach>
@@ -169,8 +169,8 @@
                 </c:forEach>
                 <br>
                 <br>
-                <button type="submit" class="btn btn-dark">Update Tour</button>
-                <a href="ApprovalTourServlet?" class="btn btn-secondary">Back to Manage Tours</a>
+                <button type="submit" class="btn btn-primary">Update Tour</button>
+                <a href="ApprovalTourServlet?" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
         <%@ include file="includes/footer.jsp" %>

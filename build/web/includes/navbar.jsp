@@ -39,12 +39,15 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Manage</a>
                     <div class="dropdown-menu m-0">
-                        <a href="destination.jsp" class="dropdown-item">Employees</a>
+                        <a href="ManageEmployeeServlet?" class="dropdown-item">Employees</a>
+                        <a href="LocationServlet?" class="dropdown-item">Locations</a>
+                        <a href="TransportationServlet?" class="dropdown-item">Transportation</a>
                         <a href="ApprovalTourServlet?" class="dropdown-item">Tours</a>
-                        <a href="team.jsp" class="dropdown-item">Locations</a>
+                        <a href="404.jsp" class="dropdown-item">Hotels</a>
                         <a href="404.jsp" class="dropdown-item">Restaurants</a>
-                        <a href="team.jsp" class="dropdown-item">Transportation</a>
                         <a href="404.jsp" class="dropdown-item">Reviews</a>
+                        <a href="404.jsp" class="dropdown-item">Bills</a>
+                        <a href="404.jsp" class="dropdown-item">Users</a>
                     </div>
 
                 </div>

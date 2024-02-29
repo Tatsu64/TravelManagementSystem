@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.database.DatabaseConnector;
 import static model.database.DatabaseConnector.connection;
 import model.entity.Location;
 
@@ -28,30 +29,115 @@ public class LocationDAO {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    // Phương thức để tạo mới một địa điểm trong cơ sở dữ liệu
-    public boolean createLocation(Location location) {
-        String query = "INSERT INTO Locations (location_name) VALUES (?)";
+    // Phương thức thêm mới một địa điểm vào cơ sở dữ liệu
+    public void createLocation(Location location) throws SQLException {
+        PreparedStatement pstmt = null;
+        
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, location.getLocationName());
-
-
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    location.setLocationId(generatedKeys.getInt(1));
-                } else {
-                    throw new SQLException("Creating location failed, no ID obtained.");
-                }
-                System.out.println("A new location was inserted successfully!");
-                return true;
+            // Tạo câu lệnh SQL để thêm mới một địa điểm
+            String insertQuery = "INSERT INTO Locations (location_name) VALUES (?)";
+            pstmt = connection.prepareStatement(insertQuery);
+            
+            // Thiết lập các tham số cho câu lệnh SQL
+            pstmt.setString(1, location.getLocationName());
+            
+            // Thực thi câu lệnh SQL để thêm mới địa điểm
+            pstmt.executeUpdate();
+        } finally {
+            // Đóng PreparedStatement sau khi thêm mới địa điểm
+            if (pstmt != null) {
+                pstmt.close();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
-        return false;
     }
+    
+    public void deleteLocation(int locationId) throws SQLException {
+    PreparedStatement pstmt = null;
+    
+    try {
+        // Tạo câu lệnh SQL để xóa địa điểm
+        String deleteQuery = "DELETE FROM Locations WHERE location_id = ?";
+        pstmt = connection.prepareStatement(deleteQuery);
+        
+        // Thiết lập tham số cho câu lệnh SQL
+        pstmt.setInt(1, locationId);
+        
+        // Thực thi câu lệnh SQL để xóa địa điểm
+        pstmt.executeUpdate();
+    } finally {
+        // Đóng PreparedStatement sau khi xóa địa điểm
+        if (pstmt != null) {
+            pstmt.close();
+        }
+    }
+}
+    
+    public void updateLocation(Location location) throws SQLException {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+
+    try {
+        conn = DatabaseConnector.getConnection();
+        
+        // Tạo câu lệnh SQL để cập nhật thông tin địa điểm
+        String updateQuery = "UPDATE Locations SET location_name = ? WHERE location_id = ?";
+        pstmt = conn.prepareStatement(updateQuery);
+        
+        // Thiết lập các tham số cho câu lệnh SQL
+        pstmt.setString(1, location.getLocationName());
+        pstmt.setInt(2, location.getLocationId());
+        
+        // Thực thi câu lệnh SQL để cập nhật thông tin địa điểm
+        pstmt.executeUpdate();
+    } finally {
+        // Đóng các tài nguyên
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        // Không đóng kết nối ở đây để tiếp tục sử dụng kết nối cho các công việc khác
+    }
+}
+
+public Location getLocationById(int locationId) throws SQLException {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    Location location = null;
+
+    try {
+        conn = DatabaseConnector.getConnection();
+        
+        // Tạo câu lệnh SQL để lấy thông tin của địa điểm dựa trên ID
+        String query = "SELECT * FROM Locations WHERE location_id = ?";
+        pstmt = conn.prepareStatement(query);
+        
+        // Thiết lập tham số cho câu lệnh SQL
+        pstmt.setInt(1, locationId);
+        
+        // Thực thi câu lệnh SQL và lấy kết quả
+        rs = pstmt.executeQuery();
+        
+        // Kiểm tra xem có kết quả trả về hay không
+        if (rs.next()) {
+            // Khởi tạo một đối tượng Location với thông tin từ kết quả truy vấn
+            location = new Location();
+            location.setLocationId(rs.getInt("location_id"));
+            location.setLocationName(rs.getString("location_name"));
+        }
+    } finally {
+        // Đóng các tài nguyên
+        if (rs != null) {
+            rs.close();
+        }
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        // Không đóng kết nối ở đây để tiếp tục sử dụng kết nối cho các công việc khác
+    }
+
+    return location;
+}
+
     // Phương thức để lấy danh sách các địa điểm
     public List<Location> getLocationList() throws SQLException {
         List<Location> locations = new ArrayList<>();

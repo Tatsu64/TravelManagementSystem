@@ -29,7 +29,7 @@ public class TransportationDAO {
     List<Transportation> transportationList = new ArrayList<>();
 
     // Use a try-with-resources statement to automatically close resources (PreparedStatement and ResultSet)
-    try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Transportations ORDER BY transportation_id DESC");
+    try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Transportations");
          ResultSet resultSet = statement.executeQuery()) {
 
         while (resultSet.next()) {
@@ -63,5 +63,97 @@ public class TransportationDAO {
             statement.executeUpdate();
         }
     }
+    
+    public void deleteTransportation(int transportationId) throws SQLException {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+
+    try {
+        conn = DatabaseConnector.getConnection();
+        
+        // Xóa các tham chiếu từ bảng trung gian TourTransportation
+        String deleteTourTransportationQuery = "DELETE FROM TourTransportation WHERE transportation_id = ?";
+        pstmt = conn.prepareStatement(deleteTourTransportationQuery);
+        pstmt.setInt(1, transportationId);
+        pstmt.executeUpdate();
+        
+        // Xóa thông tin vận chuyển từ bảng Transportation
+        String deleteTransportationQuery = "DELETE FROM Transportations WHERE transportation_id = ?";
+        pstmt = conn.prepareStatement(deleteTransportationQuery);
+        pstmt.setInt(1, transportationId);
+        pstmt.executeUpdate();
+    } finally {
+        // Đóng tài nguyên
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        // Không đóng kết nối ở đây để tiếp tục sử dụng kết nối cho các công việc khác
+    }
+}
+     public Transportation getTransportationById(int transportationId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Transportation transportation = null;
+
+        try {
+            conn = DatabaseConnector.getConnection();
+            String query = "SELECT * FROM Transportations WHERE transportation_id = ?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, transportationId);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Tạo đối tượng Transportation từ dữ liệu trong ResultSet
+                transportation = new Transportation();
+                transportation.setTransportationId(rs.getInt("transportation_id"));
+                transportation.setTransportationName(rs.getString("transportation_name"));
+                transportation.setDepartureTime(rs.getTime("departure_time"));
+                transportation.setReturnTime(rs.getTime("return_time"));
+                transportation.setImageUrl(rs.getString("image_url"));
+            }
+        } finally {
+            // Đóng tài nguyên
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            // Không đóng kết nối ở đây để tiếp tục sử dụng kết nối cho các công việc khác
+        }
+
+        return transportation;
+    }
+
+     public void updateTransportation(Transportation transportation) throws SQLException {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+
+    try {
+        conn = DatabaseConnector.getConnection();
+        
+        // Tạo câu lệnh SQL để cập nhật thông tin vận chuyển
+        String updateQuery = "UPDATE Transportations SET transportation_name = ?, departure_time = ?, return_time = ?, image_url = ? WHERE transportation_id = ?";
+        pstmt = conn.prepareStatement(updateQuery);
+        
+        // Thiết lập các tham số cho câu lệnh SQL
+        pstmt.setString(1, transportation.getTransportationName());
+        pstmt.setTime(2, transportation.getDepartureTime());
+        pstmt.setTime(3, transportation.getReturnTime());
+        pstmt.setString(4, transportation.getImageUrl());
+        pstmt.setInt(5, transportation.getTransportationId());
+        
+        // Thực thi câu lệnh SQL để cập nhật thông tin vận chuyển
+        pstmt.executeUpdate();
+    } finally {
+        // Đóng tài nguyên
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        // Không đóng kết nối ở đây để tiếp tục sử dụng kết nối cho các công việc khác
+    }
+}
+
 }
 

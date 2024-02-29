@@ -18,7 +18,7 @@
                 <h2>Create a New Tour</h2>
                 <br>
                 <br>
-                <h2>Select Transportations:</h2>
+                <h3>Select Transportations:</h3>
                 <div id="transportationContainer">
                     <table class="table">
                         <thead>
@@ -48,10 +48,6 @@
                 </c:if>
                 <br>
                 <br>
-                <a href="CreateTransportation.jsp" class="btn btn-secondary">Add Transportation</a>
-                <br>
-                <br>
-
                 <label for="location">Select a location:</label>
                 <select id="location" name="locationId" required>
                     <c:forEach var="location" items="${locations}">
@@ -102,8 +98,8 @@
 
                 <br>
                 <br>
-                <button type="submit" class="btn btn-dark">Create Tour</button>
-                <a href="ApprovalTourServlet?" class="btn btn-secondary">Back to Manage Tour</a>
+                <button type="submit" class="btn btn-primary">Create Tour</button>
+                <a href="ApprovalTourServlet?" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
         <%@ include file="includes/footer.jsp" %>

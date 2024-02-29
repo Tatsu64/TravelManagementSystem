@@ -37,11 +37,8 @@
                 <input type="file" name="image" id="image">
             </div>
             <br>
-            <!-- Back to CreateTour.jsp button -->
-            <a href="EmployeeListServlet?" class="btn btn-secondary">Back to Create Tour</a>
-            <br>
-            <br>
-            <button type="submit" class="btn btn-dark">Create Transportation</button>
+            <button type="submit" class="btn btn-primary">Create Transportation</button>
+            <a href="TransportationServlet?" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
     <%@ include file="includes/footer.jsp" %>

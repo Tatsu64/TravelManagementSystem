@@ -104,6 +104,30 @@
         <servlet-name>EditDeleteTourDatesServlet</servlet-name>
         <servlet-class>controller.tour.EditDeleteTourDatesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageEmployeeServlet</servlet-name>
+        <servlet-class>controller.tour.ManageEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeleteEmployeeServlet</servlet-name>
+        <servlet-class>controller.tour.EditDeleteEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LocationServlet</servlet-name>
+        <servlet-class>controller.tour.LocationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeleteLocationServlet</servlet-name>
+        <servlet-class>controller.tour.EditDeleteLocationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TransportationServlet</servlet-name>
+        <servlet-class>controller.tour.TransportationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeleteTransportationServlet</servlet-name>
+        <servlet-class>controller.tour.EditDeleteTransportationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -207,6 +231,30 @@
     <servlet-mapping>
         <servlet-name>EditDeleteTourDatesServlet</servlet-name>
         <url-pattern>/EditDeleteTourDatesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageEmployeeServlet</servlet-name>
+        <url-pattern>/ManageEmployeeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeleteEmployeeServlet</servlet-name>
+        <url-pattern>/EditDeleteEmployeeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LocationServlet</servlet-name>
+        <url-pattern>/LocationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeleteLocationServlet</servlet-name>
+        <url-pattern>/EditDeleteLocationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransportationServlet</servlet-name>
+        <url-pattern>/TransportationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeleteTransportationServlet</servlet-name>
+        <url-pattern>/EditDeleteTransportationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -131,7 +131,7 @@ public class CreateTransportationServlet extends HttpServlet {
 
             // TODO: Redirect to a confirmation page or another destination
             // For example, redirect to the transportation list page
-            response.sendRedirect("EmployeeListServlet");
+            response.sendRedirect("TransportationServlet");
         } catch (SQLException ex) {
             ex.printStackTrace(); // Handle the exception appropriately
         }

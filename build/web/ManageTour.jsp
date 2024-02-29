@@ -36,7 +36,7 @@
                                     <input type="hidden" name="tourId" value="${tour.tourId}">
                                 
                                 <button type="submit" class="btn btn-warning">Update</button>
-                                <button type="button" class="btn btn-danger" onclick="window.location.href = 'EditDeleteTourServlet?tourId=${tour.tourId}'">Delete</button>
+                                <button type="button" class="btn btn-danger" onclick="if (confirm('Are you sure you want to delete this tour?')) window.location.href = 'EditDeleteTourServlet?tourId=${tour.tourId}'">Delete</button>
                                 <button type="button" onclick="window.location.href = 'ViewTourDetailServlet?tourId=${tour.tourId}'">View Detail</button>
                                 </form>
                             </td>
