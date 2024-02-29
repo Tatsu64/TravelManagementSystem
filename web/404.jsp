@@ -22,7 +22,7 @@
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
                     <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
                     <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
+                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>C4T@gmail.com</small>
                 </div>
             </div>
             <div class="col-lg-4 text-center text-lg-end">
@@ -50,7 +50,7 @@
                         <h1 class="display-3 text-white animated slideInDown">Not Found</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
                                 <li class="breadcrumb-item"><a href="#">Pages</a></li>
                                 <li class="breadcrumb-item text-white active" aria-current="page">404</li>
                             </ol>
@@ -71,8 +71,8 @@
                     <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
                     <h1 class="display-1">404</h1>
                     <h1 class="mb-4">Page Not Found</h1>
-                    <p class="mb-4">We?re sorry, the page you have looked for does not exist in our website! Maybe go to our home page or try to use a search?</p>
-                    <a class="btn btn-primary rounded-pill py-3 px-5" href="">Go Back To Home</a>
+                    <p class="mb-4">We are sorry, the page you have looked for does not exist in our website! Maybe go to our home page or try to use a search?</p>
+                    <a class="btn btn-primary rounded-pill py-3 px-5" href="index.jsp">Go Back To Home</a>
                 </div>
             </div>
         </div>

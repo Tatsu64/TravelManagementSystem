@@ -34,7 +34,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <button onclick="location.href = 'AddTourDates.jsp?tourId=${tourId}';" type="button" class="btn btn-primary">Add Tour Date</button>
+            <button onclick="location.href = 'AddTourDates.jsp?tourId=${tourId}&update=0';" type="button" class="btn btn-primary">Add Tour Date</button>
             <br>
             <br>
             <a href="ApprovalTourServlet?" class="btn btn-secondary">Finish</a>
