@@ -266,8 +266,6 @@ public class TourDAO {
         }
     }
 
-
-
     public void updateRestaurantTour(int tourId, List<Integer> restaurantIds) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -292,7 +290,6 @@ public class TourDAO {
             e.printStackTrace();
         }
     }
-
 
     public List<Tour> getTours() {
         List<Tour> tours = new ArrayList<>();
@@ -449,16 +446,35 @@ public class TourDAO {
         return tours;
     }
 
-    // Phương thức xóa tour từ cơ sở dữ liệu
     public void deleteTour(int tourId) {
         Connection connection = null;
         PreparedStatement statement = null;
 
         try {
-            // Lấy kết nối từ ConnectionPool hoặc DriverManager, ở đây giả sử sử dụng ConnectionPool
             connection = DatabaseConnector.getConnection();
 
-            // Xóa các tham chiếu từ các bảng trung gian
+            // Xóa các bản ghi từ bảng Reviews có bookingId tương ứng với tourId
+            String deleteReviewsQuery = "DELETE FROM Reviews WHERE booking_id IN (SELECT booking_id FROM Bookings WHERE tour_id = ?)";
+            statement = connection.prepareStatement(deleteReviewsQuery);
+            statement.setInt(1, tourId);
+            statement.executeUpdate();
+            statement.close();
+
+            // Xóa các bản ghi từ bảng Bills có bookingId tương ứng với tourId
+            String deleteBillsQuery = "DELETE FROM Bills WHERE booking_id IN (SELECT booking_id FROM Bookings WHERE tour_id = ?)";
+            statement = connection.prepareStatement(deleteBillsQuery);
+            statement.setInt(1, tourId);
+            statement.executeUpdate();
+            statement.close();
+
+            // Xóa các bản ghi từ bảng Bookings có tourId tương ứng
+            String deleteBookingsQuery = "DELETE FROM Bookings WHERE tour_id = ?";
+            statement = connection.prepareStatement(deleteBookingsQuery);
+            statement.setInt(1, tourId);
+            statement.executeUpdate();
+            statement.close();
+
+            // Xóa các bản ghi từ các bảng trung gian và TourDates
             String[] deleteQueries = {
                 "DELETE FROM ActivitySchedules WHERE tour_id = ?",
                 "DELETE FROM TourDates WHERE tour_id = ?",
