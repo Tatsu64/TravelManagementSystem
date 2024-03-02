@@ -128,6 +128,46 @@
         <servlet-name>EditDeleteTransportationServlet</servlet-name>
         <servlet-class>controller.tour.EditDeleteTransportationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageHotelsServlet</servlet-name>
+        <servlet-class>controller.tour.ManageHotelsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FormCreateHotelServlet</servlet-name>
+        <servlet-class>controller.tour.FormCreateHotelServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeleteHotelServlet</servlet-name>
+        <servlet-class>controller.tour.EditDeleteHotelServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageRestaurantServlet</servlet-name>
+        <servlet-class>controller.tour.ManageRestaurantServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FormCreateRestaurantServlet</servlet-name>
+        <servlet-class>controller.tour.FormCreateRestaurantServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDeleteRestaurantServlet</servlet-name>
+        <servlet-class>controller.tour.EditDeleteRestaurantServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BillServlet</servlet-name>
+        <servlet-class>controller.tour.BillServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewBillDetailServlet</servlet-name>
+        <servlet-class>controller.tour.ViewBillDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageUserServlet</servlet-name>
+        <servlet-class>controller.tour.ManageUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageReviewServlet</servlet-name>
+        <servlet-class>controller.tour.ManageReviewServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -255,6 +295,46 @@
     <servlet-mapping>
         <servlet-name>EditDeleteTransportationServlet</servlet-name>
         <url-pattern>/EditDeleteTransportationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageHotelsServlet</servlet-name>
+        <url-pattern>/ManageHotelsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FormCreateHotelServlet</servlet-name>
+        <url-pattern>/FormCreateHotelServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeleteHotelServlet</servlet-name>
+        <url-pattern>/EditDeleteHotelServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageRestaurantServlet</servlet-name>
+        <url-pattern>/ManageRestaurantServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FormCreateRestaurantServlet</servlet-name>
+        <url-pattern>/FormCreateRestaurantServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDeleteRestaurantServlet</servlet-name>
+        <url-pattern>/EditDeleteRestaurantServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillServlet</servlet-name>
+        <url-pattern>/BillServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewBillDetailServlet</servlet-name>
+        <url-pattern>/ViewBillDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageUserServlet</servlet-name>
+        <url-pattern>/ManageUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageReviewServlet</servlet-name>
+        <url-pattern>/ManageReviewServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,64 +1,42 @@
-<%-- 
-    Document   : AddRestaurant
-    Created on : Feb 13, 2024, 10:34:24 PM
-    Author     : ADMIN
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <%@ include file="includes/header.jsp" %>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <style>
-        h2 {
-            margin-left: 5%;
-        }
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            text-align: center;
-        }
-        .hotel-image {
-            max-width: 100px; /* Độ rộng tối đa của hình ảnh */
-            height: auto; /* Độ cao tự động tính dựa trên chiều rộng */
-        }
-    </style>
-    <title>Add Restaurant</title>
+    <meta charset="UTF-8">
+    <title>Create Restaurant</title>
 </head>
 <body>
     <br>
     <br>
     <br>
     <br>
-    <br>
-    <form action="RestaurantServlet" method="post">
+    <form action="ManageRestaurantServlet" method="post" enctype="multipart/form-data">
         <div class="container">
-            <input type="hidden" name="locationId" value="${param.locationId}">
-
+            <h2>Create Restaurant</h2>
+            <br>
             <div class="form-group">
                 <label for="restaurantName">Restaurant Name:</label>
-                <input type="text" id="restaurantName" name="restaurantName" class="form-control" required>
+                <input type="text" id="restaurantName" name="restaurantName" class="form-control">
             </div>
-            <div class="form-group">
-                <label for="reservationDate">Reservation Date:</label>
-                <input type="date" id="reservationDate" name="reservationDate" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" id="price" name="price" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="imageUrl">Image URL:</label>
-                <input type="file" class="account-settings-fileinput" name="imageUrl">
-            </div>
+            <br>
+            <label for="location">Select a location:</label>
+            <select id="location" name="locationId" required>
+                <c:forEach var="location" items="${locations}">
+                    <option value="${location.locationId}">${location.locationName}</option>
+                </c:forEach>
+            </select><br><br>
             <div class="form-group">
                 <label for="address">Address:</label>
-                <textarea id="address" name="address" class="form-control" rows="3" required></textarea>
+                <textarea id="address" name="address" class="form-control" rows="3"></textarea>
             </div>
+            <br>
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" name="image" id="image">
+            </div>
+
             <br>
             <br>
             <!-- Add Button -->

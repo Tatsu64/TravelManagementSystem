@@ -23,7 +23,6 @@
                     <div class="dropdown-menu m-0">
                         <a href="destination.jsp" class="dropdown-item">Destination</a>
                         <a href="booking.jsp" class="dropdown-item">Booking</a>
-                        <a href="Change-Password.jsp" class="dropdown-item">Change Password</a>
                         <a href="404.jsp" class="dropdown-item">404 Page</a>
                     </div>
 
@@ -43,11 +42,11 @@
                         <a href="LocationServlet?" class="dropdown-item">Locations</a>
                         <a href="TransportationServlet?" class="dropdown-item">Transportation</a>
                         <a href="ApprovalTourServlet?" class="dropdown-item">Tours</a>
-                        <a href="404.jsp" class="dropdown-item">Hotels</a>
-                        <a href="404.jsp" class="dropdown-item">Restaurants</a>
-                        <a href="404.jsp" class="dropdown-item">Reviews</a>
-                        <a href="404.jsp" class="dropdown-item">Bills</a>
-                        <a href="404.jsp" class="dropdown-item">Users</a>
+                        <a href="ManageHotelsServlet?" class="dropdown-item">Hotels</a>
+                        <a href="ManageRestaurantServlet?" class="dropdown-item">Restaurants</a>
+                        <a href="ManageReviewServlet?" class="dropdown-item">Reviews</a>
+                        <a href="BillServlet?" class="dropdown-item">Bills</a>
+                        <a href="ManageUserServlet?" class="dropdown-item">Users</a>
                     </div>
 
                 </div>

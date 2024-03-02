@@ -8,9 +8,6 @@ package model.entity;
  *
  * @author ADMIN
  */
-import java.util.Date;
-
-import java.math.BigDecimal;
 
 public class Hotel {
     private int hotelId;

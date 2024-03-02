@@ -73,7 +73,7 @@ public class HotelServlet extends HttpServlet {
             } else {
                 // Xử lý khi tourId không tồn tại hoặc là chuỗi rỗng
                 // Ví dụ: Hiển thị trang lỗi hoặc chuyển hướng sang trang khác
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("404.jsp");
                 return;
             }
         // Lấy location_id từ request
@@ -83,7 +83,7 @@ public class HotelServlet extends HttpServlet {
             locationId = Integer.parseInt(locationIdStr);
         } catch (NumberFormatException e) {
             // Xử lý khi locationId không hợp lệ
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
             return;
         }
 
@@ -99,7 +99,7 @@ public class HotelServlet extends HttpServlet {
         } catch (SQLException ex) {
             // Xử lý khi có lỗi SQL
             ex.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 

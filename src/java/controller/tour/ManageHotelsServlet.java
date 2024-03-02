@@ -4,27 +4,24 @@
  */
 package controller.tour;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.entity.Tour;
-import java.io.*;
-import javax.servlet.http.*;
-import model.dao.TourDAO;
+import javax.servlet.http.Part;
+import model.dao.HotelDAO;
 import model.database.DatabaseConnector;
-import model.entity.TourTransportation;
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.servlet.ServletException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.annotation.*;
-import model.entity.Employee;
+import model.entity.Hotel;
+import model.entity.Location;
 
 /**
  *
@@ -33,7 +30,7 @@ import model.entity.Employee;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10, // 10MB
         maxRequestSize = 1024 * 1024 * 50)  // 50MB
-public class CreateTourServlet extends HttpServlet {
+public class ManageHotelsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,10 +49,10 @@ public class CreateTourServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateTourServlet</title>");
+            out.println("<title>Servlet ManageHotelsServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateTourServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageHotelsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,7 +70,12 @@ public class CreateTourServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Khởi tạo HotelDAO và gọi phương thức getHotelList
+        HotelDAO hotelDAO = new HotelDAO(DatabaseConnector.getConnection());
+        List<Hotel> hotelList = hotelDAO.getAllHotels();
+        // Chuyển danh sách khách sạn sang JSP để hiển thị
+        request.setAttribute("hotelList", hotelList);
+        request.getRequestDispatcher("ManageHotel.jsp").forward(request, response);
     }
 
     /**
@@ -87,33 +89,21 @@ public class CreateTourServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            // Retrieve other form data
-            String tourName = request.getParameter("tourName");
-            String description = request.getParameter("description");
-            String tourPriceStr = request.getParameter("tourPrice");
-            String employeeIdStr = request.getParameter("employeeId");
-            String startLocation = request.getParameter("startLocation");
-            String maxCapacityStr = request.getParameter("maxCapacity");
-            String[] selectedTransportations = request.getParameterValues("selectedTransportations[]");
+          try {
+            // Lấy thông tin từ form
+            String hotelName = request.getParameter("hotelName");
             String locationIdStr = request.getParameter("locationId");
-
-            BigDecimal tourPrice = new BigDecimal(tourPriceStr);
-
-            int employeeId;
-            int maxCapacity;
-            int locationId;
+            String address = request.getParameter("address");
+            
+             int locationId;
 
             try {
                 locationId = Integer.parseInt(locationIdStr);
-                employeeId = Integer.parseInt(employeeIdStr);
-                maxCapacity = Integer.parseInt(maxCapacityStr);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 response.sendRedirect("404.jsp");
                 return;
             }
-
             // Handling image upload
             Part filePart = request.getPart("image");
             String fileName = getFileName(filePart);
@@ -128,52 +118,30 @@ public class CreateTourServlet extends HttpServlet {
                     output.write(buffer, 0, bytesRead);
                 }
             }
-
-            // Create a Tour object
-            Tour newTour = new Tour();
-            newTour.setTourName(tourName);
-            newTour.setDescription(description);
-            newTour.setTourPrice(tourPrice);
-            newTour.setImageUrl(fileName); // Save the file path to database instead of image URL
-
-            // In a real application, you would retrieve the employee from the database based on employeeId
-            Employee employee = new Employee();
-            employee.setEmployeeId(employeeId);
-            newTour.setEmployee(employee);
-
-            newTour.setStartLocation(startLocation);
-            newTour.setMaxCapacity(maxCapacity);
-
-            // Assuming you have the tourId available from the form submission
-            int generatedTourId = TourDAO.insertTourAndGetId(DatabaseConnector.getConnection(), newTour);
-            TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
-            tourDAO.addTourLocation(generatedTourId, locationId);
-
-            // Insert into TourTransportations
-            for (String transportationId : selectedTransportations) {
-                TourTransportation tourTransportation = new TourTransportation(generatedTourId, Integer.parseInt(transportationId));
-                tourDAO.addTourTransportation(tourTransportation);
-            }
-
-            // Redirect to a success page or display a success message
-            response.sendRedirect("ActivityScheduleServlet?tourId=" + generatedTourId + "&locationId=" + locationId);
-
-        }catch (SQLException ex) {
-            Logger.getLogger(CreateTourServlet.class.getName()).log(Level.SEVERE, null, ex);
+            
+            Location location = new Location();
+            location.setLocationId(locationId);
+            // Tạo đối tượng Hotel
+            Hotel hotel = new Hotel();
+            hotel.setHotelName(hotelName);
+            hotel.setLocation(location);
+            hotel.setAddress(address);
+            hotel.setImageUrl(fileName);
+            
+            // Thêm vào cơ sở dữ liệu
+             HotelDAO hotelDAO = new HotelDAO(DatabaseConnector.getConnection());
+            hotelDAO.addHotelToDatabase(hotel);
+            
+            // Chuyển hướng đến trang danh sách khách sạn sau khi thêm thành công
+            response.sendRedirect("ManageHotelsServlet?");
+        } catch (IOException | NumberFormatException | SQLException | ServletException ex) {
+            // Xử lý ngoại lệ
+            ex.printStackTrace();
+            response.sendRedirect("404.jsp");
         }
-        // Handle or log the exception appropriately
-        // Redirect to an error page
-        
     }
-
-    // Helper method to parse a string into a Date
-    private Date parseDate(String dateStr) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setLenient(false); // Disallow lenient parsing
-        return sdf.parse(dateStr);
-    }
-
-    // Helper method to get the file name from the Part
+    
+     // Helper method to get the file name from the Part
     private String getFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] tokens = contentDisp.split(";");
