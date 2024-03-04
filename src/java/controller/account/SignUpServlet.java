@@ -105,10 +105,12 @@ public class SignUpServlet extends HttpServlet {
             
             // Check if the email already exists
             try {
-            if (dao.checkUserExist(email, name)) {
-                 request.setAttribute("mess", "User already existed");
+            if (dao.checkUserExist(email)) {
                 // Forward back to the signup page with an error message
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.setAttribute("mess", "Email already existed");
+                // Pass user object to keep the entered data
+                request.setAttribute("auth", user);
+                request.getRequestDispatcher("Sign-up.jsp").forward(request, response);
             } else {
                     String otp = generateOTP();
                     saveOTP(email, otp);        

@@ -92,6 +92,7 @@ public class UserServlet extends HttpServlet {
                     }
 			if (user != null) {
                                 HttpSession session = request.getSession();
+                                session.setAttribute("userId", user.getUserId());
 				session.setAttribute("auth", user);
                                 
 //				System.out.print("user logged in");

@@ -36,7 +36,7 @@
                         <td><img src="images/${hotel.imageUrl}" alt="Hotel Image" width="100"></td>
                         <td>
                             <!-- Update button -->
-                            <button onclick="location.href='EditDeleteHotelServlet?hotelId=${hotel.hotelId}&action=update'" type="button" class="btn btn-warning">Update</button>
+                            <button onclick="location.href='EditDeleteHotelServlet?hotelId=${hotel.hotelId}&action=update'" type="but"btn btn-warning">Update</button>
                             <!-- Delete button -->
                             <button onclick="if(confirm('Are you sure you want to delete this hotel?')) location.href='EditDeleteHotelServlet?hotelId=${hotel.hotelId}&action=delete'" type="button" class="btn btn-danger">Delete</button>
                         </td>

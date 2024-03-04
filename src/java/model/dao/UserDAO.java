@@ -206,11 +206,10 @@ public class UserDAO {
 }
 
 
-    public boolean checkUserExist(String email, String name) {
-        String query = "SELECT COUNT(*) FROM Users WHERE email = ? OR name = ?";
+    public boolean checkUserExist(String email) {
+        String query = "SELECT COUNT(*) FROM Users WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
-            statement.setString(2, name);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

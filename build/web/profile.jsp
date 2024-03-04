@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -25,18 +26,6 @@
         <input type="hidden" value="${auth.userId}" name="id">
         <input type="hidden" value="${auth.password}" name="password">
         <input type="hidden" value="${auth.role}" name="role">
-        
-        <c:if test="${not empty failedMsg}">
-            <h5 class="text-center text-danger">${failedMsg}</h5> 
-            <c:remove var="failedMsg" scope="session" />
-        </c:if>
-
-        <c:if test="${not empty succMsg}">
-            <h5 class="text-center text-success">${succMsg}</h5>
-            <c:remove var="succMsg" scope="session" />
-        </c:if>
-
-    
     <div class="container light-style flex-grow-1 container-p-y">
         <h4 class="font-weight-bold py-3 mb-4" style="font-style: italic; font-family: Serif">
         
@@ -49,10 +38,10 @@
                             href="#account-general">User Profile</a>
                         <a class="list-group-item list-group-item-action" 
                             href="Change-Password.jsp">Change Password</a>
+                        <a class="list-group-item list-group-item-action" 
+                           href="ViewReviewServlet?">Review History</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-info"></a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-social-links"></a>
+                            href="#account-social-links">Booking History</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-connections"></a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
@@ -75,6 +64,19 @@
                             </div>--%>
                             <hr class="border-light m-0">
                             <div class="card-body">
+                                <c:if test="${not empty failedMsg}">
+                                    <div class="text-center text-danger" role="alert">
+                                    ${failedMsg}
+                                    </div>
+                                    <c:remove var="failedMsg" scope="session" />
+                                </c:if>
+                                
+                                <c:if test="${not empty succMsg}">
+                                    <div class="alert alert-success" role="alert">
+                                    ${succMsg}
+                                    </div>
+                                    <c:remove var="succMsg" scope="request" />
+                                </c:if>
                                 <div class="form-group">
                                     <label class="form-label">Username</label>
                                     <input type="text" class="form-control mb-1" name="name" value="${auth.name}">

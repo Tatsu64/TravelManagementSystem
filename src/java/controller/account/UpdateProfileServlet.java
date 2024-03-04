@@ -30,7 +30,7 @@ public class UpdateProfileServlet extends HttpServlet {
             
             if(f2){
                 request.getSession().setAttribute("auth", user);
-                request.setAttribute("succMsg", "User Profile Update Successfully");
+                request.setAttribute("succMsg", "Update Profile Successfully");
                 request.getRequestDispatcher("profile.jsp").forward(request, response);
                 }else{
                 request.setAttribute("failedMsg", "Somthing wrong on server");

@@ -3,11 +3,43 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/Code/TravelManagementSystem/web/includes/navbar.jsp</file>
-            <file>file:/F:/Code/TravelManagementSystem/src/java/model/dao/ReviewDAO.java</file>
-            <file>file:/F:/Code/TravelManagementSystem/web/userList.jsp</file>
-            <file>file:/F:/Code/TravelManagementSystem/web/ManageReview.jsp</file>
-            <file>file:/F:/Code/TravelManagementSystem/src/java/controller/tour/ManageReviewServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/entity/Location.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/UpdateReviewServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/entity/TourLocation.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/entity/Hotel.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/UpdateHotel.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/SendEmailServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/UpdateTransportation.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/entity/HotelTour.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/dao/TransportationDAO.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/ViewReviewServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/VerifyOTPServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/ChangePassword.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/login.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/entity/Review.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/profile.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/View-Review-History.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/ManageHotel.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/tour/EditDeleteEmployeeServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/UpdateReview.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/tour/EditDeleteActivityScheduleServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/Sign-up.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/UpdateProfileServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/UserServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/ResetPasswordServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/dao/ReviewDAO.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/tour/ManageReviewServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/WEB-INF/web.xml</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/ManageReview.jsp</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/tour/ViewUpdateTourServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/tour/ManageHotelsServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/dao/UserDAO.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/account/SignUpServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/controller/tour/EditDeleteHotelServlet.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/entity/TourDates.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/entity/Booking.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/src/java/model/entity/Tour.java</file>
+            <file>file:/D:/DES/Download/GIT_PROJECT/TravelManagementSystem/web/ViewTourDetail.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -168,6 +168,14 @@
         <servlet-name>ManageReviewServlet</servlet-name>
         <servlet-class>controller.tour.ManageReviewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewReviewServlet</servlet-name>
+        <servlet-class>controller.account.ViewReviewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateReviewServlet</servlet-name>
+        <servlet-class>controller.account.UpdateReviewServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -335,6 +343,14 @@
     <servlet-mapping>
         <servlet-name>ManageReviewServlet</servlet-name>
         <url-pattern>/ManageReviewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewReviewServlet</servlet-name>
+        <url-pattern>/ViewReviewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateReviewServlet</servlet-name>
+        <url-pattern>/UpdateReviewServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

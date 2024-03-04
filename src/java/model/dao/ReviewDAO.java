@@ -34,6 +34,7 @@ public class ReviewDAO {
                 + "FROM Reviews r "
                 + "JOIN Bookings b ON r.booking_id = b.booking_id "
                 + "JOIN Tours t ON b.tour_id = t.tour_id";
+        
         try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Review review = new Review();
@@ -69,5 +70,93 @@ public class ReviewDAO {
             e.printStackTrace(); // Xử lý ngoại lệ một cách thích hợp
         }
     }
+    
+   public Review getReviewById(int reviewId) throws SQLException {
+    String query = "SELECT r.review_id, r.content, r.rating, r.booking_id, b.tour_id, t.tour_name " +
+                   "FROM reviews r " +
+                   "JOIN bookings b ON r.booking_id = b.booking_id " +
+                   "JOIN tours t ON b.tour_id = t.tour_id " +
+                   "WHERE r.review_id = ?";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setInt(1, reviewId);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                Review review = new Review();
+                review.setReviewId(resultSet.getInt("review_id"));
+                review.setRating(resultSet.getInt("rating"));
+                review.setContent(resultSet.getString("content"));
+                
+                // Create a Booking object
+                Booking booking = new Booking();
+                booking.setBookingId(resultSet.getInt("booking_id"));
+                
+                // Create a Tour object and set its name
+                Tour tour = new Tour();
+                tour.setTourId(resultSet.getInt("tour_id"));
+                tour.setTourName(resultSet.getString("tour_name"));
+                
+                // Set the Tour object in the Booking
+                booking.setTour(tour);
+                
+                // Set the Booking object in the Review
+                review.setBooking(booking);
+                
+                return review;
+            }
+        }
+    }
+    return null;
+}
+   
+   public List<Review> getReviewsByUserId(int userId) throws SQLException {
+        List<Review> reviews = new ArrayList<>();
+        String query = "SELECT r.review_id, r.content, r.rating, b.booking_id, t.tour_id, t.tour_name " +
+                       "FROM reviews r " +
+                       "JOIN bookings b ON r.booking_id = b.booking_id " +
+                       "JOIN tours t ON b.tour_id = t.tour_id " +
+                       "WHERE b.user_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Review review = new Review();
+                    review.setReviewId(resultSet.getInt("review_id"));
+                    review.setContent(resultSet.getString("content"));
+                    review.setRating(resultSet.getInt("rating"));
+                    
+                    // Assuming you have appropriate setters in the Review class for booking and tour
+                    Booking booking = new Booking();
+                    booking.setBookingId(resultSet.getInt("booking_id"));
+                    Tour tour = new Tour();
+                    tour.setTourId(resultSet.getInt("tour_id"));
+                    tour.setTourName(resultSet.getString("tour_name"));
+                    
+                    booking.setTour(tour);
+                    
+                    review.setBooking(booking);
+                    
+                    reviews.add(review);
+                }
+            }
+        }
+        return reviews;
+    }
+
+
+
+    
+    public boolean updateReview(Review review) {
+    String sql = "UPDATE Reviews SET content = ?, rating = ? WHERE review_id = ?";
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, review.getContent());
+        statement.setInt(2, review.getRating());
+        statement.setInt(3, review.getReviewId()); // Use review_id to identify the review
+        int rowsUpdated = statement.executeUpdate();
+        return rowsUpdated > 0;
+    } catch (SQLException e) {
+        e.printStackTrace(); // Handle the exception appropriately
+        return false;
+    }
+}
 
 }
