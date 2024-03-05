@@ -12,7 +12,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.entity.Booking;
+import model.entity.Review;
 import model.entity.Tour;
 import model.entity.User;
 
@@ -64,5 +67,42 @@ public class BookingDAO {
 
         return booking;
     }
+    
+public List<Booking> getBookingsByUserId(int userId) throws SQLException {
+    List<Booking> bookings = new ArrayList<>();
+    String query = "SELECT b.booking_id, b.number_of_people, b.total_price, b.booking_date, " +
+                   "t.tour_id, t.tour_name " +
+                   "FROM reviews r " +
+                   "JOIN bookings b ON r.booking_id = b.booking_id " +
+                   "JOIN tours t ON b.tour_id = t.tour_id " +
+                   "WHERE b.user_id = ?";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setInt(1, userId);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(resultSet.getInt("booking_id"));
+                booking.setNumberOfPeople(resultSet.getInt("number_of_people"));
+                booking.setTotalPrice(resultSet.getBigDecimal("total_price"));
+                booking.setBookingDate(resultSet.getDate("booking_date"));
+                
+                // Retrieve tour details
+                Tour tour = new Tour();
+                tour.setTourId(resultSet.getInt("tour_id"));
+                tour.setTourName(resultSet.getString("tour_name"));
+                
+                // Set the tour in the booking
+                booking.setTour(tour);
+                
+                // Add the booking to the list
+                bookings.add(booking);
+            }
+        }
+    }
+    return bookings;
+}
+
+
 }
 

@@ -176,6 +176,10 @@
         <servlet-name>UpdateReviewServlet</servlet-name>
         <servlet-class>controller.account.UpdateReviewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewBookingServlet</servlet-name>
+        <servlet-class>controller.account.ViewBookingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -351,6 +355,10 @@
     <servlet-mapping>
         <servlet-name>UpdateReviewServlet</servlet-name>
         <url-pattern>/UpdateReviewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewBookingServlet</servlet-name>
+        <url-pattern>/ViewBookingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

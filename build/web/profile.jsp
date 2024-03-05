@@ -40,8 +40,8 @@
                             href="Change-Password.jsp">Change Password</a>
                         <a class="list-group-item list-group-item-action" 
                            href="ViewReviewServlet?">Review History</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-social-links">Booking History</a>
+                        <a class="list-group-item list-group-item-action" 
+                            href="ViewBookingServlet?">Booking History</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-connections"></a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"

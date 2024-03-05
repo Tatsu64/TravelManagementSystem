@@ -144,6 +144,8 @@ public class ReviewDAO {
 
 
 
+
+
     
     public boolean updateReview(Review review) {
     String sql = "UPDATE Reviews SET content = ?, rating = ? WHERE review_id = ?";
