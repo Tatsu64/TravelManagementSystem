@@ -110,7 +110,7 @@
                             <h3>Guest(s)</h3>
                             <div class="numeric-updown">
                                 <button type="button" onclick="decrementValue()">-</button>
-                                <input disabled="true" type="number" id="numeric-input" name="people" value="1" min="1">
+                                <input type="number" id="numeric-input" name="people" value="1" min="1" readonly>
                                 <button type="button" onclick="incrementValue()">+</button>
                             </div>
                         </div>
@@ -131,10 +131,12 @@
                         <div style="margin-top: 20px; padding: 10px">
                             <h5>Trip start</h5>
                             <div style="padding-left: 20px">${Tour.dateStart}</div>
+                            <input type="hidden" id="dateStart" name="dateStart" value="${Tour.dateStart}" />
                             <h5>Trip end</h5>
                             <div style="padding-left: 20px">${Tour.dateEnd}</div>
                             <h5>Current</h5>
                             <div style="padding-left: 20px">${Tour.current}</div>
+                            <input type="hidden" id="current" name="current" value="${Tour.current}" />
                         </div>
 
                         <div style="display: flex; justify-content: space-between">
@@ -150,6 +152,7 @@
                         <div style="display: flex; justify-content: space-between">
                             <h4>Bill: </h4>
                             <h4 id="price" name="price" >${Tour.price} $</h4>
+                            <input type="hidden" id="price" name="price" value="${Tour.price}" />
                         </div>
 
                         <button type="submit" style="width: 100%; padding: 15px; color: white; background-color: #5fc400; border: 0px solid; font-weight: bold">Payment</button>

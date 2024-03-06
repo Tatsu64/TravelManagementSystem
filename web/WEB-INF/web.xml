@@ -184,6 +184,10 @@
         <servlet-name>BookingServlet</servlet-name>
         <servlet-class>controller.pub.BookingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StripeServlet</servlet-name>
+        <servlet-class>controller.stripe.StripeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -383,6 +387,10 @@
     <servlet-mapping>
         <servlet-name>BookingServlet</servlet-name>
         <url-pattern>/BookingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StripeServlet</servlet-name>
+        <url-pattern>/StripeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

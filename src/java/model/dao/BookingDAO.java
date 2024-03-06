@@ -18,9 +18,10 @@ import model.entity.Booking;
 import model.entity.Review;
 import model.entity.Tour;
 import model.entity.User;
+import java.sql.Statement;
 
 public class BookingDAO {
-    
+
     private Connection connection;
 
     public BookingDAO(Connection connection) {
@@ -41,17 +42,17 @@ public class BookingDAO {
             if (resultSet.next()) {
                 booking = new Booking();
                 booking.setBookingId(resultSet.getInt("booking_id"));
-                
+
                 // Get and set tour information
                 TourDAO tourDAO = new TourDAO(connection);
                 Tour tour = tourDAO.getTourById(resultSet.getInt("tour_id"));
                 booking.setTour(tour);
-                
+
                 // Get and set user information
                 UserDAO userDAO = new UserDAO(connection);
                 User user = userDAO.getUserById(resultSet.getInt("user_id"));
                 booking.setUser(user);
-                
+
                 booking.setBookingDate(resultSet.getDate("booking_date"));
                 booking.setNumberOfPeople(resultSet.getInt("number_of_people"));
                 booking.setTotalPrice(resultSet.getBigDecimal("total_price"));
@@ -67,42 +68,66 @@ public class BookingDAO {
 
         return booking;
     }
-    
-public List<Booking> getBookingsByUserId(int userId) throws SQLException {
-    List<Booking> bookings = new ArrayList<>();
-    String query = "SELECT b.booking_id, b.number_of_people, b.total_price, b.booking_date, " +
-                   "t.tour_id, t.tour_name " +
-                   "FROM reviews r " +
-                   "JOIN bookings b ON r.booking_id = b.booking_id " +
-                   "JOIN tours t ON b.tour_id = t.tour_id " +
-                   "WHERE b.user_id = ?";
 
-    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-        preparedStatement.setInt(1, userId);
-        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            while (resultSet.next()) {
-                Booking booking = new Booking();
-                booking.setBookingId(resultSet.getInt("booking_id"));
-                booking.setNumberOfPeople(resultSet.getInt("number_of_people"));
-                booking.setTotalPrice(resultSet.getBigDecimal("total_price"));
-                booking.setBookingDate(resultSet.getDate("booking_date"));
-                
-                // Retrieve tour details
-                Tour tour = new Tour();
-                tour.setTourId(resultSet.getInt("tour_id"));
-                tour.setTourName(resultSet.getString("tour_name"));
-                
-                // Set the tour in the booking
-                booking.setTour(tour);
-                
-                // Add the booking to the list
-                bookings.add(booking);
+    public List<Booking> getBookingsByUserId(int userId) throws SQLException {
+        List<Booking> bookings = new ArrayList<>();
+        String query = "SELECT b.booking_id, b.number_of_people, b.total_price, b.booking_date, "
+                + "t.tour_id, t.tour_name "
+                + "FROM reviews r "
+                + "JOIN bookings b ON r.booking_id = b.booking_id "
+                + "JOIN tours t ON b.tour_id = t.tour_id "
+                + "WHERE b.user_id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Booking booking = new Booking();
+                    booking.setBookingId(resultSet.getInt("booking_id"));
+                    booking.setNumberOfPeople(resultSet.getInt("number_of_people"));
+                    booking.setTotalPrice(resultSet.getBigDecimal("total_price"));
+                    booking.setBookingDate(resultSet.getDate("booking_date"));
+
+                    // Retrieve tour details
+                    Tour tour = new Tour();
+                    tour.setTourId(resultSet.getInt("tour_id"));
+                    tour.setTourName(resultSet.getString("tour_name"));
+
+                    // Set the tour in the booking
+                    booking.setTour(tour);
+
+                    // Add the booking to the list
+                    bookings.add(booking);
+                }
             }
         }
+        return bookings;
     }
-    return bookings;
+
+    public int createBookingAndGetId(Booking booking) throws SQLException {
+        String sql = "INSERT INTO Bookings (tour_id, user_id, booking_date, number_of_people, total_price) VALUES (?, ?, ?, ?, ?)";
+        int bookingId = -1;
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1, booking.getTour().getTourId());
+            statement.setInt(2, booking.getUser().getUserId());
+            statement.setDate(3, new java.sql.Date(booking.getBookingDate().getTime()));
+            statement.setInt(4, booking.getNumberOfPeople());
+            statement.setBigDecimal(5, booking.getTotalPrice());
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating booking failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    bookingId = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating booking failed, no ID obtained.");
+                }
+            }
+        }
+        return bookingId;
+    }
+
 }
-
-
-}
-

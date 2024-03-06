@@ -20,9 +20,8 @@ import model.entity.Booking;
 import model.entity.Tour;
 import model.entity.User;
 
-
 public class BillDAO {
-    
+
     private Connection connection;
 
     public BillDAO(Connection connection) {
@@ -64,66 +63,75 @@ public class BillDAO {
 
         return bills;
     }
-    
+
     public Bill getBillById(int billId) throws SQLException {
-    Connection connection = null;
-    PreparedStatement statement = null;
-    ResultSet resultSet = null;
-    Bill bill = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Bill bill = null;
 
-    try {
-        connection = DatabaseConnector.getConnection();
-       String query = "SELECT b.bill_id, b.payment_date, b.payment_method, "
-             + "booking.booking_id, booking.tour_id, booking.user_id, booking.booking_date, booking.number_of_people, booking.total_price, "
-             + "users.name as name, "
-             + "tour.tour_name "
-             + "FROM Bills b "
-             + "JOIN Bookings booking ON b.booking_id = booking.booking_id "
-             + "JOIN Users users ON booking.user_id = users.user_id "
-             + "JOIN Tours tour ON booking.tour_id = tour.tour_id "
-             + "WHERE b.bill_id = ?";
-        statement = connection.prepareStatement(query);
-        statement.setInt(1, billId);
-        resultSet = statement.executeQuery();
+        try {
+            connection = DatabaseConnector.getConnection();
+            String query = "SELECT b.bill_id, b.payment_date, b.payment_method, "
+                    + "booking.booking_id, booking.tour_id, booking.user_id, booking.booking_date, booking.number_of_people, booking.total_price, "
+                    + "users.name as name, "
+                    + "tour.tour_name "
+                    + "FROM Bills b "
+                    + "JOIN Bookings booking ON b.booking_id = booking.booking_id "
+                    + "JOIN Users users ON booking.user_id = users.user_id "
+                    + "JOIN Tours tour ON booking.tour_id = tour.tour_id "
+                    + "WHERE b.bill_id = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, billId);
+            resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
-            bill = new Bill();
-            bill.setBillId(resultSet.getInt("bill_id"));
-            bill.setPaymentDate(resultSet.getDate("payment_date"));
-            bill.setPaymentMethod(resultSet.getString("payment_method"));
-            
-            Booking booking = new Booking();
-            booking.setBookingId(resultSet.getInt("booking_id"));
-            
-            // Get and set tour information
-            TourDAO tourDAO = new TourDAO(connection);
-            Tour tour = tourDAO.getTourById(resultSet.getInt("tour_id"));
-            tour.setTourName(resultSet.getString("tour_name"));
-            booking.setTour(tour);
-            
-            // Set user information
-            User user = new User();
-            user.setUserId(resultSet.getInt("user_id"));
-            user.setName(resultSet.getString("name"));
-            booking.setUser(user);
-            
-            booking.setBookingDate(resultSet.getDate("booking_date"));
-            booking.setNumberOfPeople(resultSet.getInt("number_of_people"));
-            booking.setTotalPrice(resultSet.getBigDecimal("total_price"));
-            
-            bill.setBooking(booking);
+            if (resultSet.next()) {
+                bill = new Bill();
+                bill.setBillId(resultSet.getInt("bill_id"));
+                bill.setPaymentDate(resultSet.getDate("payment_date"));
+                bill.setPaymentMethod(resultSet.getString("payment_method"));
+
+                Booking booking = new Booking();
+                booking.setBookingId(resultSet.getInt("booking_id"));
+
+                // Get and set tour information
+                TourDAO tourDAO = new TourDAO(connection);
+                Tour tour = tourDAO.getTourById(resultSet.getInt("tour_id"));
+                tour.setTourName(resultSet.getString("tour_name"));
+                booking.setTour(tour);
+
+                // Set user information
+                User user = new User();
+                user.setUserId(resultSet.getInt("user_id"));
+                user.setName(resultSet.getString("name"));
+                booking.setUser(user);
+
+                booking.setBookingDate(resultSet.getDate("booking_date"));
+                booking.setNumberOfPeople(resultSet.getInt("number_of_people"));
+                booking.setTotalPrice(resultSet.getBigDecimal("total_price"));
+
+                bill.setBooking(booking);
+            }
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
         }
-    } finally {
-        if (resultSet != null) {
-            resultSet.close();
-        }
-        if (statement != null) {
-            statement.close();
+
+        return bill;
+    }
+
+    public void createBill(Bill bill) throws SQLException {
+        String sql = "INSERT INTO Bills (booking_id, payment_date, payment_method) VALUES (?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, bill.getBooking().getBookingId());
+            statement.setDate(2, new java.sql.Date(bill.getPaymentDate().getTime()));
+            statement.setString(3, bill.getPaymentMethod());
+            statement.executeUpdate();
         }
     }
 
-    return bill;
 }
-
-}
-
