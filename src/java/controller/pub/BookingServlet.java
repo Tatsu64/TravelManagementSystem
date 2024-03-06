@@ -39,7 +39,7 @@ public class BookingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BookingServlet</title>");            
+            out.println("<title>Servlet BookingServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet BookingServlet at " + request.getContextPath() + "</h1>");
@@ -60,29 +60,7 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int tourId = Integer.parseInt(request.getParameter("id"));
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        int people = Integer.parseInt(request.getParameter("people"));
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
-        
-        Date bookingDate = new Date();
-        
-        Tour tour = new Tour();
-        tour.setTourId(tourId);
-        
-        User user = new User();
-        user.setUserId(userId);
-        user.setName(name);
-        user.setEmail(email);
-        
-        Booking bk = new Booking();
-        bk.setTour(tour);
-        bk.setUser(user);
-        bk.setNumberOfPeople(people);
-        bk.setTotalPrice(price);
-        bk.setBookingDate(bookingDate);
+        processRequest(request, response);
     }
 
     /**
@@ -96,7 +74,29 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int tourId = Integer.parseInt(request.getParameter("id"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        int people = Integer.parseInt(request.getParameter("people"));
+        BigDecimal price = new BigDecimal(request.getParameter("price"));
+
+        Date bookingDate = new Date();
+
+        Tour tour = new Tour();
+        tour.setTourId(tourId);
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setName(name);
+        user.setEmail(email);
+
+        Booking bk = new Booking();
+        bk.setTour(tour);
+        bk.setUser(user);
+        bk.setNumberOfPeople(people);
+        bk.setTotalPrice(price);
+        bk.setBookingDate(bookingDate);
     }
 
     /**

@@ -80,84 +80,84 @@
         </div>
         <!-- Navbar & Hero End -->
 
-        <form action="BookingServlet" method="get">
-        <div style="padding: 100px 50px 50px 50px;">
-            <h1 style="margin-bottom: 40px">Trip Overall</h1>
-            <div style="display: flex">
-                <div style="width: 70%;margin-right: 20px">
-                    <h4>Contact information</h4>
-                    <div style="padding: 20px; background-color: #ededed; display: flex; flex-wrap: wrap">
-                        <input type="hidden" id="userId" name="userId" value="${auth.userId}">
-                        <div style="width: 50%; padding: 20px">
-                            <label>Full Name</label><span style="color: red">*</span>
-                            <input name="name" value="${auth.name}" class="form-control"/>
+        <form action="BookingServlet" method="post">
+            <div style="padding: 100px 50px 50px 50px;">
+                <h1 style="margin-bottom: 40px">Trip Overall</h1>
+                <div style="display: flex">
+                    <div style="width: 70%;margin-right: 20px">
+                        <h4>Contact information</h4>
+                        <div style="padding: 20px; background-color: #ededed; display: flex; flex-wrap: wrap">
+                            <input type="hidden" id="userId" name="userId" value="${auth.userId}">
+                            <div style="width: 50%; padding: 20px">
+                                <label>Full Name</label><span style="color: red">*</span>
+                                <input name="name" value="${auth.name}" class="form-control"/>
+                            </div>
+                            <div style="width: 50%; padding: 20px">
+                                <label>Email</label><span style="color: red">*</span>
+                                <input name="email" value="${auth.email}" class="form-control"/>
+                            </div>
+                            <div style="width: 50%; padding: 20px">
+                                <label>Phone number</label><span style="color: red">*</span>
+                                <input value="${auth.phone}" class="form-control"/>
+                            </div>
+                            <div style="width: 50%; padding: 20px">
+                                <label>Address</label>
+                                <input value="${auth.address}" class="form-control"/>
+                            </div>
+
                         </div>
-                        <div style="width: 50%; padding: 20px">
-                            <label>Email</label><span style="color: red">*</span>
-                            <input name="email" value="${auth.email}" class="form-control"/>
+                        <div style="margin-top: 20px; display: flex">
+                            <h3>Guest(s)</h3>
+                            <div class="numeric-updown">
+                                <button type="button" onclick="decrementValue()">-</button>
+                                <input disabled="true" type="number" id="numeric-input" name="people" value="1" min="1">
+                                <button type="button" onclick="incrementValue()">+</button>
+                            </div>
                         </div>
-                        <div style="width: 50%; padding: 20px">
-                            <label>Phone number</label><span style="color: red">*</span>
-                            <input value="${auth.phone}" class="form-control"/>
-                        </div>
-                        <div style="width: 50%; padding: 20px">
-                            <label>Address</label>
-                            <input value="${auth.address}" class="form-control"/>
+                    </div>
+
+                    <div style="width: 30%; padding: 20px; border: 1px solid">
+                        <h3>Trip summary</h3>
+                        <input type="hidden" id="id" name="id" value="${id}">
+                        <div style="display: flex; align-items: center">
+                            <div style="width: 30%">
+                                <img style="width: 100%" src="images/${Tour.image}"/>
+                            </div>
+                            <div style="width:70%; padding-left: 10px">
+                                <h4>${Tour.location} - ${Tour.secondlocation}</h4>
+                            </div>
                         </div>
 
-                    </div>
-                    <div style="margin-top: 20px; display: flex">
-                        <h3>Guest(s)</h3>
-                        <div class="numeric-updown">
-                            <button onclick="decrementValue()">-</button>
-                            <input disabled="true" type="number" id="numeric-input" name="people" value="1" min="1">
-                            <button onclick="incrementValue()">+</button>
+                        <div style="margin-top: 20px; padding: 10px">
+                            <h5>Trip start</h5>
+                            <div style="padding-left: 20px">${Tour.dateStart}</div>
+                            <h5>Trip end</h5>
+                            <div style="padding-left: 20px">${Tour.dateEnd}</div>
+                            <h5>Current</h5>
+                            <div style="padding-left: 20px">${Tour.current}</div>
                         </div>
+
+                        <div style="display: flex; justify-content: space-between">
+                            <h5>Per Guest: </h5>
+                            <h5>${Tour.price} $</h5>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between">
+                            <div>Guest: </div>
+                            <div><span id='nog'>1</span> X <span>${Tour.price}</span> $</div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between">
+                            <h4>Bill: </h4>
+                            <h4 id="price" name="price" >${Tour.price} $</h4>
+                        </div>
+
+                        <button type="submit" style="width: 100%; padding: 15px; color: white; background-color: #5fc400; border: 0px solid; font-weight: bold">Payment</button>
                     </div>
                 </div>
-
-                <div style="width: 30%; padding: 20px; border: 1px solid">
-                    <h3>Trip summary</h3>
-                    <input type="hidden" id="id" name="id" value="${id}">
-                    <div style="display: flex; align-items: center">
-                        <div style="width: 30%">
-                            <img style="width: 100%" src="images/${Tour.image}"/>
-                        </div>
-                        <div style="width:70%; padding-left: 10px">
-                            <h4>${Tour.location} - ${Tour.secondlocation}</h4>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 20px; padding: 10px">
-                        <h5>Trip start</h5>
-                        <div style="padding-left: 20px">${Tour.dateStart}</div>
-                        <h5>Trip end</h5>
-                        <div style="padding-left: 20px">${Tour.dateEnd}</div>
-                        <h5>Current</h5>
-                        <div style="padding-left: 20px">${Tour.current}</div>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between">
-                        <h5>Per Guest: </h5>
-                        <h5>${Tour.price} $</h5>
-                    </div>
-                    
-                     <div style="display: flex; justify-content: space-between">
-                        <div>Guest: </div>
-                        <div><span id='nog'>1</span> X <span>${Tour.price}</span> $</div>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: space-between">
-                        <h4>Bill: </h4>
-                        <h4 id="price" name="price" >${Tour.price} $</h4>
-                    </div>
-                    
-                    <button type="submit" style="width: 100%; padding: 15px; color: white; background-color: #5fc400; border: 0px solid; font-weight: bold">Payment</button>
-                </div>
+                <button type="button" onclick="history.back();" class="btn btn-secondary">Back</button>
             </div>
-                    <button type="button" onclick="history.back();" class="btn btn-secondary">Back</button>
-        </div>
-               </form>     
+        </form>     
 
 
 
@@ -182,30 +182,30 @@
         <script src="js/main.js"></script>
 
         <script>
-                                function incrementValue() {
-                                    var value = parseInt(document.getElementById('numeric-input').value, 10);
-                                    value = isNaN(value) ? 0 : value;
-                                    value++;
-                                    document.getElementById('numeric-input').value = value;
-                                    updateNOG();
-                                }
+                         function incrementValue() {
+                             var value = parseInt(document.getElementById('numeric-input').value, 10);
+                             value = isNaN(value) ? 0 : value;
+                             value++;
+                             document.getElementById('numeric-input').value = value;
+                             updateNOG();
+                         }
 
-                                function decrementValue() {
-                                    var value = parseInt(document.getElementById('numeric-input').value, 10);
-                                    value = isNaN(value) ? 0 : value;
-                                    if (value > 1) {
-                                        value--;
-                                        document.getElementById('numeric-input').value = value;
-                                        updateNOG();
-                                    }
-                                }
-                                
-                                function updateNOG(){
-                                    var value = document.getElementById("numeric-input").value
-                                    document.getElementById("nog").innerHTML = value
-                                    var newprice = value * ${price}
-                                    document.getElementById("price").innerHTML = newprice+" $"
-                                }
+                         function decrementValue() {
+                             var value = parseInt(document.getElementById('numeric-input').value, 10);
+                             value = isNaN(value) ? 0 : value;
+                             if (value > 1) {
+                                 value--;
+                                 document.getElementById('numeric-input').value = value;
+                                 updateNOG();
+                             }
+                         }
+
+                         function updateNOG() {
+                             var value = document.getElementById("numeric-input").value
+                             document.getElementById("nog").innerHTML = value
+                             var newprice = value * ${price}
+                             document.getElementById("price").innerHTML = newprice + " $"
+                         }
         </script>
 
     </body>
