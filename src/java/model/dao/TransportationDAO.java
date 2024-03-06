@@ -15,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.database.DatabaseConnector;
 import model.entity.Transportation;
 
@@ -154,6 +156,31 @@ public class TransportationDAO {
         // Không đóng kết nối ở đây để tiếp tục sử dụng kết nối cho các công việc khác
     }
 }
+    public static List<Transportation> getTransportationByTourId(int tourid) {
+        List<Transportation> transportationList = new ArrayList<>();
 
+        // Use a try-with-resources statement to automatically close resources (PreparedStatement and ResultSet)
+        try ( PreparedStatement statement = DatabaseConnector.connection.prepareStatement("SELECT * FROM Transportations t join TourTransportation tt on t.transportation_id = tt.transportation_id\n"
+                + "where tt.tour_id = ?")) {
+            statement.setInt(1, tourid);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                // Create Transportation objects and add them to the list
+                Transportation transportation = new Transportation();
+                transportation.setTransportationId(resultSet.getInt("transportation_id"));
+                transportation.setTransportationName(resultSet.getString("transportation_name"));
+                transportation.setImageUrl(resultSet.getString("image_url"));
+                transportation.setDepartureTime(resultSet.getTime("departure_time"));
+                transportation.setReturnTime(resultSet.getTime("return_time"));
+                // Set other properties as needed
+
+                transportationList.add(transportation);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TransportationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return transportationList;
+    }
 }
 

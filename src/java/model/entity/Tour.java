@@ -24,6 +24,7 @@ public class Tour {
     private Employee employee;  // Đây là khóa ngoại tới Employee
     private String startLocation;
     private int maxCapacity;
+    private int current;
 
     // Constructors, getters, and setters
 
@@ -138,6 +139,14 @@ public class Tour {
 
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
+    }
+
+    public int getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
     }
 
 }

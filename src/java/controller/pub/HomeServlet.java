@@ -70,28 +70,13 @@ public class HomeServlet extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            //processRequest(request, response);
-            Gson gson = new GsonBuilder().create();
-            List<MenuLocation> menuloc = LocationDAO.getMenuLocation();
-            request.setAttribute("menuloc", menuloc);
-            request.setAttribute("jsonloc", gson.toJson(menuloc));
-            request.setAttribute("hometour", TourDAO.getAllHomeTours());
-            String searchloc = request.getParameter("searchLoc");
-            if (searchloc != null) {
-                List<MenuLocation> searchResult = new ArrayList<>();
-                for (MenuLocation m : menuloc) {
-                    if (m.getName().contains(searchloc)) {
-                        searchResult.add(m);
-                    }
-                }
-                request.setAttribute("searchResult", searchResult);
-            }
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //processRequest(request, response);
+        Gson gson = new GsonBuilder().create();
+        List<MenuLocation> menuloc = LocationDAO.getMenuLocation();
+        request.setAttribute("menuloc", menuloc);
+        request.setAttribute("jsonloc", gson.toJson(menuloc));
+        request.setAttribute("hometour", TourDAO.getAllHomeTours());
+        request.getRequestDispatcher("index.jsp").forward(request, response);
         
     }
 

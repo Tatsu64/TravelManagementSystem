@@ -180,6 +180,10 @@
         <servlet-name>ViewBookingServlet</servlet-name>
         <servlet-class>controller.account.ViewBookingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookingServlet</servlet-name>
+        <servlet-class>controller.pub.BookingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -359,6 +363,26 @@
     <servlet-mapping>
         <servlet-name>ViewBookingServlet</servlet-name>
         <url-pattern>/ViewBookingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderDetailServlet</servlet-name>
+        <url-pattern>/OrderDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>OrderDetailServlet</servlet-name>
+        <servlet-class>controller.pub.OrderDetailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TourListServlet</servlet-name>
+        <url-pattern>/TourList</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>TourListServlet</servlet-name>
+        <servlet-class>controller.pub.TourListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookingServlet</servlet-name>
+        <url-pattern>/BookingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

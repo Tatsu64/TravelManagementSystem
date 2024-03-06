@@ -4,23 +4,20 @@
  */
 package controller.pub;
 
-import static helper.Helper.convertToLocalDate;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.temporal.ChronoUnit;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.dao.LocationDAO;
 import model.dao.TourDAO;
-import model.database.DatabaseConnector;
-import model.entity.Tour;
 
 /**
  *
  * @author toden
  */
-public class OrderServlet extends HttpServlet {
+public class TourListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +36,10 @@ public class OrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderServlet</title>");            
+            out.println("<title>Servlet TourListServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OrderServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TourListServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,13 +58,17 @@ public class OrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        int tourid = Integer.parseInt(request.getParameter("id"));
-        TourDAO tdao = new TourDAO(DatabaseConnector.getConnection());
-        Tour tour = tdao.getTourById(tourid);
-        int days = (int) ChronoUnit.DAYS.between(convertToLocalDate(tour.getStartDate()), convertToLocalDate(tour.getEndDate()));
-        request.setAttribute("tour", tour);
-        request.setAttribute("days", days);
-        request.getRequestDispatcher("order.jsp").forward(request, response);
+        String location = request.getParameter("location");
+        String date = request.getParameter("date");
+        if (location==null||location.equals("0")) {
+            response.sendRedirect("Home");
+        } else {
+            request.setAttribute("location", location);
+            request.setAttribute("date", date);
+            request.setAttribute("Menuloc", LocationDAO.getMenuLocation());
+            request.setAttribute("Tours", TourDAO.getHomeToursByStartDateAndLocation(location, date));
+            request.getRequestDispatcher("TourList.jsp").forward(request, response);
+        }
     }
 
     /**

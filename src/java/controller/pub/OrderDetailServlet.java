@@ -10,13 +10,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.dao.TourDAO;
+import model.entity.HomeTour;
+import model.entity.User;
 
 /**
  *
- * @author TATSU
+ * @author toden
  */
-public class DetailServlet extends HttpServlet {
+public class OrderDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,15 +33,15 @@ public class DetailServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DetailServlet</title>");            
+            out.println("<title>Servlet OrderDetailServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet OrderDetailServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,9 +60,18 @@ public class DetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        int id = Integer.parseInt(request.getParameter("id"));
-        request.setAttribute("ht", TourDAO.getHomeTourById(id));
-        request.getRequestDispatcher("tourDetail.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("auth");
+        if (user == null) {
+            response.sendRedirect("login.jsp");
+        } else {
+            int id = Integer.parseInt(request.getParameter("id"));
+            HomeTour ht = TourDAO.getHomeTourById(id);
+            request.setAttribute("Tour", ht);
+            request.setAttribute("id", id);
+            request.setAttribute("price", ht.getPrice());
+            request.getRequestDispatcher("OrderDetail.jsp").forward(request, response);
+        }
     }
 
     /**

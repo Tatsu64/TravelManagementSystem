@@ -14,6 +14,8 @@ import java.util.List;
 import model.database.DatabaseConnector;
 import static model.database.DatabaseConnector.connection;
 import model.entity.Location;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -187,7 +189,8 @@ public Location getLocationById(int locationId) throws SQLException {
         return locations;
     }
 
-    public static List<MenuLocation> getMenuLocation() throws SQLException {
+
+    public static List<MenuLocation> getMenuLocation() {
         List<MenuLocation> locations = new ArrayList<>();
         try ( PreparedStatement statement = connection.prepareStatement("select * from Locations");  ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
@@ -195,8 +198,9 @@ public Location getLocationById(int locationId) throws SQLException {
 
                 locations.add(new MenuLocation(name,"https://t4.ftcdn.net/jpg/02/80/82/81/360_F_280828158_ZZ2W8atYMHiSkLoDzxgDHNhdmXJ31jCR.jpg"));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(LocationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return locations;
     }
-
 }
