@@ -4,13 +4,24 @@
  */
 package controller.pub;
 
+import static helper.Helper.convertToLocalDate;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.time.temporal.ChronoUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.dao.ActivityScheduleDAO;
+import model.dao.HotelDAO;
+import model.dao.RestaurantDAO;
 import model.dao.TourDAO;
+import model.dao.TransportationDAO;
+import model.database.DatabaseConnector;
+import model.entity.Tour;
 
 /**
  *
@@ -56,10 +67,25 @@ public class DetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        int id = Integer.parseInt(request.getParameter("id"));
-        request.setAttribute("ht", TourDAO.getHomeTourById(id));
-        request.getRequestDispatcher("tourDetail.jsp").forward(request, response);
+        try {
+            //processRequest(request, response);
+            int tourid = Integer.parseInt(request.getParameter("id"));
+            TourDAO tdao = new TourDAO(DatabaseConnector.getConnection());
+            RestaurantDAO rdao = new RestaurantDAO(DatabaseConnector.getConnection());
+            ActivityScheduleDAO ad = new ActivityScheduleDAO(DatabaseConnector.getConnection());
+            HotelDAO hd = new HotelDAO(DatabaseConnector.getConnection());
+            Tour tour = tdao.getTourById(tourid);
+            int days = (int) ChronoUnit.DAYS.between(convertToLocalDate(tour.getStartDate()), convertToLocalDate(tour.getEndDate()));
+            request.setAttribute("tour", tour);
+            request.setAttribute("days", days);
+            request.setAttribute("restaurants", rdao.getRestaurantByTourId(tourid));
+            request.setAttribute("transports", TransportationDAO.getTransportationByTourId(tourid));
+            request.setAttribute("hotels", hd.getHotelByTourId(tourid));
+            request.setAttribute("activities", ad.getActivityScheduleList(tourid));
+            request.getRequestDispatcher("tourDetail.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(DetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

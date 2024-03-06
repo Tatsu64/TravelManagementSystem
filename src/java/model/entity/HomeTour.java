@@ -11,11 +11,38 @@ package model.entity;
 public class HomeTour {
     public int TourId;
     public String location;
+    private String secondlocation;
+    private String dateStart;
+    private String dateEnd;
+
+    public String getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(String dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public String getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
+    }
     public int day;
     public int person;
     public double price;
     public String image;
     public String description;
+    
+    public String getSecondlocation() {
+        return secondlocation;
+    }
+
+    public void setSecondlocation(String secondlocation) {
+        this.secondlocation = secondlocation;
+    }
 
     public HomeTour(int TourId, String location, int day, int person, double price, String image, String description) {
         this.TourId = TourId;
@@ -26,6 +53,18 @@ public class HomeTour {
         this.image = image;
         this.description = description;
     }
+    
+    public HomeTour(int TourId, String location, String secondlocation, int day, int person, double price, String image, String description) {
+        this.TourId = TourId;
+        this.location = location;
+        this.secondlocation = secondlocation;
+        this.day = day;
+        this.person = person;
+        this.price = price;
+        this.image = image;
+        this.description = description;
+    }
+    
     
     public HomeTour(){
         
