@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -179,7 +181,15 @@
                                         <small class="fa fa-star text-primary"></small>
                                         <small class="fa fa-star text-primary"></small>
                                     </div>
-                                    <p>${ht.getDescription()}</p>
+                                    <c:choose>
+                                        <c:when test="${fn:length(ht.getDescription()) > 100}">
+                                            ${fn:substring(ht.getDescription(), 0, 100)}...
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${ht.getDescription()}
+                                        </c:otherwise>
+                                    </c:choose>
+
                                     <div class="d-flex justify-content-center mb-2">
                                         <a href="Detail?id=${ht.getTourId()}" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                                         <a href="OrderDetailServlet?id=${ht.getTourId()}" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -187,6 +197,8 @@
                                 </div>
                             </div>
                         </div>
+
+
 
 
 
@@ -218,7 +230,15 @@
                                                         <small class="fa fa-star text-primary"></small>
                                                         <small class="fa fa-star text-primary"></small>
                                                     </div>
-                                                    <p>${ht.getDescription()}</p>
+                                                    <c:choose>
+                                                        <c:when test="${fn:length(ht.getDescription()) > 100}">
+                                                            ${fn:substring(ht.getDescription(), 0, 100)}...
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${ht.getDescription()}
+                                                        </c:otherwise>
+                                                    </c:choose>
+
                                                     <div class="d-flex justify-content-center mb-2">
                                                         <a href="Order?id=${ht.getTourId()}" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
                                                     </div>
@@ -263,5 +283,6 @@
         <script src="js/main.js"></script>
 
     </body>
+
 
 </html>
