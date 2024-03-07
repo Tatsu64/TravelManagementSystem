@@ -188,6 +188,10 @@
         <servlet-name>StripeServlet</servlet-name>
         <servlet-class>controller.stripe.StripeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateReviewServlet</servlet-name>
+        <servlet-class>controller.account.CreateReviewServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/WelcomeServlet</url-pattern>
@@ -391,6 +395,10 @@
     <servlet-mapping>
         <servlet-name>StripeServlet</servlet-name>
         <url-pattern>/StripeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateReviewServlet</servlet-name>
+        <url-pattern>/CreateReviewServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

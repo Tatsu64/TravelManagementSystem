@@ -29,7 +29,7 @@
                         <br>
                         <a href="forgot-password.jsp" class="signup-image-link" id="show-forgot-password">Forgot Password</a>
                         <br>
-                        <a href="index.jsp" class="signup-image-link">Back to Home Page</a>
+                        <a href="Home" class="signup-image-link">Back to Home Page</a>
                     </div>                 
                     <div class="signin-form">
                         <h2 class="form-title">Login</h2>
