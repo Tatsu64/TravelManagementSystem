@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/DaiHoc/Ki%205/SWP391/TravelManagementSystem/web/OrderDetail.jsp</file>
-            <file>file:/D:/DaiHoc/Ki%205/SWP391/TravelManagementSystem/src/java/controller/pub/BookingServlet.java</file>
-            <file>file:/D:/DaiHoc/Ki%205/SWP391/TravelManagementSystem/src/java/controller/pub/OrderDetailServlet.java</file>
+            <file>file:/F:/Code/TravelManagementSystem/src/java/controller/pub/BookingServlet.java</file>
+            <file>file:/F:/Code/TravelManagementSystem/src/java/controller/pub/OrderDetailServlet.java</file>
+            <file>file:/F:/Code/TravelManagementSystem/web/ManageTour.jsp</file>
+            <file>file:/F:/Code/TravelManagementSystem/web/pay.jsp</file>
+            <file>file:/F:/Code/TravelManagementSystem/web/index.jsp</file>
+            <file>file:/F:/Code/TravelManagementSystem/src/java/controller/stripe/StripeServlet.java</file>
+            <file>file:/F:/Code/TravelManagementSystem/web/OrderDetail.jsp</file>
         </group>
     </open-files>
 </project-private>
