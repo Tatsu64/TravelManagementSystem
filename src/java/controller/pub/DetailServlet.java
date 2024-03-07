@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,9 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import model.dao.ActivityScheduleDAO;
 import model.dao.HotelDAO;
 import model.dao.RestaurantDAO;
+import model.dao.ReviewDAO;
 import model.dao.TourDAO;
 import model.dao.TransportationDAO;
 import model.database.DatabaseConnector;
+import model.entity.Review;
 import model.entity.Tour;
 
 /**
@@ -74,6 +77,8 @@ public class DetailServlet extends HttpServlet {
             RestaurantDAO rdao = new RestaurantDAO(DatabaseConnector.getConnection());
             ActivityScheduleDAO ad = new ActivityScheduleDAO(DatabaseConnector.getConnection());
             HotelDAO hd = new HotelDAO(DatabaseConnector.getConnection());
+            ReviewDAO reviewDAO = new ReviewDAO(DatabaseConnector.getConnection());
+            
             Tour tour = tdao.getTourById(tourid);
             int days = (int) ChronoUnit.DAYS.between(convertToLocalDate(tour.getStartDate()), convertToLocalDate(tour.getEndDate()));
             request.setAttribute("tour", tour);
@@ -82,7 +87,16 @@ public class DetailServlet extends HttpServlet {
             request.setAttribute("transports", TransportationDAO.getTransportationByTourId(tourid));
             request.setAttribute("hotels", hd.getHotelByTourId(tourid));
             request.setAttribute("activities", ad.getActivityScheduleList(tourid));
+            
+            
+            // Retrieve reviews based on the tour ID
+            List<Review> reviews = reviewDAO.getAllReviewsByTourId(tourid);
+
+            // Store user names, review content, and ratings as attributes in the request
+            request.setAttribute("reviews", reviews);
+            
             request.getRequestDispatcher("tourDetail.jsp").forward(request, response);
+          
         } catch (SQLException ex) {
             Logger.getLogger(DetailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

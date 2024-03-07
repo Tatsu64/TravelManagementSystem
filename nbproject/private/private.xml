@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/DaiHoc/Ki%205/SWP391/TravelManagementSystem/web/OrderDetail.jsp</file>
-            <file>file:/D:/DaiHoc/Ki%205/SWP391/TravelManagementSystem/src/java/controller/pub/BookingServlet.java</file>
-            <file>file:/D:/DaiHoc/Ki%205/SWP391/TravelManagementSystem/src/java/controller/pub/OrderDetailServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/web/profile.jsp</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/web/resetpassword.jsp</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/web/Change-Password.jsp</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/src/java/controller/stripe/StripeServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/web/tourDetail.jsp</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/src/java/controller/pub/BookingServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/src/java/controller/pub/DetailServlet.java</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/src/java/model/dao/ReviewDAO.java</file>
+            <file>file:/D:/DES/Download/GIT-SWP/TravelManagementSystem/web/View-Review-History.jsp</file>
         </group>
     </open-files>
 </project-private>

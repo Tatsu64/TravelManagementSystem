@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group form-button">
                         <input type="submit" class="form-submit" value="Change Password"/>
-                        <a href="index.jsp" style="color: black;" class="btn btn-default">Back to Home Page</a>
+                        <a href="profile.jsp" style="color: black;" class="btn btn-default">Back to Profile</a>
                     </div>
                 </form>
             </div>

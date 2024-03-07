@@ -136,6 +136,54 @@
             </div>
 
             <!-- About End -->
+            
+            
+            <!-- User Reviews -->
+
+<br>
+<div>
+    <div>
+        <div id="customerReviews" class="text-center">
+            Total Reviews: <span id="totalReviews">0</span><br>
+            Average Rating: <span id="averageRating">0.0</span>
+            <span class="fa fa-star star-active ml-3"></span>
+            <span class="fa fa-star star-active"></span>
+            <span class="fa fa-star star-active"></span>
+            <span class="fa fa-star star-active"></span>
+            <span class="fa fa-star star-inactive"></span>                   
+            <br><br>
+
+            <div class="card mx-auto" style="max-width: 800px;">
+                <div class="row d-flex justify-content-center">
+                    <div class="d-flex flex-column user-reviews">
+                        <c:forEach var="review" items="${reviews}">
+                            <div class="review">
+                                <h4>${review.booking.tour.tourName} ${review.booking.tour.startLocation}</h4>
+                                <h5 class="mt-2 mb-0">User: ${review.booking.user.name}</h5>
+                                <div class="row text-left">
+                                    <p class="content">Comment: ${review.content}</p>
+                                </div>
+                                <div>
+                                    <p class="text-left">
+                                        <span class="text-muted">${review.rating}</span>
+                                        <span class="fa fa-star star-active ml-3"></span>
+                                        <span class="fa fa-star star-active"></span>
+                                        <span class="fa fa-star star-active"></span>
+                                        <span class="fa fa-star star-active"></span>
+                                        <span class="fa fa-star star-inactive"></span>
+                                    </p>
+                                </div>
+                                <br>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 
@@ -205,6 +253,32 @@
 
             <!-- Template Javascript -->
             <script src="js/main.js"></script>
+            <script>
+                // Function to display customer reviews
+                function displayCustomerReviews() {
+                    let totalReviews = document.querySelectorAll('.user-reviews .review').length;
+                    let totalRating = 0;
+
+                    // Loop through each review
+                    document.querySelectorAll('.user-reviews .review').forEach(review => {
+                        let rating = parseInt(review.querySelector('.text-muted').textContent);
+                        totalRating += rating;
+                    });
+
+                    // Calculate average rating
+                    let averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
+
+                    // Update total reviews and average rating
+                    document.getElementById('totalReviews').innerText = totalReviews;
+                    document.getElementById('averageRating').innerText = averageRating.toFixed(1); // Round to 1 decimal place
+                }
+
+                // Call displayCustomerReviews function when the page is loaded
+                window.addEventListener('load', function () {
+                    displayCustomerReviews();
+                });
+            </script>
+            
 
     </body>
 

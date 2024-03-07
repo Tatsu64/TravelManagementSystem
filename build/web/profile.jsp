@@ -111,7 +111,7 @@
                               
         <div class="text-right mt-3">
             <input type="submit" class="btn btn-primary px-4" value="Save Changes">&nbsp;
-            <a type="submit" href="index.jsp" style="color: black;" class="btn btn-default" >Back to Home Page</a>
+            <a type="submit" href="Home" style="color: black;" class="btn btn-default" >Back to Home Page</a>
         </div>
 
     </div>
