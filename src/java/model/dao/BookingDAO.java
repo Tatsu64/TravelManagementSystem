@@ -131,15 +131,16 @@ public class BookingDAO {
         return bookingId;
     }
     
-public Booking getLatestBookingByUserId(int userId) throws SQLException {
-    Booking latestBooking = null;
+public Booking getLatestBookingByTourId(int userId, int tourId) throws SQLException {
+     Booking latestBooking = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
 
     try {
-        String query = "SELECT TOP 1 * FROM Bookings WHERE user_id = ? ORDER BY booking_date DESC";
+        String query = "SELECT TOP 1 * FROM Bookings WHERE user_id = ? AND tour_id = ? ORDER BY booking_date DESC";
         statement = connection.prepareStatement(query);
         statement.setInt(1, userId);
+        statement.setInt(2, tourId);
         resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
@@ -171,6 +172,7 @@ public Booking getLatestBookingByUserId(int userId) throws SQLException {
 
     return latestBooking;
 }
+
 
 
 

@@ -102,7 +102,7 @@ public class DetailServlet extends HttpServlet {
             // Store user names, review content, and ratings as attributes in the request
             request.setAttribute("reviews", reviews);
             
-            Booking latestBooking = bookingDAO.getLatestBookingByUserId(userId);
+            Booking latestBooking = bookingDAO.getLatestBookingByTourId(userId, tourid);
                 if (latestBooking != null) {
                     List<Integer> bookingIds = new ArrayList<>();
                     bookingIds.add(latestBooking.getBookingId());
