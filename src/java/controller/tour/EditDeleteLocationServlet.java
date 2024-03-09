@@ -73,11 +73,11 @@ public class EditDeleteLocationServlet extends HttpServlet {
                     break;
                 default:
                     // Xử lý trường hợp không hợp lệ
-                    response.sendRedirect("error.jsp");
+                    response.sendRedirect("404.jsp");
             }
         } else {
             // Xử lý trường hợp action không được cung cấp
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 

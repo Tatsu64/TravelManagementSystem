@@ -100,11 +100,11 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         } else {
             // Xử lý khi tourId không tồn tại trong request
             // Ví dụ: Hiển thị trang lỗi hoặc chuyển hướng sang trang khác
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     } catch (SQLException ex) {
         Logger.getLogger(ActivityScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
-        response.sendRedirect("error.jsp"); // Redirect to an error page in case of exception
+        response.sendRedirect("404.jsp"); // Redirect to an error page in case of exception
     }
 }
 

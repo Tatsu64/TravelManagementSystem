@@ -116,7 +116,7 @@ public class EditDeleteTourServlet extends HttpServlet {
             maxCapacity = Integer.parseInt(maxCapacityStr);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
             return;
         }
 

@@ -71,7 +71,7 @@ public class TourDatesServlet extends HttpServlet {
             if (tourIdStr != null && !tourIdStr.isEmpty()) {
                 tourId = Integer.parseInt(tourIdStr);
             } else {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("404.jsp");
                 return;
             }
             TourDatesDAO tourDatesDAO = new TourDatesDAO(DatabaseConnector.getConnection());
@@ -108,7 +108,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             currentCapacityStr == null || tourIdStr == null ||
             startDateStr.isEmpty() || endDateStr.isEmpty() ||
             currentCapacityStr.isEmpty() || tourIdStr.isEmpty()) {
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
             return;
         }
 
@@ -135,7 +135,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
 
     } catch (ParseException | NumberFormatException ex) {
         Logger.getLogger(TourDatesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        response.sendRedirect("error.jsp");
+        response.sendRedirect("404.jsp");
     }   catch (SQLException ex) {
             Logger.getLogger(TourDatesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

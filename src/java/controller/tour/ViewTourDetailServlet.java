@@ -114,7 +114,7 @@ public class ViewTourDetailServlet extends HttpServlet {
                 request.getRequestDispatcher("/ViewTourDetail.jsp").forward(request, response);
             } else {
                 // Nếu tour không tồn tại, có thể chuyển hướng người dùng đến một trang thông báo lỗi
-                response.sendRedirect(request.getContextPath() + "/error.jsp");
+                response.sendRedirect(request.getContextPath() + "/404.jsp");
             }
         } catch (SQLException ex) {
             Logger.getLogger(ViewTourDetailServlet.class.getName()).log(Level.SEVERE, null, ex);

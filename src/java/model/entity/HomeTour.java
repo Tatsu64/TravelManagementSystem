@@ -10,6 +10,7 @@ package model.entity;
  */
 public class HomeTour {
     public int TourId;
+    public String tourName;
     public String location;
     private String secondlocation;
     private String dateStart;
@@ -78,6 +79,14 @@ public class HomeTour {
     
     public HomeTour(){
         
+    }
+
+    public String getTourName() {
+        return tourName;
+    }
+
+    public void setTourName(String tourName) {
+        this.tourName = tourName;
     }
 
     public int getTourId() {

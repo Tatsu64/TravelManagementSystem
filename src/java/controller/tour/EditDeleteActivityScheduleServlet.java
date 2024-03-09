@@ -88,17 +88,17 @@ public class EditDeleteActivityScheduleServlet extends HttpServlet {
                     response.sendRedirect("ViewUpdateTourServlet?tourId=" + tourId);
                 } else {
                     // Xử lý trường hợp không xác định hành động
-                    response.sendRedirect("error.jsp");
+                    response.sendRedirect("404.jsp");
                 }
             } catch (NumberFormatException e) {
                 // Xử lý lỗi nếu không thể chuyển đổi tourId hoặc scheduleId thành số nguyên
                 e.printStackTrace();
                 // Chuyển hướng đến trang lỗi nếu cần
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("404.jsp");
             }
         } else {
             // Xử lý khi action, tourId hoặc scheduleId không tồn tại
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 

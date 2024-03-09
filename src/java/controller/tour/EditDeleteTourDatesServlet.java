@@ -90,19 +90,19 @@ public class EditDeleteTourDatesServlet extends HttpServlet {
                     response.sendRedirect("ViewUpdateTourServlet?tourId=" + tourId);
                 } else {
                     // Xử lý trường hợp không xác định hành động
-                    response.sendRedirect("error.jsp");
+                    response.sendRedirect("404.jsp");
                 }
             } catch (NumberFormatException e) {
                 // Xử lý lỗi nếu không thể chuyển đổi tourId hoặc scheduleId thành số nguyên
                 e.printStackTrace();
                 // Chuyển hướng đến trang lỗi nếu cần
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("404.jsp");
             } catch (SQLException ex) {
                 Logger.getLogger(EditDeleteTourDatesServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             // Xử lý khi action, tourId hoặc scheduleId không tồn tại
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 
@@ -140,7 +140,7 @@ public class EditDeleteTourDatesServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace(); // Xử lý hoặc ghi log lỗi
             // Forward hoặc redirect đến trang lỗi tùy theo yêu cầu
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
             return;
         }
         

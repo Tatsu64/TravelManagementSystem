@@ -102,7 +102,7 @@ public class LocationServlet extends HttpServlet {
         } catch (SQLException e) {
             // Xử lý lỗi nếu có
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 

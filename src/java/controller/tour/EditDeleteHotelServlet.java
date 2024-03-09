@@ -83,11 +83,11 @@ public class EditDeleteHotelServlet extends HttpServlet {
                     deleteHotel(request, response);
                     break;
                 default:
-                    response.sendRedirect("error.jsp");
+                    response.sendRedirect("404.jsp");
                     break;
             }
         } else {
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 

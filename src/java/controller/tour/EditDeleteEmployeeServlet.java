@@ -74,11 +74,11 @@ public class EditDeleteEmployeeServlet extends HttpServlet {
                     deleteEmployee(request, response);
                     break;
                 default:
-                    response.sendRedirect("error.jsp"); // Hoặc xử lý lỗi khác
+                    response.sendRedirect("404.jsp"); // Hoặc xử lý lỗi khác
                     break;
             }
         } else {
-            response.sendRedirect("error.jsp"); // Hoặc xử lý lỗi khác
+            response.sendRedirect("404.jsp"); // Hoặc xử lý lỗi khác
         }
     }
 
@@ -133,11 +133,11 @@ public class EditDeleteEmployeeServlet extends HttpServlet {
                 response.sendRedirect("ManageEmployeeServlet?");
             } catch (NumberFormatException e) {
                 // Xử lý ngoại lệ khi không thể chuyển đổi employeeId thành số nguyên
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("404.jsp");
             }
         } else {
             // Xử lý khi employeeId không tồn tại trong request
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 

@@ -551,6 +551,7 @@ public class TourDAO {
     private static HomeTour extractHomeTourFromResultSet(ResultSet resultSet) throws SQLException {
         HomeTour tour = new HomeTour();
         tour.setTourId(resultSet.getInt("tour_id"));
+        tour.setTourName(resultSet.getString("tour_name"));
         tour.setDescription(resultSet.getString("description"));
         Date startdate = resultSet.getDate("start_date");
         Date endate = resultSet.getDate("end_date");

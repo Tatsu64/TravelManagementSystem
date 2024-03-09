@@ -78,7 +78,7 @@ public class RestaurantServlet extends HttpServlet {
             } else {
                 // Xử lý khi tourId không tồn tại hoặc là chuỗi rỗng
                 // Ví dụ: Hiển thị trang lỗi hoặc chuyển hướng sang trang khác
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("404.jsp");
                 return;
             }
             // Lấy locationId từ request parameter
@@ -89,7 +89,7 @@ public class RestaurantServlet extends HttpServlet {
             } else {
                 // Xử lý khi locationId không tồn tại hoặc là chuỗi rỗng
                 // Ví dụ: Hiển thị trang lỗi hoặc chuyển hướng sang trang khác
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("404.jsp");
                 return;
             }
 
@@ -107,7 +107,7 @@ public class RestaurantServlet extends HttpServlet {
         } catch (SQLException ex) {
             // Xử lý ngoại lệ SQLException
             ex.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 
@@ -122,22 +122,30 @@ public class RestaurantServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int tourId = Integer.parseInt(request.getParameter("tourId"));
-        // Nhận danh sách khách sạn đã chọn từ request
-        String[] selectedRestaurants = request.getParameterValues("selectedRestaurants");
+    int tourId = Integer.parseInt(request.getParameter("tourId"));
+    // Nhận danh sách nhà hàng đã chọn từ request
+    String[] selectedRestaurants = request.getParameterValues("selectedRestaurants");
 
-        // Tạo một đối tượng DAO để thao tác với cơ sở dữ liệu
-        TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
+    // Tạo một đối tượng DAO để thao tác với cơ sở dữ liệu
+    TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
 
-        // Insert into TourTransportations
-        for (String restaurantId : selectedRestaurants) {
-            RestaurantTour restaurantTour = new RestaurantTour(Integer.parseInt(restaurantId), tourId);
-            tourDAO.addRestaurantTour(restaurantTour);
-        }
-
-        // Redirect hoặc forward tới trang tiếp theo sau khi xử lý
+    // Kiểm tra nếu danh sách nhà hàng đã chọn rỗng
+    if (selectedRestaurants == null || selectedRestaurants.length == 0) {
+        // Redirect trực tiếp tới trang TourDatesServlet
         response.sendRedirect("TourDatesServlet?tourId=" + tourId);
+        return; // Kết thúc phương thức doPost
     }
+
+    // Insert into TourTransportations
+    for (String restaurantId : selectedRestaurants) {
+        RestaurantTour restaurantTour = new RestaurantTour(Integer.parseInt(restaurantId), tourId);
+        tourDAO.addRestaurantTour(restaurantTour);
+    }
+
+    // Redirect hoặc forward tới trang tiếp theo sau khi xử lý
+    response.sendRedirect("TourDatesServlet?tourId=" + tourId);
+}
+
 
 
 

@@ -174,14 +174,8 @@
                                     <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>${ht.getPerson()} Person</small>
                                 </div>
                                 <div class="text-center p-4">
-                                    <h3 class="mb-0">$ ${ht.getPrice()}</h3>
-                                    <div class="mb-3">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                    </div>
+                                    <h2 class="mb-0">${ht.getTourName()}</h2> 
+                                    <h3 class="mb-0">$ ${ht.getPrice()}</h3> 
                                     <c:choose>
                                         <c:when test="${fn:length(ht.getDescription()) > 100}">
                                             ${fn:substring(ht.getDescription(), 0, 100)}...
