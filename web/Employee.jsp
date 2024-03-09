@@ -9,11 +9,10 @@
         <%@ include file="includes/header.jsp" %>
     </head>
     <body>
-        <br>
-        <br>
-        <br>
-        <br>
+        <%@include file="includes/sidebar.jsp" %>
         <div class="container">
+            <br>
+            <br>
             <h2>Employee List</h2>
             <table class="table table-light">
                 <thead>
@@ -37,8 +36,7 @@
                                 <button onclick="location.href = 'EditDeleteEmployeeServlet?employeeId=${employee.employeeId}&action=update'" type="button" class="btn btn-warning">Update</button>
 
                                 <!-- Delete button -->
-                                <button onclick="if (confirm('Are you sure you want to delete this employee?'))
-                                            location.href = 'EditDeleteEmployeeServlet?employeeId=${employee.employeeId}&action=delete'" type="button" class="btn btn-danger">Delete</button>
+                                <button type="button" class="btn btn-danger" onclick="openConfirmDeleteModal(${employee.employeeId})">Delete</button>
 
                             </td>
                         </tr>
@@ -50,8 +48,45 @@
             <a href="CreateEmployee.jsp" class="btn btn-primary">Create Employees</a>
             <a href="Home" class="btn btn-primary">Back to Homepage</a>
         </div>
-        <footer>
-            <%@ include file="includes/footer.jsp" %>
-        </footer>
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this employee?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+                                    function openConfirmDeleteModal(employeeId) {
+                                        $('#confirmDeleteModal').modal('show');
+                                        // Lưu employeeId vào một input hidden trong modal để sử dụng khi xác nhận xóa
+                                        $('#confirmDeleteModal').find('#confirmDeleteButton').attr('data-employee-id', employeeId);
+                                    }
+
+                                    // Xác nhận xóa khi người dùng nhấn nút "Delete" trong modal
+                                    $(document).on('click', '#confirmDeleteButton', function () {
+                                        var employeeId = $(this).attr('data-employee-id');
+                                        // Thực hiện chuyển hướng đến servlet để xóa nhân viên
+                                        window.location.href = 'EditDeleteEmployeeServlet?employeeId=' + employeeId + '&action=delete';
+                                    });
+        </script>
     </body>
 </html>

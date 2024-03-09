@@ -9,16 +9,11 @@
     <body>
         <br>
         <br>
-        <br>
-        <br>
-        <br>
-        <form action="EditDeleteTourServlet" method="post" enctype="multipart/form-data"">
-
+         <form id="updateTourForm" action="EditDeleteTourServlet" method="post" enctype="multipart/form-data">
             <div class="container">
                 <h2>Update Tour</h2>
                 <br>
                 <br>
-
                 <input type="hidden" name="tourId" value="${tour.tourId}">
                 <h3>Transportation</h3>
                 <c:forEach items="${transportationList}" var="transportation">
@@ -171,8 +166,46 @@
                 <br>
                 <button type="submit" class="btn btn-primary">Update Tour</button>
                 <a href="ApprovalTourServlet?" class="btn btn-secondary">Cancel</a>
+                <br>
+                <br>
+                <br>
+                <br>
             </div>
         </form>
-        <%@ include file="includes/footer.jsp" %>
+         <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Update Successful</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tour details have been successfully updated.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#updateTourForm').submit(function(event) {
+                event.preventDefault();
+                $('#successModal').modal('show');
+                setTimeout(function() {
+                 document.getElementById("updateTourForm").submit();
+             }, 2000); 
+            });
+        });
+    </script>
     </body>
 </html>

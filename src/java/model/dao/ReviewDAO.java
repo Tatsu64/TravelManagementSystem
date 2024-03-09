@@ -191,6 +191,22 @@ public List<Review> getAllReviewsByTourId(int tourId) throws SQLException {
     return reviews;
 }
 
+public boolean createReview(int userId, int bookingId, String content, int rating) {
+    String query = "INSERT INTO Reviews (booking_id, content, rating) VALUES (?, ?, ?)";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setInt(1, bookingId);
+        preparedStatement.setString(2, content);
+        preparedStatement.setInt(3, rating);
+        int rowsAffected = preparedStatement.executeUpdate();
+        return rowsAffected > 0; // Trả về true nếu có ít nhất một dòng bị ảnh hưởng
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; // Trả về false nếu xảy ra lỗi
+    }
+}
+
+
+
 
 
     

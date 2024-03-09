@@ -11,8 +11,10 @@
     <head>
         <%@include file="includes/header.jsp" %>
         <script src="https://kit.fontawesome.com/5a5f994da7.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/style_rating.css">
+   
     </head>
-
     <body>
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -138,7 +140,7 @@
             <!-- About End -->
             
             
-            <!-- User Reviews -->
+            <!-- View User Reviews -->
 
 <br>
 <div>
@@ -182,6 +184,50 @@
         </div>
     </div>
 </div>
+<!-- END -->
+
+<!-- Create Review -->
+<c:if test="${not empty auth.userId and not empty bookingIds}">
+    <br>
+    <div class="container">
+        <h2>Review</h2>
+        <br>
+        <form id="commentForm" action="CreateReviewServlet" method="post">
+            <input type="hidden" value="${auth.userId}" name="userId">
+            <c:forEach var="bookingId" items="${bookingIds}">
+                <input type="hidden" value="${bookingId}" name="bookingId">
+            </c:forEach>
+
+            <div class="form-group">
+                <label for="comment">Your Comment:</label>
+                <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <br>
+                <label for="rating">Your Rating:</label>
+                <div class="feedback">
+                    <div class="rating">
+                        <input type="radio" name="rating" id="rating-5" value="5">
+                        <label for="rating-5"></label>
+                        <input type="radio" name="rating" id="rating-4" value="4">
+                        <label for="rating-4"></label>
+                        <input type="radio" name="rating" id="rating-3" value="3">
+                        <label for="rating-3"></label>
+                        <input type="radio" name="rating" id="rating-2" value="2">
+                        <label for="rating-2"></label>
+                        <input type="radio" name="rating" id="rating-1" value="1">
+                        <label for="rating-1"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</c:if>
+
+
 
 
 
@@ -272,7 +318,7 @@
                     document.getElementById('totalReviews').innerText = totalReviews;
                     document.getElementById('averageRating').innerText = averageRating.toFixed(1); // Round to 1 decimal place
                 }
-
+                
                 // Call displayCustomerReviews function when the page is loaded
                 window.addEventListener('load', function () {
                     displayCustomerReviews();

@@ -21,7 +21,7 @@
             <div class="container">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <h2 class="form-title">Enter OTP to Sign Up</h2>
+                        <h2 class="form-title">Enter OTP that we send to your email to Sign Up</h2>
                         <form action="VerifyOTPServlet" method="post" class="register-form" id="register-form">
 
                             <div class="form-group">

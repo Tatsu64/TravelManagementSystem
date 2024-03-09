@@ -50,7 +50,7 @@
                                             <!-- Update button -->
                                             <button onclick="location.href='UpdateReviewServlet?action=update&reviewId=${review.reviewId}&action=update'" class="btn btn-primary">Edit</button>
                                             <!-- Delete button -->
-                                            <button onclick="if(confirm('Are you sure you want to delete this hotel?')) location.href='UpdateReviewServlet?action=delete&reviewId=${review.reviewId}&action=delete'" type="button" class="btn btn-danger">Delete</button>                        
+                                            <button onclick="if(confirm('Are you sure you want to delete this review?')) location.href='UpdateReviewServlet?action=delete&reviewId=${review.reviewId}&action=delete'" type="button" class="btn btn-danger">Delete</button>                        
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -8,11 +8,10 @@
     <title>All Bills</title>
 </head>
 <body>
-    <br>
-    <br>
-    <br>
-    <br>
+<%@include file="includes/sidebar.jsp" %>
     <div class="container">
+        <br>
+        <br>
         <h2>All Bills</h2>
         <table class="table table-light">
             <thead>
@@ -31,15 +30,12 @@
                         <td>${bill.booking.bookingId}</td>
                         <td>${bill.paymentDate}</td>
                         <td>${bill.paymentMethod}</td>
-                        <td><a href="ViewBillDetailServlet?billId=${bill.billId}">View Detail</a></td>
+                        <td><button type="button" onclick="window.location.href = 'ViewBillDetailServlet?billId=${bill.billId}'">View Detail</button></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
         <a href="Home" class="btn btn-primary">Back to Homepage</a>
     </div>
-    <footer>
-        <%@ include file="includes/footer.jsp" %>
-    </footer>
 </body>
 </html>

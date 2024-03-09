@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,12 +18,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.ActivityScheduleDAO;
+import model.dao.BookingDAO;
 import model.dao.HotelDAO;
 import model.dao.RestaurantDAO;
 import model.dao.ReviewDAO;
 import model.dao.TourDAO;
 import model.dao.TransportationDAO;
 import model.database.DatabaseConnector;
+import model.entity.Booking;
 import model.entity.Review;
 import model.entity.Tour;
 
@@ -72,14 +75,18 @@ public class DetailServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             //processRequest(request, response);
+            Integer userIdObj = (Integer) request.getSession().getAttribute("userId");
+            int userId = userIdObj != null ? userIdObj.intValue() : 0; 
             int tourid = Integer.parseInt(request.getParameter("id"));
             TourDAO tdao = new TourDAO(DatabaseConnector.getConnection());
             RestaurantDAO rdao = new RestaurantDAO(DatabaseConnector.getConnection());
             ActivityScheduleDAO ad = new ActivityScheduleDAO(DatabaseConnector.getConnection());
             HotelDAO hd = new HotelDAO(DatabaseConnector.getConnection());
             ReviewDAO reviewDAO = new ReviewDAO(DatabaseConnector.getConnection());
+            BookingDAO bookingDAO = new BookingDAO(DatabaseConnector.getConnection()); 
             
             Tour tour = tdao.getTourById(tourid);
+            if (tour != null) {
             int days = (int) ChronoUnit.DAYS.between(convertToLocalDate(tour.getStartDate()), convertToLocalDate(tour.getEndDate()));
             request.setAttribute("tour", tour);
             request.setAttribute("days", days);
@@ -95,8 +102,17 @@ public class DetailServlet extends HttpServlet {
             // Store user names, review content, and ratings as attributes in the request
             request.setAttribute("reviews", reviews);
             
-            request.getRequestDispatcher("tourDetail.jsp").forward(request, response);
-          
+            Booking latestBooking = bookingDAO.getLatestBookingByTourId(userId, tourid);
+                if (latestBooking != null) {
+                    List<Integer> bookingIds = new ArrayList<>();
+                    bookingIds.add(latestBooking.getBookingId());
+                    request.setAttribute("bookingIds", bookingIds);
+                }
+
+                request.getRequestDispatcher("tourDetail.jsp").forward(request, response);
+            } else { 
+                response.sendRedirect("404.jsp");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DetailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

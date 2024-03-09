@@ -19,6 +19,8 @@ import model.entity.Review;
 import model.entity.Tour;
 import model.entity.User;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BookingDAO {
 
@@ -73,8 +75,7 @@ public class BookingDAO {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT b.booking_id, b.number_of_people, b.total_price, b.booking_date, "
                 + "t.tour_id, t.tour_name "
-                + "FROM reviews r "
-                + "JOIN bookings b ON r.booking_id = b.booking_id "
+                + "FROM bookings b "
                 + "JOIN tours t ON b.tour_id = t.tour_id "
                 + "WHERE b.user_id = ?";
 
@@ -129,5 +130,51 @@ public class BookingDAO {
         }
         return bookingId;
     }
+    
+public Booking getLatestBookingByTourId(int userId, int tourId) throws SQLException {
+     Booking latestBooking = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    try {
+        String query = "SELECT TOP 1 * FROM Bookings WHERE user_id = ? AND tour_id = ? ORDER BY booking_date DESC";
+        statement = connection.prepareStatement(query);
+        statement.setInt(1, userId);
+        statement.setInt(2, tourId);
+        resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            latestBooking = new Booking();
+            latestBooking.setBookingId(resultSet.getInt("booking_id"));
+
+            // Get and set tour information
+            TourDAO tourDAO = new TourDAO(connection);
+            Tour tour = tourDAO.getTourById(resultSet.getInt("tour_id"));
+            latestBooking.setTour(tour);
+
+            // Get and set user information
+            UserDAO userDAO = new UserDAO(connection);
+            User user = userDAO.getUserById(resultSet.getInt("user_id"));
+            latestBooking.setUser(user);
+
+            latestBooking.setBookingDate(resultSet.getDate("booking_date"));
+            latestBooking.setNumberOfPeople(resultSet.getInt("number_of_people"));
+            latestBooking.setTotalPrice(resultSet.getBigDecimal("total_price"));
+        }
+    } finally {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+        if (statement != null) {
+            statement.close();
+        }
+    }
+
+    return latestBooking;
+}
+
+
+
+
 
 }

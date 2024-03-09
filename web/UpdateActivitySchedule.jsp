@@ -4,8 +4,8 @@
     Author     : ADMIN
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +19,7 @@
 <br>
 <br>
 <br>
-<form action="EditDeleteActivityScheduleServlet" method="post" onsubmit="return validateForm()">
+<form id="updateActivityForm" action="EditDeleteActivityScheduleServlet" method="post" onsubmit="return validateForm()">
     <div class="container">
         <input type="hidden" name="scheduleId" value="${param.scheduleId}">
         <input type="hidden" id="tourId" name="tourId" value="${param.tourId}">
@@ -57,15 +57,34 @@
         <button type="button" onclick="history.back();" class="btn btn-secondary">Back</button>
     </div>
 </form>
-<footer>
-    <%@include file="includes/footer.jsp" %>
-</footer>
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Activity schedule updated successfully.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function validateForm() {
         var startTime = document.getElementById("startTime").value;
         var endTime = document.getElementById("endTime").value;
 
-        // Chuyển đổi thời gian sang định dạng số giờ và phút
+        // Convert time to hours and minutes
         var startTimeParts = startTime.split(":");
         var endTimeParts = endTime.split(":");
         var startHour = parseInt(startTimeParts[0]);
@@ -73,13 +92,25 @@
         var endHour = parseInt(endTimeParts[0]);
         var endMinute = parseInt(endTimeParts[1]);
 
-        // Kiểm tra nếu end time trước start time
+        // Check if end time is after start time
         if (endHour < startHour || (endHour === startHour && endMinute <= startMinute)) {
             alert("End time must be after start time.");
-            return false; // Ngăn chặn submit form
+            return false; // Prevent form submission
         }
-        return true; // Cho phép submit form nếu thời gian hợp lệ
+        return true; // Allow form submission if time is valid
     }
+
+    // Show success modal after form submission
+    document.getElementById("updateActivityForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+        if (validateForm()) {
+            $('#successModal').modal('show'); // Show success modal
+            // Optional: Submit the form after a delay if needed
+             setTimeout(function() {
+                 document.getElementById("updateActivityForm").submit();
+             }, 2000); // Submit after 2 seconds
+        }
+    });
 </script>
 </body>
 </html>

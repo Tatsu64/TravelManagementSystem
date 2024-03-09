@@ -14,13 +14,9 @@
         
     </head>
     <body>
-        <br>
-        <br>
-        <br>
-        
-        <br>
-        <br>
         <div class="container">
+            <br>
+            <br>
             <h2>Activity Schedules</h2>
             <input type="hidden" name="locationId" value="${locationId}">
             <table class="table table-light">

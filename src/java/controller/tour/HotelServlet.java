@@ -113,24 +113,32 @@ public class HotelServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Nhận locationId từ request
-        int locationId = Integer.parseInt(request.getParameter("locationId"));
-        int tourId = Integer.parseInt(request.getParameter("tourId"));
-        // Nhận danh sách khách sạn đã chọn từ request
-        String[] selectedHotels = request.getParameterValues("selectedHotels");
+    // Nhận locationId từ request
+    int locationId = Integer.parseInt(request.getParameter("locationId"));
+    int tourId = Integer.parseInt(request.getParameter("tourId"));
+    // Nhận danh sách khách sạn đã chọn từ request
+    String[] selectedHotels = request.getParameterValues("selectedHotels");
 
-        // Tạo một đối tượng DAO để thao tác với cơ sở dữ liệu
-        TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
+    // Tạo một đối tượng DAO để thao tác với cơ sở dữ liệu
+    TourDAO tourDAO = new TourDAO(DatabaseConnector.getConnection());
 
-        // Insert into TourTransportations
-            for (String HotelId : selectedHotels) {
-               HotelTour hotelTour = new HotelTour(Integer.parseInt(HotelId), tourId);
-               tourDAO.addHotelTour(hotelTour);
-            }
-
-        // Redirect hoặc forward tới trang tiếp theo sau khi xử lý
+    // Kiểm tra nếu danh sách khách sạn đã chọn rỗng
+    if (selectedHotels == null || selectedHotels.length == 0) {
+        // Redirect trực tiếp tới trang RestaurantServlet
         response.sendRedirect("RestaurantServlet?tourId=" + tourId + "&locationId=" + locationId);
+        return; // Kết thúc phương thức doPost
     }
+
+    // Insert into TourTransportations
+    for (String hotelId : selectedHotels) {
+        HotelTour hotelTour = new HotelTour(Integer.parseInt(hotelId), tourId);
+        tourDAO.addHotelTour(hotelTour);
+    }
+
+    // Redirect hoặc forward tới trang tiếp theo sau khi xử lý
+    response.sendRedirect("RestaurantServlet?tourId=" + tourId + "&locationId=" + locationId);
+}
+
 
 
 
