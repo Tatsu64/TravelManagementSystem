@@ -17,6 +17,7 @@ import java.util.List;
 import model.entity.Booking;
 import model.entity.Review;
 import model.entity.Tour;
+import model.entity.User;
 
 public class ReviewDAO {
 
@@ -142,7 +143,53 @@ public class ReviewDAO {
         return reviews;
     }
 
+public List<Review> getAllReviewsByTourId(int tourId) throws SQLException {
+    List<Review> reviews = new ArrayList<>();
+    String sql = "SELECT TOP 4 r.review_id, u.name, r.content, r.rating, b.booking_id, b.tour_id " +
+                 "FROM users u " +
+                 "JOIN bookings b ON u.user_id = b.user_id " +
+                 "JOIN reviews r ON r.booking_id = b.booking_id " +
+                 "WHERE b.tour_id = ? " +
+                 "ORDER BY r.review_id DESC";
 
+    
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setInt(1, tourId);
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            Review review = new Review();
+            review.setReviewId(resultSet.getInt("review_id"));
+            review.setRating(resultSet.getInt("rating"));
+            review.setContent(resultSet.getString("content"));
+            
+            // Create a Booking object
+            Booking booking = new Booking();
+            booking.setBookingId(resultSet.getInt("booking_id"));
+            
+            // Create a Tour object and set its ID
+            Tour tour = new Tour();
+            tour.setTourId(resultSet.getInt("tour_id"));
+            
+            // Create a User object and set its name
+            User user = new User();
+            user.setName(resultSet.getString("name"));
+            
+            // Set the Tour object in the Booking
+            booking.setTour(tour);
+            
+            // Set the User object in the Review
+            booking.setUser(user);
+            
+            // Set the Booking object in the Review
+            review.setBooking(booking);
+            
+            reviews.add(review);
+        }
+    }
+
+    return reviews;
+}
 
 
 

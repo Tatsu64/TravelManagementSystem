@@ -65,8 +65,8 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right mt-3">
-                <a href="profile.jsp" class="btn btn-default">Back To Profile</a>
+            <div class="text-left mt-3">
+                <a href="profile.jsp" class="btn btn-primary px4">Back To Profile</a>
             </div>
         </div>
 

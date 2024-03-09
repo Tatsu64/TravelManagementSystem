@@ -85,7 +85,7 @@
                 <h1 style="margin-bottom: 40px">Trip Overall</h1>
                 <div style="display: flex">
                     <div style="width: 70%;margin-right: 20px">
-                        <h4>Contact information</h4>
+                        <h4>Contact Information</h4>
                         <div style="padding: 20px; background-color: #ededed; display: flex; flex-wrap: wrap">
                             <input type="hidden" id="userId" name="userId" value="${auth.userId}">
                             <div style="width: 50%; padding: 20px">
