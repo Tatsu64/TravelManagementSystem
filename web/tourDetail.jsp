@@ -118,6 +118,34 @@
                         <h3>${tour.employee.fullName}</h3>
                         <div>${tour.employee.email}</div>
                     </div>
+                    <br>
+                    <h3>Transportation</h3>
+                    <div style="padding: 10px; color: #d1d1d1; border: 1px solid;">
+                        <div><c:forEach items="${transports}" var="t">
+                                <h3>${t.transportationName}</h3>
+                                <div>Time: ${t.departureTime} - ${t.returnTime}</div>
+                                <img alt="transportation image" src="images/${t.imageUrl}" style="width: 50%; margin-top: 10px; margin-bottom: 10px;" />
+                            </c:forEach></div>
+                        </div>
+                    <br>
+                    <h3>Hotel</h3>
+                    <div style="padding: 10px; color: #d1d1d1; border: 1px solid;">
+                         <div><c:forEach items="${hotels}" var="h">
+                                <h3>${h.hotelName}</h3>
+                                <div>Address: ${h.address}</div>
+                                <img alt="Hotel image" src="images/${h.imageUrl}" style="width: 50%; margin-top: 10px; margin-bottom: 10px;" />
+                            </c:forEach></div>
+                        </div>
+                    <br>
+                    <h3>Restaurant</h3>
+                    <div style="padding: 10px; color: #d1d1d1; border: 1px solid;">
+                         <div><c:forEach items="${restaurants}" var="r">
+                                <h3>${r.restaurantName}</h3>
+                                <div>Address: ${r.address}</div>
+                                <img alt="Restaurant image" src="images/${r.imageUrl}" style="width: 50%; margin-top: 10px; margin-bottom: 10px;" />
+                            </c:forEach></div>
+                        </div>
+                    <br>
                 </div>
                 <div style="width: 40%;margin-left: 40px">
                     <h5 style="text-align: center; ">Schedule</h5>
