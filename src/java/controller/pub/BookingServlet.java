@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.BillDAO;
 import model.dao.BookingDAO;
+import model.dao.TourDAO;
 import model.dao.TourDatesDAO;
 import model.database.DatabaseConnector;
 import model.entity.Bill;
 import model.entity.Booking;
+import model.entity.HomeTour;
 import model.entity.Tour;
 import model.entity.User;
 
@@ -84,7 +86,7 @@ public class BookingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            int tourId = Integer.parseInt(request.getParameter("id"));
+            int tourDateId = Integer.parseInt(request.getParameter("id"));
             int userId = Integer.parseInt(request.getParameter("userId"));
             String name = request.getParameter("name");
             String email = request.getParameter("email");
@@ -98,6 +100,9 @@ public class BookingServlet extends HttpServlet {
             java.sql.Date startDate = parseDate(startDateStr);
             BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(people));
 
+            HomeTour homeTour = TourDAO.getHomeTourByTourDateId(tourDateId);
+            int tourId = homeTour.getTourId();
+            
             Tour tour = new Tour();
             tour.setTourId(tourId);
 

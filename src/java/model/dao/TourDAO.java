@@ -387,6 +387,25 @@ public class TourDAO {
         return null;
     }
 
+    public Tour getTourByTourDateId(int tourDateId) {
+        try {
+            String query = "select * from Tours t join TourDates td on t.tour_id = td.tour_id and td.tour_date_id = ?";
+
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, tourDateId);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return extractTourFromResultSet(resultSet);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception appropriately
+        }
+
+        return null;
+    }
 
     public static HomeTour getHomeTourById(int tourId) {
         try {
@@ -395,15 +414,15 @@ public class TourDAO {
             try (PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query)) {
                 statement.setInt(1, tourId);
                 ResultSet resultSet = statement.executeQuery();
-                    if (resultSet.next()) {
-                        HomeTour t = extractHomeTourFromResultSet(resultSet);
-                        String sl = resultSet.getNString("location_name");
-                        if(sl!=null){
-                            t.setSecondlocation(sl);
-                        }
-                        return t;
+                if (resultSet.next()) {
+                    HomeTour t = extractHomeTourFromResultSet(resultSet);
+                    String sl = resultSet.getNString("location_name");
+                    if (sl != null) {
+                        t.setSecondlocation(sl);
                     }
-                
+                    return t;
+                }
+
             }
         } catch (SQLException e) {
             e.printStackTrace(); // Handle or log the exception appropriately
@@ -411,7 +430,33 @@ public class TourDAO {
 
         return null;
     }
-    
+
+    public static HomeTour getHomeTourByTourDateId(int tourDateId) {
+        try {
+            String query = "select * from Tours t \n"
+                    + "join TourDates td on t.tour_id = td.tour_id and td.tour_date_id = ?\n"
+                    + "join TourLocation tl on tl.tour_id = t.tour_id \n"
+                    + "join Locations l on l.location_id = tl.location_id ";
+            try (PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query)) {
+                statement.setInt(1, tourDateId);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    HomeTour t = extractHomeTourFromResultSet(resultSet);
+                    String sl = resultSet.getNString("location_name");
+                    if (sl != null) {
+                        t.setSecondlocation(sl);
+                    }
+                    return t;
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception appropriately
+        }
+
+        return null;
+    }
+
     public List<Tour> getAllTours() {
         List<Tour> tours = new ArrayList<>();
 
@@ -430,6 +475,7 @@ public class TourDAO {
 
         return tours;
     }
+
     public static List<HomeTour> getAllHomeTours() {
         List<HomeTour> tours = new ArrayList<>();
 
@@ -563,24 +609,64 @@ public class TourDAO {
         tour.setImage(resultSet.getString("image_url"));
 
         tour.setLocation(resultSet.getString("start_location"));
-        
+
         tour.setPerson(resultSet.getInt("max_capacity"));
         tour.setCurrent(resultSet.getInt("current_capacity"));
-        
+
+        tour.setTourDateId(resultSet.getInt("tour_date_id"));
+
         return tour;
     }
-    
+
     public static List<HomeTour> getHomeToursByStartDateAndLocation(String location, String startdate) {
         List<HomeTour> tours = new ArrayList<>();
 
         try {
-            String query = "select * from Tours t join TourDates td on t.tour_id = td.tour_id join TourLocation tl on t.tour_id = tl.tour_id\n" +
-"join Locations l on l.location_id = tl.location_id\n" +
-"where td.start_date = ? and t.start_location = ?";
-
-            try ( PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query)) {
+//            String query = "select * from Tours t "
+//                    + "join TourDates td on t.tour_id = td.tour_id \n"
+//                    + "join TourLocation tl on t.tour_id = tl.tour_id \n"
+//                    + "join Locations l on l.location_id = tl.location_id \n"
+//                    + "where td.start_date = ? and t.start_location = ?";
+            String query = "select * from Tours t \n"
+                    + "join TourDates td on t.tour_id = td.tour_id \n"
+                    + "	and td.start_date = ?\n"
+                    + "join TourLocation tl on t.tour_id = tl.tour_id \n"
+                    + "join Locations l on l.location_id = tl.location_id \n"
+                    + "where l.location_name = ? or t.start_location = ?";
+            try (PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query)) {
                 statement.setString(1, startdate);
                 statement.setString(2, location);
+                statement.setString(3, location);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    HomeTour tour = extractHomeTourFromResultSet(resultSet);
+                    tour.setSecondlocation(resultSet.getNString("location_name"));
+                    tours.add(tour);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception appropriately
+        }
+        return tours;
+    }
+
+    public static List<HomeTour> getHomeToursInTwoWeeksByStartDateAndLocation(String location, String startdate) {
+        List<HomeTour> tours = new ArrayList<>();
+
+        try {
+            String query = "select * from Tours t \n"
+                    + "join TourDates td on t.tour_id = td.tour_id \n"
+                    + "	and td.start_date >= DATEADD(WEEK, -1, ?)\n"
+                    + "	and td.start_date <= DATEADD(WEEK, 1, ?)\n"
+                    + "join TourLocation tl on t.tour_id = tl.tour_id \n"
+                    + "join Locations l on l.location_id = tl.location_id \n"
+                    + "where l.location_name = ? or t.start_location = ?";
+
+            try (PreparedStatement statement = DatabaseConnector.connection.prepareStatement(query)) {
+                statement.setString(1, startdate);
+                statement.setString(2, startdate);
+                statement.setString(3, location);
+                statement.setString(4, location);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     HomeTour tour = extractHomeTourFromResultSet(resultSet);

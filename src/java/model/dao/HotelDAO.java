@@ -76,6 +76,29 @@ public class HotelDAO {
         return hotels;
     }
 
+    public List<Hotel> getHotelByTourDateId(int tourDateId) throws SQLException {
+        List<Hotel> hotels = new ArrayList<>();
+        String query = "SELECT * FROM Hotels \n"
+                + "JOIN HotelTour ON Hotels.hotel_id = HotelTour.hotel_id \n"
+                + "JOIN TourDates TD ON TD.tour_id = HotelTour.tour_id AND TD.tour_date_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, tourDateId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Hotel hotel = new Hotel();
+                    hotel.setHotelId(resultSet.getInt("hotel_id"));
+                    hotel.setHotelName(resultSet.getString("hotel_name"));
+                    hotel.setImageUrl(resultSet.getString("image_url"));
+                    hotel.setAddress(resultSet.getString("address"));
+                    hotels.add(hotel);
+                }
+            }
+        }
+
+        return hotels;
+    }
+
     public List<Hotel> getAllHotels() {
         List<Hotel> hotels = new ArrayList<>();
         Connection connection = null;

@@ -53,31 +53,25 @@
             <hr style="margin-top: 10px; margin-bottom: 10px"/>
             <div style="display: flex; padding-left: 80px">
                 <div style="width: 20%; margin-right: 10px; background-color: #f7f7f7; padding: 15px">
-                    <div style="margin-bottom: 20px">
-                        <div style="margin-bottom: 10px; font-weight: bold; font-size: larger; color: #0a0061">Start Location</div>
-                        <select class="form-select">
-                            <option>Choose your destination</option>
-                            <c:forEach items="${Menuloc}" var="m">
-                                <option ${m.name.equals(location)?'selected':''}>
-                                    ${m.name}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div  style="margin-bottom: 20px">
-                        <div style="margin-bottom: 10px; font-weight: bold; font-size: larger; color: #0a0061">End Location</div>
-                        <select class="form-select">
-                            <option>Choose your destination</option>
-                            <c:forEach items="${Menuloc}" var="m">
-                                <option>
-                                    ${m.name}
-                                </option>
-                            </c:forEach></select>
-                    </div>
-                    <div style="margin-bottom: 20px">
-                        <div style="margin-bottom: 10px; font-weight: bold; font-size: larger; color: #0a0061">Start Date</div>
-                        <input class="form-control" type="date" value="${date}"/>
-                    </div>
+                    <form method="get" action="TourList">
+
+                        <div style="margin-bottom: 20px">
+                            <div style="margin-bottom: 10px; font-weight: bold; font-size: larger; color: #0a0061">Start Location</div>
+                            <select name="location" class="form-select">
+                                <option>Choose your destination</option>
+                                <c:forEach items="${Menuloc}" var="m">
+                                    <option ${m.name.equals(location)?'selected':''}>
+                                        ${m.name}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 20px">
+                            <div style="margin-bottom: 10px; font-weight: bold; font-size: larger; color: #0a0061">Start Date</div>
+                            <input name="date" class="form-control" type="date" value="${date}"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary rounded-pill py-2 px-4 me-2" style="margin-top: 7px;">Search</button>
+                    </form>
                 </div>
                 <div style="width: 80%">
                     <div style="margin-bottom: 10px">We found ${Tours.size()} tour(s) for you</div>
@@ -86,14 +80,14 @@
                             <div style="width: 30%; margin-right: 10px; margin-bottom: 40px; border: 1px solid; border-color: #c7c7c7">
                                 <img src="images/${t.image}" style="width: 100%"/>
                                 <div style="padding: 20px">
-                                    <div>${date}</div>
+                                    <div>${t.dateStart}</div>
                                     <h3>${t.location} - ${t.secondlocation}</h3>
                                     <h5>Tour ID: ${t.tourId}</h5>
                                     <h5>Start location: ${t.location}</h5>
                                     <h5 style="color:red">${t.price} $</h5>
                                     <div style="display: flex; justify-content: space-between">
-                                        <a href="OrderDetailServlet?id=${t.tourId}" style="background: red; color: white; padding: 5px 30px 5px 30px; border-radius: 10%">Order</a>
-                                        <a href="Detail?id=${t.tourId}" style="background: white; border: 1px solid; border-color: #b1a8ff; color: #b1a8ff; padding: 5px 30px 5px 30px; border-radius: 10%">Detail</a>
+                                        <a href="OrderDetailServlet?id=${t.tourDateId}" style="background: red; color: white; padding: 5px 30px 5px 30px; border-radius: 10%">Order</a>
+                                        <a href="Detail?id=${t.tourDateId}" style="background: white; border: 1px solid; border-color: #b1a8ff; color: #b1a8ff; padding: 5px 30px 5px 30px; border-radius: 10%">Detail</a>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +98,7 @@
         </div>
 
 
- 
+
 
 
 

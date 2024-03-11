@@ -66,7 +66,7 @@ public class OrderDetailServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
-            HomeTour ht = TourDAO.getHomeTourById(id);
+            HomeTour ht = TourDAO.getHomeTourByTourDateId(id);
             request.setAttribute("Tour", ht);
             request.setAttribute("id", id);
             request.setAttribute("price", ht.getPrice());

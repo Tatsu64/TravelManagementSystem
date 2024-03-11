@@ -52,7 +52,7 @@ public class DetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DetailServlet</title>");            
+            out.println("<title>Servlet DetailServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet DetailServlet at " + request.getContextPath() + "</h1>");
@@ -76,33 +76,33 @@ public class DetailServlet extends HttpServlet {
         try {
             //processRequest(request, response);
             Integer userIdObj = (Integer) request.getSession().getAttribute("userId");
-            int userId = userIdObj != null ? userIdObj.intValue() : 0; 
-            int tourid = Integer.parseInt(request.getParameter("id"));
+            int userId = userIdObj != null ? userIdObj.intValue() : 0;
+            int tourDateId = Integer.parseInt(request.getParameter("id"));
             TourDAO tdao = new TourDAO(DatabaseConnector.getConnection());
             RestaurantDAO rdao = new RestaurantDAO(DatabaseConnector.getConnection());
             ActivityScheduleDAO ad = new ActivityScheduleDAO(DatabaseConnector.getConnection());
             HotelDAO hd = new HotelDAO(DatabaseConnector.getConnection());
             ReviewDAO reviewDAO = new ReviewDAO(DatabaseConnector.getConnection());
-            BookingDAO bookingDAO = new BookingDAO(DatabaseConnector.getConnection()); 
-            
-            Tour tour = tdao.getTourById(tourid);
-            if (tour != null) {
-            int days = (int) ChronoUnit.DAYS.between(convertToLocalDate(tour.getStartDate()), convertToLocalDate(tour.getEndDate()));
-            request.setAttribute("tour", tour);
-            request.setAttribute("days", days);
-            request.setAttribute("restaurants", rdao.getRestaurantByTourId(tourid));
-            request.setAttribute("transports", TransportationDAO.getTransportationByTourId(tourid));
-            request.setAttribute("hotels", hd.getHotelByTourId(tourid));
-            request.setAttribute("activities", ad.getActivityScheduleList(tourid));
-            
-            
-            // Retrieve reviews based on the tour ID
-            List<Review> reviews = reviewDAO.getAllReviewsByTourId(tourid);
+            BookingDAO bookingDAO = new BookingDAO(DatabaseConnector.getConnection());
 
-            // Store user names, review content, and ratings as attributes in the request
-            request.setAttribute("reviews", reviews);
-            
-            Booking latestBooking = bookingDAO.getLatestBookingByTourId(userId, tourid);
+            Tour tour = tdao.getTourByTourDateId(tourDateId);
+            if (tour != null) {
+                int tourid = tour.getTourId();
+                int days = (int) ChronoUnit.DAYS.between(convertToLocalDate(tour.getStartDate()), convertToLocalDate(tour.getEndDate()));
+                request.setAttribute("tour", tour);
+                request.setAttribute("days", days);
+                request.setAttribute("restaurants", rdao.getRestaurantByTourId(tourid));
+                request.setAttribute("transports", TransportationDAO.getTransportationByTourId(tourid));
+                request.setAttribute("hotels", hd.getHotelByTourId(tourid));
+                request.setAttribute("activities", ad.getActivityScheduleList(tourid));
+
+                // Retrieve reviews based on the tour ID
+                List<Review> reviews = reviewDAO.getAllReviewsByTourId(tourid);
+
+                // Store user names, review content, and ratings as attributes in the request
+                request.setAttribute("reviews", reviews);
+
+                Booking latestBooking = bookingDAO.getLatestBookingByTourId(userId, tourid);
                 if (latestBooking != null) {
                     List<Integer> bookingIds = new ArrayList<>();
                     bookingIds.add(latestBooking.getBookingId());
@@ -110,7 +110,7 @@ public class DetailServlet extends HttpServlet {
                 }
 
                 request.getRequestDispatcher("tourDetail.jsp").forward(request, response);
-            } else { 
+            } else {
                 response.sendRedirect("404.jsp");
             }
         } catch (SQLException ex) {

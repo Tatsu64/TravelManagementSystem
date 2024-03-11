@@ -9,6 +9,7 @@ package model.entity;
  * @author toden
  */
 public class HomeTour {
+
     public int TourId;
     public String tourName;
     public String location;
@@ -16,6 +17,15 @@ public class HomeTour {
     private String dateStart;
     private String dateEnd;
     private int current;
+    private int tourDateId;
+
+    public int getTourDateId() {
+        return tourDateId;
+    }
+
+    public void setTourDateId(int tourDateId) {
+        this.tourDateId = tourDateId;
+    }
 
     public String getDateStart() {
         return dateStart;
@@ -45,6 +55,7 @@ public class HomeTour {
     public void setSecondlocation(String secondlocation) {
         this.secondlocation = secondlocation;
     }
+
     public HomeTour(int TourId, String location, int day, int person, double price, String image, String description) {
         this.TourId = TourId;
         this.location = location;
@@ -65,7 +76,8 @@ public class HomeTour {
         this.image = image;
         this.description = description;
     }
-     public HomeTour(int TourId, String location, String secondlocation, int day, int person, int current, double price, String image, String description) {
+
+    public HomeTour(int TourId, String location, String secondlocation, int day, int person, int current, double price, String image, String description) {
         this.TourId = TourId;
         this.location = location;
         this.secondlocation = secondlocation;
@@ -76,9 +88,9 @@ public class HomeTour {
         this.image = image;
         this.description = description;
     }
-    
-    public HomeTour(){
-        
+
+    public HomeTour() {
+
     }
 
     public String getTourName() {
@@ -152,8 +164,5 @@ public class HomeTour {
     public void setCurrent(int current) {
         this.current = current;
     }
-    
-    
-    
-    
+
 }

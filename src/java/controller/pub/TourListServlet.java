@@ -6,12 +6,14 @@ package controller.pub;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.LocationDAO;
 import model.dao.TourDAO;
+import model.entity.HomeTour;
 
 /**
  *
@@ -31,7 +33,7 @@ public class TourListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -60,13 +62,17 @@ public class TourListServlet extends HttpServlet {
         //processRequest(request, response);
         String location = request.getParameter("location");
         String date = request.getParameter("date");
-        if (location==null||location.equals("0")) {
+        if (location == null || location.equals("0")) {
             response.sendRedirect("Home");
         } else {
+            List<HomeTour> tours = TourDAO.getHomeToursByStartDateAndLocation(location, date);
+            if (tours.isEmpty()) {
+                tours = TourDAO.getHomeToursInTwoWeeksByStartDateAndLocation(location, date);
+            }
             request.setAttribute("location", location);
             request.setAttribute("date", date);
             request.setAttribute("Menuloc", LocationDAO.getMenuLocation());
-            request.setAttribute("Tours", TourDAO.getHomeToursByStartDateAndLocation(location, date));
+            request.setAttribute("Tours", tours);
             request.getRequestDispatcher("TourList.jsp").forward(request, response);
         }
     }
